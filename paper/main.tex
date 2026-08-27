@@ -1,0 +1,1064 @@
+\documentclass[twoside,10pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amsthm,amssymb,amsfonts}
+\usepackage{mathtools}
+\usepackage[
+  letterpaper,
+  total={5.5in,8in},
+  vmarginratio=1:1,
+  hmarginratio=1:1,
+  headsep=21pt
+]{geometry}
+\usepackage{xcolor}
+\usepackage[
+  breaklinks=false,
+  linktocpage=true
+]{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor={purple},
+  urlcolor={purple},
+  citecolor={blue!80!black},
+  pdfauthor={},
+  pdftitle={A Single Kinetic Defect in a Run-and-Tumble Ring:
+    Exact Spectrum, Exceptional Points, and Relaxation Crossover},
+  pdfsubject={Exact spectral analysis of a run-and-tumble ring with one tumbling-rate defect},
+  pdfkeywords={run-and-tumble particle, kinetic defect, exceptional point,
+    localized mode, spectral gap, telegraph equation}
+}
+
+\medmuskip=4mu
+\thickmuskip=8mu
+\setlength{\emergencystretch}{2em}
+
+\numberwithin{equation}{section}
+
+\newtheoremstyle{slbody}
+  {8pt}
+  {8pt}
+  {\normalfont\slshape}
+  {}
+  {\bfseries}
+  {.}
+  {0.5em}
+  {\thmname{#1}\thmnumber{ #2}%
+   \thmnote{ {\normalfont\itshape(\ignorespaces#3\unskip)}}}
+\theoremstyle{slbody}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\renewcommand{\qedsymbol}{$\blacksquare$}
+
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\C}{\mathbb C}
+\newcommand{\one}{\mathbf 1}
+\newcommand{\ii}{\mathrm i}
+\newcommand{\spec}{\operatorname{spec}}
+\newcommand{\ord}{\operatorname{ord}}
+\newcommand{\Res}{\operatorname*{Res}}
+
+\title{A single kinetic defect in a run-and-tumble ring:\\
+exact spectrum, exceptional points, and relaxation crossover}
+\author{}
+\date{}
+
+\makeatletter
+\renewcommand{\section}{%
+  \@startsection{section}{1}{\z@}%
+    {-3.5ex \@plus -1ex \@minus -.2ex}%
+    {2.3ex \@plus .2ex}%
+    {\normalfont\large\bfseries}}
+\renewcommand{\@seccntformat}[1]{%
+  \csname the#1\endcsname.\enspace}
+
+\def\tagform@#1{%
+  \maketag@@@{(\ignorespaces{\oldstylenums{#1}}\unskip\@@italiccorr)}}
+\renewcommand{\eqref}[1]{%
+  \textup{{\normalfont(\oldstylenums{\ref{#1}}}\normalfont)}}
+
+\newcommand{\shorttitle}{A SINGLE KINETIC DEFECT IN A RUN-AND-TUMBLE RING}
+\newcommand{\shortauthors}{}
+\newcommand{\ps@bookheader}{%
+  \renewcommand\@oddfoot{\hfil}%
+  \renewcommand\@evenfoot{\hfil}%
+  \renewcommand\@oddhead{%
+    \ifnum\value{page}>1
+      {\small\hfil\shortauthors}\hfil\thepage
+    \else
+      \hfil
+    \fi}%
+  \renewcommand\@evenhead{%
+    \thepage\hfil\small\shorttitle\hfil}}
+\pagestyle{bookheader}
+
+\renewcommand{\maketitle}{%
+  \begin{center}
+    {\large\bfseries\@title}\\
+    \vskip36pt
+    \ifx\@author\@empty
+      \vspace{55pt}\par
+    \else
+      {\scshape\@author}\par
+      \medskip
+      {\small\@date}\par
+    \fi
+    \vskip36pt
+  \end{center}}
+\makeatother
+
+\renewenvironment{abstract}
+  {\quotation\noindent\small{\bfseries\abstractname.\enspace}}
+  {\endquotation}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We solve the spectral problem for one continuous-time run-and-tumble
+particle on an $n$-site ring when the tumbling rate at one site is
+$\omega _0$ and the bulk rate is $\omega$.  The defect changes the
+$2n\times2n$ generator by rank one.  The characteristic polynomial is
+the homogeneous polynomial plus $(\omega _0-\omega)/n$ times its
+$\omega$-derivative.  This identity gives Chebyshev and transfer-matrix
+quantization formulas, a parity factorization, and finite polynomial
+tests for every Jordan block.  We separately resolve the singular
+flat-band point $\omega=1$, where the eigenvalue $-2$ can carry Jordan
+blocks of sizes two or three.  The infinite-line Green function gives
+an exact criterion for exponentially localized defect modes.  For fixed
+positive bulk rate, reflection protects one homogeneous long-wave mode;
+consequently a slow defect, including $\omega _0\asymp n^{-1}$, does not
+produce a new spectral-gap scaling.  The nontrivial $n^{-1}$ crossover
+occurs when the bulk rate itself is of order $n^{-1}$.  Finally, the
+standard telegraph equation misses the lattice Poisson-diffusion term at
+fixed $\omega$, while a diffusion-corrected telegraph equation agrees
+through order $n^{-2}$.
+\end{abstract}
+
+\vskip5pt
+\noindent\textbf{Keywords.}\enspace Run-and-tumble particle; kinetic
+defect; non-Hermitian spectrum; exceptional point; localized mode;
+spectral gap; telegraph equation.
+
+\vskip50pt
+\baselineskip=13.5pt
+
+\section{Model and notation}
+
+\begin{definition}[Defective run-and-tumble generator]\label{def:generator}
+Let $n\geq2$, let $\omega>0$, and let $\omega _0\geq0$.  Sites are
+$j\in\Z/n\Z$, orientations are $\sigma\in\{+,-\}$, and
+\[
+  \omega_j=\begin{cases}\omega_0,&j=0,\\ \omega,&j\ne0.\end{cases}
+\]
+The forward generator $L=L_n(\omega,\omega_0)$ is
+\begin{align}
+ (Lu)^+_j&=u^+_{j-1}-(1+\omega_j)u^+_j+\omega_j u^-_j,\label{eq:generator-plus}\\
+ (Lu)^-_j&=u^-_{j+1}-(1+\omega_j)u^-_j+\omega_j u^+_j.\label{eq:generator-minus}
+\end{align}
+Thus hopping in the current orientation has rate one and tumbling has
+rate $\omega_j$.  Put
+\[
+ \delta=\omega_0-\omega,\qquad
+ q_k=\frac{2\pi k}{n},\qquad c_k=\cos q_k,\qquad s_k=\sin q_k.
+\]
+\end{definition}
+
+Equations \eqref{eq:generator-plus}--\eqref{eq:generator-minus} use the
+same one-particle convention as equations (6)--(10) of
+\cite{MallminBlytheEvans2019}.  That paper records the homogeneous
+eigenvalues in its equation (11), the homogeneous exceptional points in
+equation (14), and the first-mode relaxation rate in equations
+(20)--(21).
+
+\begin{lemma}[Rank-one defect]\label{lem:rank-one}
+Let $L^{(0)}=L_n(\omega,\omega)$.  If
+$d=e_{0,+}-e_{0,-}$, then
+\[
+ L=L^{(0)}-\delta\,dd^{\mathsf T}.
+\]
+In particular, the perturbation has rank one when $\delta\ne0$.
+\end{lemma}
+
+\begin{proof}
+At site zero, changing $\omega$ to $\omega_0$ adds
+\[
+ \delta\begin{pmatrix}-1&1\\1&-1\end{pmatrix}
+ =-\delta\begin{pmatrix}1\\-1\end{pmatrix}
+             \begin{pmatrix}1&-1\end{pmatrix}.
+\]
+Every other matrix entry is unchanged.
+\end{proof}
+
+\section{Three exact characteristic equations}
+
+\begin{definition}[Homogeneous factors]\label{def:homogeneous-factors}
+For $\lambda\in\C$, set
+\begin{align}
+ a&=\lambda+1+\omega,\label{eq:a-def}\\
+ x&=\frac{a^2+1-\omega^2}{2a},\label{eq:x-def}\\
+ D_k(\lambda)&=(\lambda+1-c_k)(\lambda+1+2\omega-c_k)+s_k^2
+             =a^2+1-\omega^2-2ac_k.\label{eq:Dk}
+\end{align}
+Although $x$ is undefined at $a=0$, each expression below containing
+$a^nT_n(x)$ is understood by its unique polynomial continuation.
+\end{definition}
+
+\begin{lemma}[Homogeneous polynomial]\label{lem:homogeneous-polynomial}
+The homogeneous characteristic polynomial is
+\begin{align}
+ P_n^{(0)}(\lambda;\omega)
+  &=\det(\lambda I-L^{(0)})\notag\\
+  &=\prod_{k=0}^{n-1}D_k(\lambda)\label{eq:P0-product}\\
+  &=2a^n\bigl(T_n(x)-1\bigr),\label{eq:P0-cheb}
+\end{align}
+where $T_n$ is the Chebyshev polynomial of the first kind.
+The two roots of $D_k$ are
+\[
+ \lambda_k^\pm=c_k-1-\omega
+       \pm\sqrt{\omega^2-s_k^2}.
+\]
+\end{lemma}
+
+\begin{proof}
+Fourier transformation gives the block
+\[
+ W_k=\begin{pmatrix}e^{\ii q_k}-1-\omega&\omega\\
+                     \omega&e^{-\ii q_k}-1-\omega\end{pmatrix}.
+\]
+Its characteristic polynomial is $D_k$, which proves
+\eqref{eq:P0-product} and the displayed roots.  Since
+$D_k=2a(x-c_k)$ and
+\[
+ \prod_{k=0}^{n-1}(x-c_k)=2^{1-n}\bigl(T_n(x)-1\bigr),
+\]
+equation \eqref{eq:P0-cheb} follows.
+\end{proof}
+
+\begin{theorem}[Exact finite characteristic polynomial]\label{thm:characteristic}
+For every $n\geq2$, $\omega>0$, and $\omega_0\geq0$,
+\begin{align}
+ P_n(\lambda;\omega,\omega_0)
+  &:=\det(\lambda I-L_n(\omega,\omega_0))\label{eq:P-def}\\
+  &=P_n^{(0)}(\lambda;\omega)
+    +\frac{\delta}{n}\,\partial_\omega
+       P_n^{(0)}(\lambda;\omega)\label{eq:derivative-form}\\
+  &=P_n^{(0)}(\lambda;\omega)
+    \left[1+\frac{2\delta}{n}
+      \sum_{k=0}^{n-1}\frac{\lambda+1-c_k}{D_k(\lambda)}\right].
+      \label{eq:resolvent-form}
+\end{align}
+Equation \eqref{eq:resolvent-form} is interpreted by polynomial
+continuation at a homogeneous eigenvalue.  Equivalently,
+\begin{align}
+ P_n={}&2a^n(T_n(x)-1)
+      +2\delta a^{n-1}(T_n(x)-1)
+      +\delta a^{n-2}\lambda(\lambda+2)U_{n-1}(x),
+      \label{eq:cheb-defect}
+\end{align}
+where $U_{n-1}$ is the Chebyshev polynomial of the second kind and the
+right-hand side again denotes its polynomial continuation.
+\end{theorem}
+
+\begin{proof}
+Let $B=\lambda I-L^{(0)}$.  Lemma \ref{lem:rank-one} and the matrix
+determinant lemma give
+\[
+ \det(\lambda I-L)=\det B\bigl(1+\delta d^{\mathsf T}B^{-1}d\bigr).
+\]
+In Fourier space,
+\[
+ d^{\mathsf T}B^{-1}d
+   =\frac1n\sum_{k=0}^{n-1}
+      \frac{2(\lambda+1-c_k)}{D_k(\lambda)},
+\]
+which proves \eqref{eq:resolvent-form}.  Direct differentiation of
+\eqref{eq:P0-product} gives
+\[
+ \partial_\omega P_n^{(0)}
+ =P_n^{(0)}\sum_k\frac{2(\lambda+1-c_k)}{D_k},
+\]
+and hence \eqref{eq:derivative-form}.  Finally,
+\[
+ \partial_\omega x=\frac{\lambda(\lambda+2)}{2a^2},
+ \qquad T_n'(x)=nU_{n-1}(x),
+\]
+and differentiating \eqref{eq:P0-cheb} proves
+\eqref{eq:cheb-defect}.
+\end{proof}
+
+\begin{theorem}[Transfer-matrix quantization]\label{thm:transfer}
+For a local rate $r\geq0$, define
+\[
+ T_r(\lambda)=\frac1{\lambda+1+r}
+ \begin{pmatrix}
+  1&r\\
+  -r&(\lambda+1+r)^2-r^2
+ \end{pmatrix}.
+ \label{eq:transfer}
+\]
+Then $\det T_r=1$, and, away from the displayed denominators,
+\[
+ P_n(\lambda;\omega,\omega_0)
+ =a^{n-1}(\lambda+1+\omega_0)
+   \left\{\operatorname{tr}
+     \bigl[T_\omega(\lambda)^{n-1}T_{\omega_0}(\lambda)\bigr]-2\right\}.
+ \label{eq:transfer-char}
+\]
+After multiplication by the denominators, this identity holds for every
+$\lambda$ by polynomial continuation.  Thus an eigenvalue is equivalently
+characterized by
+\[
+ \operatorname{tr}
+     \bigl[T_\omega(\lambda)^{n-1}T_{\omega_0}(\lambda)\bigr]=2.
+ \label{eq:trace-two}
+\]
+Moreover, if $t=\operatorname{tr}T_\omega=2x$, then
+\[
+ T_\omega^{n-1}=U_{n-2}(x)T_\omega-U_{n-3}(x)I,
+ \label{eq:transfer-cheb}
+\]
+with $U_{-1}=0$.
+\end{theorem}
+
+\begin{proof}
+The eigenvalue equations at site $j$ are
+\begin{align*}
+ (\lambda+1+\omega_j)u_j^+-\omega_j u_j^-&=u_{j-1}^+,\\
+ (\lambda+1+\omega_j)u_j^--\omega_j u_j^+&=u_{j+1}^-.
+\end{align*}
+Consequently
+\[
+ \binom{u_j^+}{u_{j+1}^-}
+ =T_{\omega_j}(\lambda)\binom{u_{j-1}^+}{u_j^-}.
+\]
+Periodic boundary conditions require the product monodromy to have
+eigenvalue one.  Its determinant is one, so this is equivalent to trace
+two.  Both sides of \eqref{eq:transfer-char} are monic polynomials of
+degree $2n$ and have the same zeros with multiplicity; comparison as
+$\lambda\to\infty$ fixes the factor shown.  Equation
+\eqref{eq:transfer-cheb} is the Cayley--Hamilton identity for a
+unimodular $2\times2$ matrix.
+\end{proof}
+
+\section{Parity factorization and every finite exceptional point}
+
+\begin{definition}[Kinetic reflection]\label{def:reflection}
+Define the involution
+\[
+ (Ru)^+_j=u^-_{-j},\qquad (Ru)^-_j=u^+_{-j}.
+\]
+Write $\mathcal H_\pm=\ker(R\mp I)$.
+\end{definition}
+
+\begin{lemma}[Protected sector]\label{lem:protected-sector}
+The generator commutes with $R$, the defect vector satisfies $Rd=-d$,
+and
+\[
+ L|_{\mathcal H_+}=L^{(0)}|_{\mathcal H_+}.
+\]
+Thus the defect changes only the reflection-odd sector.
+\end{lemma}
+
+\begin{proof}
+Reflection reverses position and orientation simultaneously, leaving the
+directed hopping rules and the rate field $\omega_j$ invariant.  At the
+fixed site zero it exchanges the two entries of $d$, hence $Rd=-d$.
+Lemma \ref{lem:rank-one} then vanishes on $\mathcal H_+$.
+\end{proof}
+
+\begin{definition}[Parity polynomials]\label{def:parity-polynomials}
+Put $m=\lfloor(n-1)/2\rfloor$ and let $\varepsilon_n$ be one for even
+$n$ and zero for odd $n$.  Define
+\begin{align}
+ H_{n,+}(\lambda)
+   &=\lambda(\lambda+2)^{\varepsilon_n}
+     \prod_{k=1}^{m}D_k(\lambda),\label{eq:Hplus}\\
+ H_{n,-}^{(0)}(\lambda)
+   &=(\lambda+2\omega)
+     (\lambda+2+2\omega)^{\varepsilon_n}
+     \prod_{k=1}^{m}D_k(\lambda),\label{eq:Hminus0}\\
+ G_n(\lambda)
+   &=\frac1n\left[
+       \frac1{\lambda+2\omega}
+       +\frac{\varepsilon_n}{\lambda+2+2\omega}
+       +2\sum_{k=1}^{m}\frac{\lambda+1-c_k}{D_k(\lambda)}
+     \right],\label{eq:Gfinite}\\
+ Q_{n,-}(\lambda)
+   &=H_{n,-}^{(0)}(\lambda)\bigl(1+2\delta G_n(\lambda)\bigr).
+   \label{eq:Qminus}
+\end{align}
+Every quotient in \eqref{eq:Qminus} cancels, so $Q_{n,-}$ is a monic
+polynomial of degree $n$.  An entirely polynomial version is
+\begin{align}
+Q_{n,-}={}&H_{n,-}^{(0)}+\frac{2\delta}{n}\left[
+ \frac{H_{n,-}^{(0)}}{\lambda+2\omega}
+ +\varepsilon_n\frac{H_{n,-}^{(0)}}{\lambda+2+2\omega}\right.\notag\\
+&\left.\hspace{38mm}
+ +2\sum_{k=1}^{m}(\lambda+1-c_k)
+       \frac{H_{n,-}^{(0)}}{D_k}\right].\label{eq:Qminus-poly}
+\end{align}
+\end{definition}
+
+\begin{theorem}[Exact parity factorization]\label{thm:parity-factor}
+The characteristic polynomial factors as
+\[
+ P_n(\lambda;\omega,\omega_0)
+   =H_{n,+}(\lambda)Q_{n,-}(\lambda).
+ \label{eq:parity-factor}
+\]
+The first factor is the characteristic polynomial on $\mathcal H_+$;
+the second is the characteristic polynomial on $\mathcal H_-$.
+\end{theorem}
+
+\begin{proof}
+The modes $q_k$ and $-q_k$ form a four-dimensional Fourier subspace,
+which splits into two isomorphic two-dimensional $R$-eigenspaces.  Each
+has characteristic polynomial $D_k$.  At $q=0$, the vectors $(1,1)$ and
+$(1,-1)$ have parities $+$ and $-$ and eigenvalues $0$ and $-2\omega$.
+When $n$ is even, the $q=\pi$ density and polarization vectors have
+parities $+$ and $-$ and eigenvalues $-2$ and $-2-2\omega$.  This gives
+\eqref{eq:Hplus}--\eqref{eq:Hminus0}.  Lemma
+\ref{lem:protected-sector} and the rank-one determinant lemma restricted
+to $\mathcal H_-$ give \eqref{eq:Qminus}.  Multiplication proves
+\eqref{eq:parity-factor}.
+\end{proof}
+
+\begin{definition}[Exceptional point]\label{def:exceptional}
+For an eigenvalue $\mu$, let $a(\mu)$ be its algebraic multiplicity and
+$g(\mu)=\dim\ker(\mu I-L)$ its geometric multiplicity.  We call
+$(\omega,\omega_0,\mu)$ an exceptional point when $a(\mu)>g(\mu)$.
+Write $J_r(\mu)$ for a Jordan block of size $r$ at $\mu$.
+\end{definition}
+
+\begin{lemma}[No inter-wave coincidences away from the flat band]
+\label{lem:no-coincidences}
+If $c_k\ne c_\ell$ and $D_k(\mu)=D_\ell(\mu)=0$, then $\omega=1$ and
+$\mu=-2$.
+\end{lemma}
+
+\begin{proof}
+Subtracting the two equations gives
+$2a(c_k-c_\ell)=0$, hence $a=0$.  Substitution into
+\eqref{eq:Dk} gives $1-\omega^2=0$.  Since $\omega>0$, this means
+$\omega=1$ and then $\mu=-1-\omega=-2$.
+\end{proof}
+
+\begin{theorem}[Jordan classification for $\omega\ne1$]
+\label{thm:jordan-regular}
+Assume $\omega\ne1$.
+\begin{enumerate}
+\item In the protected sector, the endpoint factors in
+  \eqref{eq:Hplus} give one-dimensional blocks.  For each
+  $1\leq k\leq m$, a root of $D_k$ gives one $J_1$, except that
+  \begin{equation}\label{eq:protected-ep}
+    \omega=|s_k|,\qquad
+    \mu=c_k-1-\omega.
+  \end{equation}
+  gives one $J_2(\mu)$.
+\item In the affected sector, if
+  \begin{equation}\label{eq:affected-ep}
+    Q_{n,-}(\mu)=Q_{n,-}'(\mu)=\cdots
+      =Q_{n,-}^{(r-1)}(\mu)=0,\qquad
+    Q_{n,-}^{(r)}(\mu)\ne0,
+  \end{equation}
+  then the complete affected-sector contribution at $\mu$ is one
+  block $J_r(\mu)$.
+\item The full Jordan form at $\mu$ is the direct sum of the blocks in
+  items 1 and 2.  In particular, a crossing between the two parity
+  sectors is semisimple unless one of its sector blocks has size greater
+  than one.
+\end{enumerate}
+Consequently, \eqref{eq:protected-ep} together with
+\eqref{eq:affected-ep} is an exact finite criterion for every exceptional
+point when $\omega\ne1$.  The order $r$ in \eqref{eq:affected-ep}
+classifies exceptional points of arbitrary order.
+\end{theorem}
+
+\begin{proof}
+The discriminant of $D_k$ is $4(\omega^2-s_k^2)$.  At a zero
+discriminant its Fourier block is not scalar and hence is a single
+$J_2$; otherwise each root is simple.  Lemma
+\ref{lem:no-coincidences} excludes coincidences between distinct
+$c_k$ values.
+
+It remains to show that the affected restriction is cyclic.  In each
+two-dimensional homogeneous parity block, the spectral weight of the
+defect vector has numerator $2(\lambda+1-c_k)$.  This numerator and
+$D_k$ have no common root for an interior wave number: a common root
+would give $\lambda+1=c_k$, after which $D_k=s_k^2\ne0$.  The endpoint
+weights in \eqref{eq:Gfinite} are also nonzero.  Lemma
+\ref{lem:no-coincidences} makes the block minimal polynomials coprime.
+The defect vector is therefore cyclic for the homogeneous odd
+restriction.  If $A$ has cyclic vector $d$, then $d$ is also cyclic for
+$A-\delta dd^{\mathsf T}$, because each
+$(A-\delta dd^{\mathsf T})^jd$ equals $A^jd$ plus a linear combination
+of lower powers.  Hence the minimal and characteristic polynomials of
+the affected restriction both equal $Q_{n,-}$.  A cyclic matrix has one
+Jordan block for each eigenvalue, of size equal to the root order.
+The direct-sum assertion follows from the invariant parity splitting.
+\end{proof}
+
+\begin{theorem}[The complete flat-band classification at $\omega=1$]
+\label{thm:flat-band}
+Let $\omega=1$ and put $\mu=-2$.
+\begin{enumerate}
+\item If $\omega_0=1$ and $4\nmid n$, the contribution at $\mu$ is
+  $nJ_1(\mu)$.
+\item If $\omega_0=1$ and $4\mid n$, the contribution is
+  \[
+    2J_2(\mu)\oplus(n-2)J_1(\mu).
+  \]
+\item If $\omega_0\ne1$ and $n\equiv1$ or $2\pmod4$, the contribution
+  is $(n-1)J_1(\mu)$.
+\item If $\omega_0\ne1$ and $n\equiv0\pmod4$, the contribution is
+  \[
+    J_2(\mu)\oplus(n-2)J_1(\mu).
+  \]
+\item If $n\equiv3\pmod4$, $\omega_0\ne1$, and
+  $\omega_0\ne(n-1)/(n+1)$, the contribution is again
+  $J_2(\mu)\oplus(n-2)J_1(\mu)$.
+\item If $n\equiv3\pmod4$ and
+  $\omega_0=(n-1)/(n+1)$, the contribution is
+  \[
+    J_3(\mu)\oplus(n-2)J_1(\mu).
+  \]
+\end{enumerate}
+For eigenvalues $\lambda\ne-2$, every protected-sector root is a
+one-dimensional block.  Remove the exact power of $(\lambda+2)$
+specified above from $Q_{n,-}$.  The remaining affected polynomial is
+cyclic, so the derivative test \eqref{eq:affected-ep} applied to that
+reduced polynomial
+classifies every remaining affected block at $\omega=1$.  The full
+Jordan form is the direct sum of the protected and affected blocks.
+\end{theorem}
+
+\begin{proof}
+Write $t=\lambda+2$.  At $\omega=1$,
+\[
+ D_k=t(t-2c_k),\qquad
+ P_n=t^{n-1}F_n(t),
+\]
+where, for $\delta=\omega_0-1$,
+\begin{equation}\label{eq:flat-F}
+ F_n(t)=2t\bigl(T_n(t/2)-1\bigr)
+ +\delta\left[2\bigl(T_n(t/2)-1\bigr)
+ +(t-2)U_{n-1}(t/2)\right].
+\end{equation}
+The values
+\[
+ T_n(0)=\cos(n\pi/2),\qquad U_{n-1}(0)=\sin(n\pi/2)
+\]
+give the following algebraic multiplicities.  For $\delta=0$ they are
+$n$, except that $4\mid n$ gives $n+2$.  For $\delta\ne0$ they are
+$n-1$ when $n\equiv1,2\pmod4$, and $n$ when
+$n\equiv0,3\pmod4$.  In the last congruence class,
+$F_n'(0)=-2-\delta(n+1)$; it vanishes exactly at
+$\delta=-2/(n+1)$, when $F_n''(0)\ne0$ and the multiplicity is $n+1$.
+
+The bulk equations at $t=0$ read
+\[
+ u_j^-=-u_{j-1}^+\qquad(j\ne0).
+\]
+Together they impose this relation for every $j$.  The defect equation
+adds no constraint when $\omega_0=1$ and otherwise adds the single
+constraint $u_0^++u_{n-1}^+=0$.  Thus the geometric multiplicity is $n$
+in the homogeneous case and $n-1$ otherwise.  Fourier decomposition
+shows that the two excess algebraic dimensions when $4\mid n$ and
+$\delta=0$ are the two $q=\pm\pi/2$ blocks, each a $J_2$.  For
+$\delta\ne0$, the parity factorization places the $4\mid n$ excess in
+one protected $J_2$.  When $n\equiv3\pmod4$, the affected block is one
+$J_2$ generically; the additional order at
+$\delta=-2/(n+1)$ extends it to $J_3$.  These counts give all six cases.
+After the flat factor is removed, the coprime-block cyclicity argument
+from Theorem \ref{thm:jordan-regular} applies unchanged.
+\end{proof}
+
+\begin{corollary}[Finite algebraic exceptional set]\label{cor:resultant}
+For fixed $n$, all non-flat affected exceptional parameters lie on the
+explicit algebraic set
+\[
+ \Res_\lambda\bigl(Q_{n,-},\partial_\lambda Q_{n,-}\bigr)=0,
+\]
+with $Q_{n,-}$ given by \eqref{eq:Qminus-poly}.  At $\omega=1$, the
+flat factor is removed before taking the resultant.  Root orders and
+theorems \ref{thm:jordan-regular}--\ref{thm:flat-band} distinguish
+exceptional points from semisimple parity crossings without a numerical
+tolerance.
+\end{corollary}
+
+\begin{proof}
+The resultant vanishes exactly when the two displayed polynomials share
+a root.  The preceding two theorems identify the Jordan block attached
+to every such root and separately account for the flat factor.
+\end{proof}
+
+\section{Defect-localized modes}
+
+\begin{definition}[Bulk spectral set]\label{def:bulk-set}
+For the infinite translation-invariant chain, define
+\[
+ \Sigma_\omega=
+ \left\{c-1-\omega\pm\sqrt{\omega^2-(1-c^2)}:
+              c\in[-1,1]\right\}.
+\]
+For $\lambda\notin\Sigma_\omega$, retain $a$ and $x$ from
+\eqref{eq:a-def}--\eqref{eq:x-def}, and choose
+\[
+ s(\lambda)=\sqrt{x(\lambda)^2-1}
+\]
+as the branch satisfying $s(\lambda)\sim x(\lambda)$ as
+$|\lambda|\to\infty$.  Put $z=x-s$, so $|z|<1$.
+\end{definition}
+
+\begin{theorem}[Infinite-line localization criterion]
+\label{thm:localization}
+Let $\delta\ne0$.  A number $\lambda\notin\Sigma_\omega$ is an
+exponentially localized eigenvalue of the infinite chain with the same
+single tumbling defect if and only if
+\begin{equation}\label{eq:localization-secular}
+ 1+2\delta g_\infty(\lambda)=0,
+\end{equation}
+where
+\begin{equation}\label{eq:localization-green}
+ g_\infty(\lambda)
+ =\frac1{2a}\left(1+\frac{\lambda+1-x}{s}\right)
+ =\frac{z(\lambda+1-z)}{a(1-z^2)}.
+\end{equation}
+The localization length is
+\[
+ \xi(\lambda)=\frac{-1}{\log|z|}.
+\]
+Equivalently, with $a=\lambda+1+\omega$, the pair $(a,z)$ satisfies
+\begin{align}
+ a^2+1-\omega^2-a(z+z^{-1})&=0,\label{eq:loc-dispersion}\\
+ a(1-z^2)+2\delta z(a-\omega-z)&=0,
+ \qquad 0<|z|<1.\label{eq:loc-match}
+\end{align}
+After elimination of $a$, every admissible $z$ is a root of
+\begin{align}
+0={}&2\delta z^3+(2\delta\omega+1-\omega^2)z^2\notag\\
+&+(4\delta^2\omega+4\delta\omega^2-2\delta)z
+ +(2\delta\omega+\omega^2-1),\label{eq:localization-cubic}
+\end{align}
+and, when the denominator is nonzero,
+\begin{equation}\label{eq:localization-recovery}
+ a=\frac{2\delta z(\omega+z)}{1-z^2+2\delta z},
+ \qquad \lambda=a-1-\omega.
+\end{equation}
+A root of \eqref{eq:localization-cubic} is accepted only when
+\eqref{eq:localization-secular}, or equivalently both
+\eqref{eq:loc-dispersion} and \eqref{eq:loc-match}, is satisfied; this
+removes roots introduced by elimination or by clearing denominators.
+\end{theorem}
+
+\begin{proof}
+The polarization entry of the bulk resolvent at the defect site is
+\begin{align*}
+ g_\infty(\lambda)
+ &=\frac1{2\pi}\int_0^{2\pi}
+   \frac{\lambda+1-\cos q}
+        {a^2+1-\omega^2-2a\cos q}\,dq\\
+ &=\frac1{2a}\left[1+(\lambda+1-x)
+       \frac1{2\pi}\int_0^{2\pi}\frac{dq}{x-\cos q}\right]\\
+ &=\frac1{2a}\left(1+\frac{\lambda+1-x}{s}\right).
+\end{align*}
+The rank-one eigenvalue equation is \eqref{eq:localization-secular}.  Since
+$x=(z+z^{-1})/2$ and $s=(z^{-1}-z)/2$, elementary simplification gives
+the second expression in \eqref{eq:localization-green}, and the Green
+kernel decays as $z^{|j|}$.  Clearing the denominator in
+\eqref{eq:localization-secular} gives
+\eqref{eq:loc-match}; the bulk dispersion relation gives
+\eqref{eq:loc-dispersion}.  Eliminating $a$ gives
+\eqref{eq:localization-cubic}, while solving \eqref{eq:loc-match} for
+$a$ gives \eqref{eq:localization-recovery}.
+\end{proof}
+
+\begin{proposition}[Finite-ring convergence of a localized mode]
+\label{prop:localized-convergence}
+Suppose \eqref{eq:localization-secular} has a simple root
+$\lambda_\infty$ with decay root
+$z_\infty$, $|z_\infty|<1$.  Then, for all sufficiently large $n$, the
+finite polynomial $Q_{n,-}$ has a unique root $\lambda_n$ near
+$\lambda_\infty$, and
+\[
+ \lambda_n-\lambda_\infty=O(|z_\infty|^n).
+\]
+The corresponding right eigenvector has site mass bounded by
+$C|z_\infty|^{2\operatorname{dist}(j,0)}$ after normalization.
+\end{proposition}
+
+\begin{proof}
+The finite Green function \eqref{eq:Gfinite} is the periodization of the
+infinite Green kernel.  On a compact neighborhood of a point outside
+$\Sigma_\omega$, its image terms are bounded by a geometric series with
+first term $|z_\infty|^n$.  Hence
+$G_n-g_\infty=O(|z_\infty|^n)$ uniformly there.  The simple-root
+implicit-function estimate applied to $1+2\delta G_n$ gives the
+eigenvalue bound.  The resolvent representation of the eigenvector and
+the same image estimate give the spatial bound.
+\end{proof}
+
+\section{Large-ring spectral gap}
+
+\begin{definition}[Spectral gap]\label{def:gap}
+For $\omega>0$ and $n\ge2$, irreducibility makes zero a simple
+eigenvalue.  Define
+\[
+ \gamma_n(\omega,\omega_0)
+ =-\max\{\Re\lambda:\lambda\in\spec L_n(\omega,\omega_0),
+                            \ \lambda\ne0\}.
+\]
+Put $q=2\pi/n$ and
+\begin{equation}\label{eq:hom-gap}
+ \gamma_n^{\rm hom}(\omega)
+ =1-\cos q+\omega-\sqrt{\omega^2-\sin^2q},
+\end{equation}
+where the square root is positive once $n$ is sufficiently large for
+fixed $\omega>0$.
+\end{definition}
+
+\begin{lemma}[Protected first mode and affected pole]
+\label{lem:gap-pole}
+For every $n$, the protected sector contains
+$\lambda_1^+=-\gamma_n^{\rm hom}$.  For fixed positive $\omega$ and
+$\omega_0$, the affected root born from the same homogeneous pole is
+\begin{equation}\label{eq:affected-gap-shift}
+ \lambda_{1,-}=\lambda_1^+
+ +\frac{\delta(1+\omega)}{\omega^2(1+\omega_0)}
+       \frac{q^2}{n}+O(n^{-4}).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The first assertion is Theorem \ref{thm:parity-factor}.  Near
+$\lambda_1^+$, the two terms $k=1,n-1$ in the full Fourier Green
+function have residue
+\[
+ R_1=\frac{\lambda_1^++1-c_1}{\lambda_1^+-\lambda_1^-}
+    =-\frac{\omega-r_1}{2r_1},
+ \qquad r_1=\sqrt{\omega^2-\sin^2q}.
+\]
+Thus
+\[
+ G_n(\lambda)=\frac{2R_1}{n(\lambda-\lambda_1^+)}
+                  +G_n^{\rm reg}(\lambda).
+\]
+The regular part tends to $1/[2(1+\omega)]$.  Solving
+$1+2\delta G_n=0$ gives
+\[
+ \lambda_{1,-}-\lambda_1^+
+ =\frac{2\delta(\omega-r_1)}{nr_1}
+    \frac{1}{1+\delta/(1+\omega)}+O(n^{-4}),
+\]
+which expands to \eqref{eq:affected-gap-shift}.
+\end{proof}
+
+\begin{theorem}[Fixed-rate gap asymptotics]\label{thm:fixed-gap}
+Fix $\omega>0$ and $\omega_0\ge0$.
+\begin{enumerate}
+\item If $\omega_0\le\omega$, then for every sufficiently large $n$,
+  \begin{equation}\label{eq:slow-defect-gap}
+    \gamma_n(\omega,\omega_0)=\gamma_n^{\rm hom}(\omega).
+  \end{equation}
+\item If $\omega_0>\omega$, then
+  \begin{equation}\label{eq:fast-defect-gap}
+  \gamma_n(\omega,\omega_0)
+  =\gamma_n^{\rm hom}(\omega)
+   -\frac{4\pi^2(\omega_0-\omega)(1+\omega)}
+          {\omega^2(1+\omega_0)}\,n^{-3}+O(n^{-4}).
+  \end{equation}
+\item In both cases,
+  \begin{align}
+  \gamma_n^{\rm hom}(\omega)
+   ={}&\frac{2\pi^2(1+\omega)}{\omega}\,n^{-2}\notag\\
+    &-16\pi^4\left(\frac1{24}+\frac1{6\omega}
+                    -\frac1{8\omega^3}\right)n^{-4}
+      +O(n^{-6}).\label{eq:hom-gap-expansion}
+  \end{align}
+\end{enumerate}
+The errors are uniform when $(\omega,\omega_0)$ ranges over a compact
+set with $\omega$ bounded away from zero; in
+\eqref{eq:slow-defect-gap} the ordering is uniform away from
+$\omega_0=\omega$.
+\end{theorem}
+
+\begin{proof}
+Taylor expansion of \eqref{eq:hom-gap} gives
+\eqref{eq:hom-gap-expansion}.  Lemma \ref{lem:gap-pole} shows
+that the affected first root moves toward zero precisely when
+$\delta>0$.  The protected and affected roots associated with wave
+number two have real parts separated from the first pair by a positive
+multiple of $n^{-2}$; all remaining extended roots are farther left,
+and Proposition \ref{prop:localized-convergence} places every fixed-rate
+localized root a positive distance from zero.  These estimates are
+uniform on the stated compact sets.  Therefore the protected root wins
+when $\delta\le0$, proving \eqref{eq:slow-defect-gap}, and the affected
+root wins when
+$\delta>0$.  Substitution of $q^2=4\pi^2n^{-2}$ in
+\eqref{eq:affected-gap-shift} then gives \eqref{eq:fast-defect-gap}.
+\end{proof}
+
+\begin{corollary}[Fixed ratio, vanishing ratio, and a slow-site scaling]
+\label{cor:requested-regimes}
+Let the bulk rate $\omega>0$ be fixed.
+\begin{enumerate}
+\item If $\omega_0/\omega\to\rho\in(0,\infty)$, equations
+  \eqref{eq:slow-defect-gap}--\eqref{eq:hom-gap-expansion} apply.  For
+  $\rho<1$ the protected branch is selected; for
+  $\rho>1$ the affected branch and its $n^{-3}$ term are selected.  The
+  boundary $\rho=1$ is decided by the eventual sign and size of
+  $\omega_0-\omega$.
+\item If $\omega_0/\omega\to0$, then \eqref{eq:slow-defect-gap} holds
+  for every sufficiently large $n$.
+\item In particular, if $\omega_0\sim\beta/n$ with $\beta\ge0$, then
+  \eqref{eq:slow-defect-gap} still holds.  A single slow tumbling site
+  therefore has no
+  separate $\omega_0\asymp n^{-1}$ gap crossover when the bulk rate is
+  fixed.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+In items 2 and 3 one has $\omega_0<\omega$ for every sufficiently large
+$n$, so Theorem \ref{thm:fixed-gap} applies.  Item 1 follows by the same
+sign test and compact-uniform expansion.
+\end{proof}
+
+\begin{theorem}[Bulk-critical double scaling]\label{thm:critical-gap}
+Set
+\[
+ \omega=\frac{\alpha}{n},\qquad
+ \omega_0=\frac{\beta}{n},\qquad
+ k=2\pi,
+\]
+where $\alpha>0$ and $\beta\ge0$ are fixed.  Away from $\alpha=k$,
+\begin{align}
+\alpha<k:\quad
+ \gamma_n
+ &=\frac{\alpha}{n}
+   +\left[\frac{k^2}{2}-2(\alpha-\beta)_+\right]n^{-2}
+   +O(n^{-3}),\label{eq:critical-below}\\
+\alpha>k:\quad
+ \gamma_n
+ &=\frac{\alpha-\sqrt{\alpha^2-k^2}}{n}\notag\\
+ &\quad+\left[\frac{k^2}{2}
+ -2(\beta-\alpha)_+
+   \frac{\alpha-\sqrt{\alpha^2-k^2}}
+        {\sqrt{\alpha^2-k^2}}\right]n^{-2}
+ +O(n^{-3}).\label{eq:critical-above}
+\end{align}
+At $\alpha=k$,
+\begin{align}
+ \beta\le k:\quad
+ \gamma_n&=\frac{k}{n}
+ +k^2\left(\frac12-\frac1{\sqrt3}\right)n^{-2}
+ +O(n^{-3}),\label{eq:critical-at-slow}\\
+ \beta>k:\quad
+ \gamma_n&=\frac{k}{n}
+ -2\sqrt{k(\beta-k)}\,n^{-3/2}+O(n^{-2}).
+ \label{eq:critical-at-fast}
+\end{align}
+Thus the first homogeneous exceptional scaling is a square-root boundary
+layer for a faster defect, while the side selecting the affected parity
+mode reverses as $\alpha$ passes through $2\pi$.
+\end{theorem}
+
+\begin{proof}
+For $\alpha<k$, the protected first pair has
+\[
+ \Re\lambda_1^+=-\frac{\alpha}{n}-\frac{k^2}{2n^2}
+ +O(n^{-3}).
+\]
+The pole residue tends to
+$R_1=\tfrac12+\ii\alpha/(2\sqrt{k^2-\alpha^2})$, and
+$\delta=(\beta-\alpha)/n$.  Hence the affected real part shifts by
+$-2(\beta-\alpha)n^{-2}+O(n^{-3})$.  Taking the larger real part gives
+\eqref{eq:critical-below}.
+
+For $\alpha>k$, put $s=\sqrt{\alpha^2-k^2}$.  The protected rate is
+$(\alpha-s)n^{-1}+k^2(2n^2)^{-1}+O(n^{-3})$, while
+$R_1\to-(\alpha-s)/(2s)$.  The same pole equation shifts the affected
+eigenvalue by
+$2(\beta-\alpha)(\alpha-s)/(sn^2)+O(n^{-3})$.  Selection of the larger
+real part gives \eqref{eq:critical-above}.  The first wave number remains
+separated at order
+$n^{-1}$ from all higher wave numbers in this case; for $\alpha<k$ the
+order-$n^{-2}$ term separates it from them.
+
+At $\alpha=k$, the exact lattice splitting of the homogeneous first
+block is
+\[
+ \sqrt{\omega^2-\sin^2(k/n)}
+   =\frac{k^2}{\sqrt3\,n^2}+O(n^{-4}),
+\]
+which proves \eqref{eq:critical-at-slow} when the protected root wins.
+Near the center of this
+block, writing the eigenvalue displacement as $\Delta$, the two
+$q=\pm k/n$ poles give
+\[
+ G_n(\lambda)=-\frac{2k}{n^2\Delta^2}\bigl(1+o(1)\bigr).
+\]
+For $\beta>k$, the equation $1+2\delta G_n=0$ has the positive
+displacement
+\[
+ \Delta=2\sqrt{k(\beta-k)}n^{-3/2}+O(n^{-2}),
+\]
+which gives \eqref{eq:critical-at-fast}.
+For $\beta<k$ the displacement is imaginary at this order and the
+protected lattice-split root remains closer to zero, giving
+\eqref{eq:critical-at-slow}.
+\end{proof}
+
+\section{Telegraph comparison}
+
+\begin{definition}[Two continuum approximations]\label{def:telegraph}
+For a homogeneous ring of circumference $n$, the standard telegraph
+system is
+\begin{equation}\label{eq:telegraph-system}
+ \partial_t\rho=-\partial_xm,
+ \qquad
+ \partial_tm=-\partial_x\rho-2\omega m.
+\end{equation}
+Its slow Fourier eigenvalue at wave number $q$ is
+\begin{equation}\label{eq:telegraph-eigenvalue}
+ \lambda_{\rm tel}^+(q)=-\omega+\sqrt{\omega^2-q^2}.
+\end{equation}
+The lattice-diffusion-corrected system is
+\begin{equation}\label{eq:corrected-telegraph-system}
+ \partial_t\rho=-\partial_xm+\tfrac12\partial_x^2\rho,
+ \qquad
+ \partial_tm=-\partial_x\rho+\tfrac12\partial_x^2m-2\omega m.
+\end{equation}
+whose slow eigenvalue is
+\begin{equation}\label{eq:corrected-telegraph-eigenvalue}
+ \lambda_{\rm td}^+(q)=-\frac{q^2}{2}-\omega
+                         +\sqrt{\omega^2-q^2}.
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Exact relaxation rate versus telegraph rates]
+\label{thm:telegraph-comparison}
+Fix $\omega>0$, let $q=2\pi/n$, and define
+$\gamma_{\rm tel}=-\lambda_{\rm tel}^+(q)$ and
+$\gamma_{\rm td}=-\lambda_{\rm td}^+(q)$.  Then
+\begin{align}
+ \gamma_n^{\rm hom}-\gamma_{\rm tel}
+ &=\frac{q^2}{2}
+   -\left(\frac1{24}+\frac1{6\omega}\right)q^4+O(q^6),
+   \label{eq:telegraph-error}\\
+ \gamma_n^{\rm hom}-\gamma_{\rm td}
+ &=-\left(\frac1{24}+\frac1{6\omega}\right)q^4+O(q^6).
+   \label{eq:corrected-telegraph-error}
+\end{align}
+Consequently
+\begin{equation}\label{eq:telegraph-ratios}
+ \frac{\gamma_{\rm tel}}{\gamma_n^{\rm hom}}
+ \longrightarrow\frac1{1+\omega},
+ \qquad
+ \frac{\gamma_{\rm td}}{\gamma_n^{\rm hom}}\longrightarrow1.
+\end{equation}
+In the bulk-critical scaling $\omega=\alpha/n$, the standard telegraph
+rate does recover the leading term:
+\begin{equation}\label{eq:telegraph-critical}
+ \gamma_{\rm tel}
+ =\frac{\alpha-\Re\sqrt{\alpha^2-(2\pi)^2}}{n},
+\end{equation}
+which agrees with the leading terms of
+\eqref{eq:critical-below}--\eqref{eq:critical-at-fast}.
+\end{theorem}
+
+\begin{proof}
+The exact lattice dispersion replaces $-q^2/2$ by $\cos q-1$ and $q$
+inside the square root by $\sin q$.  Expanding
+$\cos q$, $\sin^2q$, and the square root gives
+\eqref{eq:telegraph-error}--\eqref{eq:corrected-telegraph-error}.
+Dividing by the leading exact rate $(1+\omega)q^2/(2\omega)$ gives
+\eqref{eq:telegraph-ratios}.  Substitution of $\omega=\alpha/n$ and
+$q=2\pi/n$ into \eqref{eq:telegraph-eigenvalue} gives
+\eqref{eq:telegraph-critical}.
+\end{proof}
+
+\begin{proposition}[Point-defect telegraph secular equation]
+\label{prop:telegraph-defect}
+Add $-2\delta\,\delta_0(x)m$ to the second equation in
+\eqref{eq:telegraph-system}, with
+periodic boundary conditions on a circle of length $n$.  Outside the
+homogeneous telegraph spectrum, put
+\[
+ \kappa=\sqrt{\lambda(\lambda+2\omega)}
+\]
+with positive real part.  The affected-parity eigenvalues satisfy
+\begin{equation}\label{eq:telegraph-defect}
+ 1+\delta\frac{\lambda}{\kappa}
+            \coth\left(\frac{n\kappa}{2}\right)=0.
+\end{equation}
+The reflection-even telegraph modes are unchanged.  Formula
+\eqref{eq:telegraph-defect} is the
+continuum counterpart of \eqref{eq:resolvent-form}; the exact lattice
+formula retains $1-\cos q$ and $\sin q$, and
+\eqref{eq:telegraph-error}--\eqref{eq:corrected-telegraph-error} quantify
+the resulting relaxation-rate error.
+\end{proposition}
+
+\begin{proof}
+The polarization entry of the telegraph resolvent is
+\[
+ \frac1n\sum_{\ell\in\Z}
+ \frac{\lambda}{\lambda(\lambda+2\omega)+(2\pi\ell/n)^2}
+ =\frac{\lambda}{2\kappa}\coth\left(\frac{n\kappa}{2}\right).
+\]
+Applying the rank-one determinant identity gives
+\eqref{eq:telegraph-defect}.  The defect
+vector is reflection odd, so the even modes are protected exactly as in
+Lemma \ref{lem:protected-sector}.
+\end{proof}
+
+\section{Conclusions}
+
+\begin{proposition}[The theorem package]\label{prop:package}
+For the generator in Definition \ref{def:generator}:
+\begin{enumerate}
+\item Theorem \ref{thm:characteristic} and Theorem \ref{thm:transfer}
+give exact characteristic equations for every $n$, $\omega$, and
+$\omega_0$.
+\item Theorems \ref{thm:jordan-regular} and \ref{thm:flat-band}
+classify the algebraic and geometric multiplicities of every eigenvalue,
+including every exceptional point.
+\item Theorem \ref{thm:localization} gives an exact criterion and decay
+length for a defect-localized mode.
+\item Theorems \ref{thm:fixed-gap} and \ref{thm:critical-gap} give the
+fixed-rate, vanishing-defect, and bulk-critical large-$n$ gap
+asymptotics.
+\item Theorem \ref{thm:telegraph-comparison} and Proposition
+\ref{prop:telegraph-defect} compare the exact relaxation rate with the
+standard and diffusion-corrected telegraph approximations.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Each item is the cited result.  Their hypotheses all match Definition
+\ref{def:generator}; no additional parameter is introduced.
+\end{proof}
+
+\section*{AI-use disclosure}
+
+The proof architecture and manuscript were developed with assistance from
+OpenAI GPT-5.6 Sol (\texttt{gpt-5.6-sol}) at max reasoning effort.  The model
+served as an interactive research assistant for deriving and testing
+arguments, checking citations and calculations, writing exact verification
+code, and editing the exposition.  The author set the research direction,
+evaluated and approved the final arguments, and assumes responsibility for
+the mathematical claims, references, computations, and text.
+
+\bibliographystyle{alpha}
+\bibliography{refs}
+
+\end{document}

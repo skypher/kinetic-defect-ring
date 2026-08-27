@@ -1,0 +1,22 @@
+# LaTeX build products (the versioned manuscript PDF is retained).
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.toc
+
+# Python cache and local environments.
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Editor and operating-system metadata.
+.DS_Store
+*~
+.vscode/
+.idea/
