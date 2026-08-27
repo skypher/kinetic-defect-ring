@@ -815,7 +815,9 @@ and define
  \widehat Q_{n,-}(\lambda)
    =\frac{Q_{n,-}(\lambda)}{(\lambda+2)^{r_-}}.
 \]
-On each parameter stratum in \eqref{eq:flat-affected-order}, the
+If $n=3$ and $\omega_0=1/2$, then $r_-=3$ and
+$\widehat Q_{3,-}=1$, so there are no non-flat affected eigenvalues.
+On every other parameter stratum in \eqref{eq:flat-affected-order}, the
 non-flat affected exceptional parameters are exactly those satisfying
 \[
  \Res_\lambda\bigl(\widehat Q_{n,-},
@@ -830,8 +832,11 @@ points from semisimple parity crossings without a numerical tolerance.
 \end{corollary}
 
 \begin{proof}
-The resultant vanishes exactly when the two displayed polynomials share
-a root.  It remains only to verify the exponent in
+For a nonconstant polynomial $F$, the resultant
+$\Res_\lambda(F,F')$ vanishes exactly when $F$ has a repeated root.
+For $\omega\ne1$, the polynomial $Q_{n,-}$ is monic of degree $n$, so
+Theorem \ref{thm:jordan-regular} proves the first assertion.  At
+$\omega=1$, it remains to verify the exponent in
 \eqref{eq:flat-affected-order}.  Definition \ref{def:parity-polynomials}
 gives
 \[
@@ -844,7 +849,11 @@ gives
 Subtracting these protected orders from the total flat algebraic
 multiplicities in Theorem \ref{thm:flat-band} gives every line of
 \eqref{eq:flat-affected-order}.  Thus $\widehat Q_{n,-}$ removes the
-exact affected flat primary factor on each stratum.  Theorems
+exact affected flat primary factor on each stratum.  At the tuned
+$n=3$ point, $Q_{3,-}$ is monic of degree three and its exact flat order
+is three, so $\widehat Q_{3,-}=1$ and the non-flat affected spectrum is
+empty.  On every other stratum, $\widehat Q_{n,-}$ is nonconstant, and
+the resultant criterion applies.  Theorems
 \ref{thm:jordan-regular}--\ref{thm:flat-band} then identify the Jordan
 block attached to every repeated non-flat root and separately account
 for the protected and flat contributions.
@@ -970,9 +979,21 @@ the second expression in \eqref{eq:localization-green}, and the Green
 kernel decays as $z^{|j|}$.  Clearing the denominator in
 \eqref{eq:localization-secular} gives
 \eqref{eq:loc-match}; the bulk dispersion relation gives
-\eqref{eq:loc-dispersion}.  Eliminating $a$ gives
-\eqref{eq:localization-cubic}, while solving \eqref{eq:loc-match} for
-$a$ gives \eqref{eq:localization-recovery}.
+\eqref{eq:loc-dispersion}.  After multiplication of the dispersion
+relation by $z$, the exact elimination factorization is
+\[
+ \operatorname{Res}_a\!\left(
+  za^2+z(1-\omega^2)-a(z^2+1),
+  a(1-z^2+2\delta z)-2\delta z(\omega+z)
+ \right)
+ =z(z^2-1)\mathcal C_{\omega,\delta}(z),
+\]
+where $\mathcal C_{\omega,\delta}$ is the cubic polynomial displayed in
+\eqref{eq:localization-cubic}.  The admissible noncompact range
+$0<|z|<1$ excludes the three prefactors: $z=\pm1$ are bulk-edge
+points, while $z=0$ is evaluated separately below.  Thus eliminating
+$a$ gives \eqref{eq:localization-cubic} on the stated range.  Solving
+\eqref{eq:loc-match} for $a$ gives \eqref{eq:localization-recovery}.
 
 Put $C=1-z^2+2\delta z$.  If $C=0$, the matching equation reduces to
 $2\delta z(\omega+z)=0$.  Since $\delta\ne0$ and $z\ne0$, this forces
@@ -1025,7 +1046,8 @@ $\lambda_\infty$, and
 \]
 If the corresponding right eigenvector is normalized in $\ell^2$, define
 its site mass as $|u_j^+|^2+|u_j^-|^2$.  This mass is bounded by
-$C|z_\infty|^{2\operatorname{dist}(j,0)}$.
+$C|z_\infty|^{2\operatorname{dist}(j,0)}$ for a constant $C$
+independent of $j$ and of all sufficiently large $n$.
 In the compact case \eqref{eq:compact-localization}, the infinite and
 finite eigenvalues agree exactly and the eigenvector is supported where
 $\operatorname{dist}(j,0)\le1$.
@@ -1303,7 +1325,7 @@ $(\omega,\omega_0)\in K$.
   \begin{equation}\label{eq:fixed-bounded-threshold-bound}
    |G_n(\lambda)-g_0|\le \frac{C_M}{A}+\frac{C_M}{n}.
   \end{equation}
-\item If $\lambda_n\to0$ satisfies
+\item For every fixed $C>0$, if $\lambda_n\to0$ satisfies
   $-C n^{-2}\le\Re\lambda_n\le0$ and
   $n^2|\lambda_n|\to\infty$, then
   \begin{equation}\label{eq:fixed-unbounded-threshold-limit}
@@ -1598,7 +1620,8 @@ including crossings through equality.
 
 \begin{definition}[Critical homogeneous poles and residues]
 \label{def:critical-poles}
-For $\omega=\alpha/n$ and $k=2\pi$, put
+Let $\alpha>0$, set $\omega=\alpha/n$ and $k=2\pi$, and, for an
+integer $\ell$, put
 \begin{align}
  p_{\ell,n}^{\pm}
  &=\cos(\ell k/n)-1-\frac\alpha n
@@ -1608,9 +1631,17 @@ For $\omega=\alpha/n$ and $k=2\pi$, put
        {p_{\ell,n}^\pm-p_{\ell,n}^\mp}.
  \label{eq:critical-pole-fraction}
 \end{align}
-When the two poles are distinct, their contribution to $G_n$ is
+When the two poles are distinct and $1\le\ell<n/2$, the paired waves
+$q=\pm\ell k/n$ contribute
 $2R_{\ell,n}^\pm/
-\{n(\lambda-p_{\ell,n}^\pm)\}$ for the indicated sign.
+\{n(\lambda-p_{\ell,n}^\pm)\}$ for the indicated sign.  The unpaired
+endpoint contributions are instead
+\[
+ \frac{1}{n(\lambda+2\alpha/n)},
+ \qquad
+ \frac{\varepsilon_n}{n(\lambda+2+2\alpha/n)},
+\]
+at $q=0$ and $q=\pi$, respectively.
 \end{definition}
 
 \begin{lemma}[Critical Green limit and pole remainders]
@@ -1739,8 +1770,11 @@ window below.  Define the branch-invariant distances
  d_{*,n}(w)=\operatorname{dist}
    \bigl(w,2\pi\mathrm i(\Z\setminus n\Z)\bigr).
 \]
-Thus $d_{0,n}$ measures distance to the removable zero-wave points,
-whereas $d_{*,n}$ measures distance to every nonzero-wave pole.
+Thus $d_{0,n}$ measures distance to the zero-wave lattice points.  In
+the right-edge windows below, the nonremovable tumble pole
+$\lambda=-2\omega$ lies outside the window, so only the removable
+$\lambda=0$ branch is relevant there.  The distance $d_{*,n}$ measures
+distance to every nonzero-wave pole.
 The following estimates hold for $|\lambda|\le R$.
 \begin{enumerate}
 \item Suppose $\alpha\le k$.  For an integer $L\ge1$, set
@@ -2123,7 +2157,8 @@ affected zero and
 To relate this pole-cleared count to the polynomial count, write
 $H_{n,-}^{(0)}=(\lambda-p_{\ell,n}^\pm)J_{\ell,n}$ on the disk.
 The factor $J_{\ell,n}$ is nonvanishing there, and
-$R_{\ell,n}^\pm\ne0$ at every nonzero-wave simple pole.  Since
+$R_{\ell,n}^\pm\ne0$ at every simple interior pole considered in these
+neighborhoods.  Since
 $b\ne0$, the right side of \eqref{eq:critical-simple-rouche} is
 nonzero at $\lambda=p_{\ell,n}^\pm$.  Hence the homogeneous pole is
 canceled rather than retained, and the single Rouch\'e zero is exactly
