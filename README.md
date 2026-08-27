@@ -18,11 +18,13 @@ The compiled manuscript is [`paper/main.pdf`](paper/main.pdf), with source in
 5. a term-by-term comparison with the telegraph and
    telegraph-with-lattice-diffusion approximations.
 
-The characteristic, transfer, selected flat-band Jordan, gap, and
-localization formulas can be replayed against direct matrices and their
-defining equations with
+The characteristic, transfer, flat-band Jordan, fixed-rate and critical
+gap, and localization formulas can be replayed against direct matrices
+and their defining equations with
 [`scripts/verify_formulas.py`](scripts/verify_formulas.py).  The script is a
-short audit, not a substitute for the proofs in the manuscript.
+short assertion-based audit, including all ring sizes from 2 through 12
+for the flat-band nullity profiles.  It is not a substitute for the proofs
+in the manuscript.
 
 ## Build the manuscript
 

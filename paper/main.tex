@@ -179,7 +179,14 @@ been studied through random asymmetric transmittances
 \cite{SadjadiMiri2008}.  For nonpersistent confined lattice walks,
 exact propagators admit Chebyshev representations; the same framework
 treats partially absorbing defects and connects to pseudo-Green functions
-\cite[Secs.~VI--VII and Apps.~C and E]{Giuggioli2020}.  The present problem instead asks for the full
+\cite[Secs.~VI--VII and Apps.~C and E]{Giuggioli2020}.  Difference-equation
+methods for isolated lattice impurity levels go back to the two linear-chain
+calculations of Koster and Slater
+\cite[abstract]{KosterSlater1954}.  Green-function
+reduction of a point perturbation has also been used for non-Hermitian
+lattices, notably to turn a periodic chain into an open one
+\cite[Secs.~II--III and Eqs.~(11)--(15)]{Roccati2021}.  The present
+problem instead asks for the full
 finite-ring characteristic polynomial and Jordan structure of a single
 lattice tumbling defect, together with its large-ring spectral ordering.
 
@@ -207,6 +214,33 @@ flat-band block, the localized-mode criterion and compact tuning, and the
 uniform fixed-rate and bulk-critical gap selection.  The continuum
 comparison additionally derives the point-defect telegraph domain and
 isolates the lattice Poisson-diffusion correction.
+
+The main logical dependencies are summarized in
+Table~\ref{tab:dependency-spine}.  In particular, the gap conclusions use
+the root-exhaustion results, not only local expansions at the first pole.
+
+\begin{table}[ht]
+\centering
+\small
+\begin{tabular}{p{0.34\textwidth}p{0.54\textwidth}}
+\hline
+Supplier & Direct consumers\\
+\hline
+Fourier blocks and the rank-one defect
+  & characteristic, Chebyshev, transfer, and parity formulas\\
+Parity polynomials and pole coincidences
+  & regular and flat-band Jordan classification\\
+Finite Green identity
+  & infinite-line localization and fixed-rate root separation\\
+Critical local, endpoint, and off-pole Green bounds
+  & critical right-edge exhaustion and the double-scaling gap\\
+Exact homogeneous dispersion
+  & telegraph and diffusion-corrected telegraph comparison\\
+\hline
+\end{tabular}
+\caption{Dependency spine of the theorem package.}
+\label{tab:dependency-spine}
+\end{table}
 
 The proof is organized by its consumers.  Theorems
 \ref{thm:characteristic} and \ref{thm:transfer} give the exact finite
@@ -1167,9 +1201,14 @@ bound the derivative of the regular slow-pole sum throughout $S_n$ by
 \[
  Cn\sum_{k=2}^\infty\frac{k^2}{(k^2-1)^2}\le C'n.
 \]
-The fast-pole terms, the wave numbers $q_k^*\ge\eta$, and the endpoint
-terms have total derivative $O(1)$.  This proves the derivative bound in
-\eqref{eq:fixed-regular-green-bounds}.
+For $q_k^*\le\eta$, every fast-pole denominator stays uniformly away
+from $S_n$.  For $q_k^*\ge\eta$, both pole denominators do so by the
+compactness argument above.  After differentiation, each corresponding
+paired contribution to $G_n$ is therefore $O(n^{-1})$; there are at
+most $n/2$ such pairs.  The two endpoint contributions have derivatives
+$O(n^{-1})$ because their poles stay a fixed distance from $S_n$.
+Thus these terms have total derivative $O(1)$.  This proves the derivative
+bound in \eqref{eq:fixed-regular-green-bounds}.
 
 At $\lambda=0$, every unpaired nonzero-wave Fourier summand is exactly
 $1/[2(1+\omega)]$.  The $q=0$ term and the removed first-pole
@@ -1401,7 +1440,17 @@ tumbling form.  Equality therefore forces $q=0$ and equal orientation
 components, and the corresponding eigenvalue is zero.  Thus the bulk
 spectral set meets the imaginary axis only at zero, so
 \eqref{eq:finite-green-error} gives
-$G_n\to g_\infty$ locally uniformly at $\lambda_*$.  The limiting
+$G_n\to g_\infty$ locally uniformly at $\lambda_*$.  Indeed,
+$\Re\lambda_*=0$ and $\omega>0$ imply
+$|a(\lambda_*)|\geq1+\omega$, so a closed disk $U$ about
+$\lambda_*$ is disjoint from $\Sigma_\omega$, from the point $a=0$,
+and from zero.  On $U$ the branch $z=x-s$ is analytic and satisfies
+$\sup_U|z|=\rho<1$.  Equation \eqref{eq:finite-green-error} then gives
+\[
+ \sup_{\lambda\in U}|G_n(\lambda)-g_\infty(\lambda)|
+ \le C_U\frac{\rho^n}{1-\rho^n}\longrightarrow0.
+\]
+The limiting
 secular equation would produce an $\ell^2$ eigenvector $u$ of the
 infinite defective generator with eigenvalue $\lambda_*$.  This is
 impossible because
@@ -1680,6 +1729,186 @@ smaller disk proves
 \eqref{eq:critical-endpoint-green}.
 \end{proof}
 
+\begin{lemma}[Critical pole-distance conversion]
+\label{lem:critical-pole-distance}
+Fix $\alpha>0$ and $R<\infty$, put $\omega=\alpha/n$ and $k=2\pi$,
+and let $w$ satisfy $\cosh(w/n)=x(\lambda)$ in either right-edge
+window below.  Define the branch-invariant distances
+\[
+ d_{0,n}(w)=\operatorname{dist}(w,2\pi\mathrm i n\Z),\qquad
+ d_{*,n}(w)=\operatorname{dist}
+   \bigl(w,2\pi\mathrm i(\Z\setminus n\Z)\bigr).
+\]
+Thus $d_{0,n}$ measures distance to the removable zero-wave points,
+whereas $d_{*,n}$ measures distance to every nonzero-wave pole.
+The following estimates hold for $|\lambda|\le R$.
+\begin{enumerate}
+\item Suppose $\alpha\le k$.  For an integer $L\ge1$, set
+  \[
+   B=\frac{k^2}{4}\{L^2+(L+1)^2\},\qquad
+   \Omega_{B,n}=\{\Re\lambda\ge-\alpha/n-B/n^2\}.
+  \]
+  Delete disks of radius $An^{-2}$ about the simple homogeneous poles
+  in $\Omega_{B,n}$.  When $\alpha=k$, replace the two first-pole
+  disks by the disk of radius $An^{-3/2}$ about their midpoint.  There
+  are $C=C(\alpha,R)$ and $C_B=C_B(\alpha,B,R)$ such that, for every
+  fixed $A\ge1$ and all sufficiently large $n$,
+  \begin{equation}\label{eq:critical-pole-distance-subcritical}
+   d_{*,n}(w)^{-1}
+   \le C_B\left(1+\frac nA\right)+C\frac n{\sqrt B}
+  \end{equation}
+  on the remaining part of $\Omega_{B,n}$.
+\item Suppose $\alpha>k$.  Put
+  \[
+   d_1=\alpha-\sqrt{\alpha^2-k^2},\qquad
+   d_2=\alpha-\Re\sqrt{\alpha^2-4k^2},
+  \]
+  fix $d\in(d_1,d_2)$, and set
+  $\Omega_{d,n}=\{\Re\lambda\ge-d/n\}$.  After deleting the disk of
+  radius $An^{-2}$ about the slow first pole, there is
+  $C_d=C_d(\alpha,d,R)$ such that
+  \begin{equation}\label{eq:critical-pole-distance-supercritical}
+   d_{*,n}(w)^{-1}\le C_d\left(1+\frac nA\right)
+  \end{equation}
+  throughout the remaining part of $\Omega_{d,n}$, for every fixed
+  $A\ge1$ and all sufficiently large $n$.
+\end{enumerate}
+The thresholds for $n$ may depend on the displayed fixed parameters
+and on $A$, but the constants in
+\eqref{eq:critical-pole-distance-subcritical}--
+\eqref{eq:critical-pole-distance-supercritical} do not depend on
+$A$ or $n$.
+\end{lemma}
+
+\begin{proof}
+A branch change has the form
+$w\mapsto\pm w+2\pi\mathrm i n m$.  Both pole sets in the definition
+are invariant under this transformation, so both distances are
+branch independent.  It is enough to consider $d_{*,n}(w)<1$.
+Choose the nearest nonzero-wave representative and use the branch
+symmetries to write it as $2\pi\mathrm i\ell$, where
+$1\le\ell\le\lfloor n/2\rfloor$, and put
+\[
+ q=\frac{\ell k}{n},\qquad
+ \theta=w-2\pi\mathrm i\ell.
+\]
+The exact factorization
+\begin{equation}\label{eq:critical-w-pole-factorization}
+ 2a\{\cosh(w/n)-\cos(\ell k/n)\}
+ =D_\ell(\lambda)
+ =(\lambda-p_{\ell,n}^+)(\lambda-p_{\ell,n}^-)
+\end{equation}
+shows that the two zeros over this representative are precisely the
+two homogeneous poles of wave number $q$.  Taylor's theorem, $|a|\le
+C_R$, and $|\theta|<1$ give
+\begin{equation}\label{eq:critical-cosh-local-bound}
+ |D_\ell(\lambda)|
+ \le C_R\left(\frac{|\sin q|}{n}|\theta|
+                  +\frac{|\theta|^2}{n^2}\right).
+\end{equation}
+
+Suppose first that $\alpha\le k$.  The poles with indices
+$1\le\ell\le L$ lie in $\Omega_{B,n}$ for all sufficiently large
+$n$.  Except for $(\alpha,\ell)=(k,1)$, they are simple.  On the
+scaled variable $\nu=n\lambda$, the limiting relation is
+$w^2=\nu(\nu+2\alpha)$, and at a simple limiting pole
+\[
+ \frac{dw}{d\nu}=\frac{\nu+\alpha}{w}\ne0.
+\]
+For each of these fixed indices,
+\eqref{eq:critical-cosh-local-bound} first gives
+$|D_\ell(\lambda)|\le C_Bn^{-2}$; since both poles are
+$O(n^{-1})$, the factorization confines $\nu=n\lambda$ to a fixed
+compact set.
+The finite-$n$ derivative therefore stays bounded above and below in
+a fixed scaled neighborhood.  The analytic inverse-function theorem
+gives
+\[
+ |w-2\pi\mathrm i\ell|\ge c_B A/n
+\]
+outside the deleted $An^{-2}$ disk.  On the complement of those fixed
+scaled neighborhoods, compactness gives a positive lower bound.  The
+reciprocal contribution of all these finitely many indices is thus at
+most $C_B(1+n/A)$.
+
+At $\alpha=k$ and $\ell=1$, write
+$\Delta=\lambda-\lambda_c$.  The two first poles are
+$\lambda_c\pm r_n$, with $r_n=O(n^{-2})$.  Outside the grouped disk,
+\[
+ |D_1(\lambda)|=|\Delta^2-r_n^2|
+ \ge cA^2n^{-3}.
+\]
+Since $|\sin(k/n)|\asymp n^{-1}$,
+\eqref{eq:critical-cosh-local-bound} implies
+$|\theta|\ge cA^2/n\ge cA/n$.  This supplies the same reciprocal
+bound as a simple pole without separating the coalescing pair.
+
+It remains to treat $\ell\ge L+1$.  Choose
+$q_0\in(0,\pi/2)$.  When $q\le q_0$, the two poles are conjugate for
+large $n$; write them as
+$h_{\ell,n}\pm\mathrm i t_{\ell,n}$.  Every point of
+$\Omega_{B,n}$ has horizontal separation at least
+\[
+ u_{\ell,n}=1-\cos(\ell k/n)-B/n^2
+\]
+from their common real part.  The midpoint definition of $B$ and
+$1-\cos q=q^2/2+O(q^4)$ give
+\[
+ u_{\ell,n}\ge u_{L+1,n}\ge c\sqrt B\,n^{-2},
+ \qquad t_{\ell,n}\ge cq.
+\]
+For $u\ge0$ and real $y,t$,
+\begin{equation}\label{eq:critical-conjugate-product-bound}
+ |(u+\mathrm i(y-t))(u+\mathrm i(y+t))|\ge2u|t|,
+\end{equation}
+because the difference of the squares of the two sides is
+$(u^2+y^2-t^2)^2$.  Hence
+$|D_\ell(\lambda)|\ge c u_{\ell,n}q$.  Since
+$q\ge2k/n$ and $|\theta|<1$, the right side of
+\eqref{eq:critical-cosh-local-bound} is at most
+$Cq|\theta|/n$.  Therefore
+\[
+ |\theta|\ge c n u_{\ell,n}\ge c\sqrt B/n.
+\]
+When $q\in[q_0,\pi]$, both poles have real part at most
+$-c(q_0)<0$, while the boundary of $\Omega_{B,n}$ tends to zero.
+Thus $|D_\ell(\lambda)|\ge c(q_0)^2$, which is incompatible with
+\eqref{eq:critical-cosh-local-bound} and $|\theta|<1$ for large $n$.
+This proves \eqref{eq:critical-pole-distance-subcritical}.
+
+Now suppose $\alpha>k$.  The choice $d_1<d<d_2$ places only the slow
+first pole in $\Omega_{d,n}$.  The simple-pole inverse-function
+argument gives $|\theta|\ge cA/n$ near that pole after its disk is
+deleted.  The fast first pole and the complement of a fixed scaled
+neighborhood of the slow pole have a positive scaled separation from
+the window, so they give $|\theta|\ge c$.
+
+Choose $L_0$ with $L_0k>2\alpha$.  For each fixed
+$2\le\ell\le L_0$, both pole factors have horizontal distance at
+least $c/n$ from $\Omega_{d,n}$; hence
+$|D_\ell(\lambda)|\ge cn^{-2}$.  Equation
+\eqref{eq:critical-cosh-local-bound} gives
+$|D_\ell(\lambda)|\le C|\theta|n^{-2}$ when $|\theta|<1$, so
+$|\theta|\ge c$.  This also covers a coalescence
+$\alpha=\ell k$.
+
+For $\ell>L_0$ and $q\le q_0$, the poles are conjugate,
+$t_{\ell,n}\ge cq$, and their horizontal separation from the window
+is at least
+\[
+ u_{\ell,n}=\frac{\alpha-d}{n}+1-\cos q.
+\]
+Equations \eqref{eq:critical-conjugate-product-bound} and
+\eqref{eq:critical-cosh-local-bound} give
+\[
+ |\theta|\ge c n u_{\ell,n}\ge c(\alpha-d).
+\]
+The fixed separation for $q\in[q_0,\pi]$ again rules out
+$|\theta|<1$.  Combining the slow-pole estimate with these fixed
+lower bounds proves
+\eqref{eq:critical-pole-distance-supercritical}.
+\end{proof}
+
 \begin{lemma}[Critical off-pole Green estimate]
 \label{lem:critical-green-off-pole}
 Fix $\alpha>0$ and $R<\infty$, put $\omega=\alpha/n$ and $k=2\pi$, and
@@ -1733,135 +1962,46 @@ It follows by squaring the second identity in
 \[
  x+1=\frac{(\lambda+2)(\lambda+2+2\omega)}{2a}.
 \]
-A change of the arccosh branch replaces
-$w$ by $\pm w+2\pi\mathrm i n m$.  Under the sign change both
+A branch change replaces $w$ by
+$\pm w+2\pi\mathrm i n m$.  Under the sign change both
 $s=\sinh(w/n)$ and $\coth(w/2)$ change sign, while the additive term is
-a period; hence $\Theta\coth(w/2)$ is unchanged.  The quantity
-$\operatorname{dist}(w,2\pi\mathrm i\mathbb Z)$ is also unchanged.
-Thus all subsequent estimates are branch independent.
+a period.  Thus $\Theta\coth(w/2)$ is unchanged, as are the distances
+in Lemma~\ref{lem:critical-pole-distance}.
+
 The right-edge windows stay a fixed multiple of $n^{-1}$ to the right
-of the tumble pole $-2\omega$.  Consequently $|a|$ is bounded below
-and $|\Theta|$ is bounded there.  If $w$ is near zero, the apparent
-singularity of the cotangent cancels: Taylor expansion in the two exact
-identities gives
+of the tumble pole $-2\omega$ and a fixed distance to the right of
+$-2-2\omega$.  Consequently $|a|$ is bounded below and
+\eqref{eq:critical-theta-square} gives $|\Theta|\le C$ there.  Fix a
+small $\eta>0$.  If $d_{0,n}(w)\le\eta$, a branch change puts
+$|w|\le\eta$.  Taylor expansion of
+$\cosh(w/n)-1$, $\sinh(w/n)$, and $\coth(w/2)$, together with
+$s=\sinh(w/n)$ and the exact identities
+\eqref{eq:fixed-exact-x-identities}, gives
 \begin{equation}\label{eq:critical-zero-cancellation}
  \Theta\coth(w/2)=
    \frac{\lambda+2}{n(\lambda+2\omega)}+O(1),
 \end{equation}
 uniformly in either window.  This is bounded because
-$|\lambda+2\omega|\ge c(n^{-1}+|\Im\lambda|)$.  Away from $w=0$,
-\eqref{eq:finite-green-z} and \eqref{eq:coth-distance-bound} therefore
-give
-\begin{equation}\label{eq:critical-green-distance-reduction}
- |G_n(\lambda)|\le C\left\{1+
-       \operatorname{dist}(w,2\pi\mathrm i\Z)^{-1}\right\}.
-\end{equation}
+$|\lambda+2\omega|\ge c(n^{-1}+|\Im\lambda|)$.
 
-We now bound the distance in \eqref{eq:critical-green-distance-reduction}.
-The exact factorization
-\begin{equation}\label{eq:critical-w-pole-factorization}
- 2a\{\cosh(w/n)-\cos(\ell k/n)\}
-  =D_\ell(\lambda)
-  =(\lambda-p_{\ell,n}^+)(\lambda-p_{\ell,n}^-)
-\end{equation}
-shows that $w=2\pi\mathrm i\ell$ precisely at the two poles with index
-$\ell$.  Suppose first that
-$\theta=w-2\pi\mathrm i\ell$ has $|\theta|<1$, and choose the
-representative $1\le\ell\le\lfloor n/2\rfloor$, so that
-$q=\ell k/n\in(0,\pi]$; the case $\ell=0$ was handled by
-\eqref{eq:critical-zero-cancellation}.  Taylor's theorem gives the
-uniform upper bound
-\begin{equation}\label{eq:critical-cosh-local-bound}
- |D_\ell(\lambda)|
- \le C\left(\frac{|\sin q|}{n}|\theta|
-                  +\frac{|\theta|^2}{n^2}\right).
-\end{equation}
-For each of the finitely many simple poles inside $\Omega_{B,n}$, the
-scaled map $\nu=n\lambda\mapsto w$ has a derivative bounded above and
-below at the pole.  The inverse-function theorem and compactness of
-the boundaries of fixed scaled neighborhoods therefore give
-$|w-2\pi\mathrm i\ell|\ge cA/n$ off the deleted disk, once
-$n\ge N(A,B)$.  At $\alpha=k$, write
-$\Delta=\lambda-\lambda_c$.  If
-$|\Delta|\ge A n^{-3/2}$, then
-\[
- |D_1(\lambda)|=|\Delta^2-r_n^2|\ge cA^2n^{-3},
- \qquad r_n=O(n^{-2}),
-\]
-and \eqref{eq:critical-cosh-local-bound}, with
-$|\sin(k/n)|\asymp n^{-1}$, gives
-$|w-2\pi\mathrm i|\ge cA^2/n\ge cA/n$.
-
-It remains to control the first pole just outside $\Omega_{B,n}$.
-Choose $q_0\in(0,\pi/2)$.  For $q\le q_0$ and exterior
-$\ell\ge L+1$, the two poles are conjugate for large $n$; write them
-$h_{\ell,n}\pm\mathrm i t_{\ell,n}$.  Their horizontal distance from
-the window is
-\[
- u_{\ell,n}=1-\cos(\ell k/n)-B/n^2.
-\]
-The midpoint definition of $B$ and the expansion
-$1-\cos q=q^2/2+O(q^4)$ show first that
-$u_{L+1,n}\ge c\sqrt B\,n^{-2}$ and then, by monotonicity of
-$1-\cos q$ on $[0,q_0]$, that the same lower bound holds for every
-such exterior index.  Moreover
-$t_{\ell,n}=\sqrt{\sin^2q-\alpha^2/n^2}\ge c q$ because
-$\ell\ge L+1\ge2$ and $\alpha\le k$.  For $u\ge0$ and real $y,t$,
-\begin{equation}\label{eq:critical-conjugate-product-bound}
- |(u+\mathrm i(y-t))(u+\mathrm i(y+t))|\ge2u|t|;
-\end{equation}
-this follows by squaring both sides and completing the square in
-$y^2$.  Consequently the right side of
-\eqref{eq:critical-w-pole-factorization} is at least
-$c u_{\ell,n}q$.  Since $q\ge2k/n$ and $|\theta|<1$,
-\eqref{eq:critical-cosh-local-bound} is at most
-$Cq|\theta|/n$.  Hence
-$|\theta|\ge cn u_{\ell,n}\ge c\sqrt B/n$.
-
-For $q\in[q_0,\pi]$, both homogeneous poles have real part at most
-$-c(q_0)<0$, whereas the window boundary tends to zero.  Thus
-$|D_\ell(\lambda)|\ge c(q_0)^2$.  This contradicts
-\eqref{eq:critical-cosh-local-bound} when $|\theta|<1$ and $n$ is
-large, so in this range the distance is at least one.  We have proved
+If $d_{0,n}(w)>\eta$, then
 \[
  \operatorname{dist}(w,2\pi\mathrm i\Z)
- \ge c\min\{1,A/n,\sqrt B/n\}
+ =\min\{d_{0,n}(w),d_{*,n}(w)\}.
 \]
-outside the deleted disks.  Combining this with
-\eqref{eq:critical-green-distance-reduction} proves item 1.
-
-For $\alpha>k$, the choice $d_1<d<d_2$ leaves only the slow first pole
-in $\Omega_{d,n}$.  The scaled inverse-function argument gives distance
-$cA/n$ off its disk.  Choose an integer $L_0$ with $L_0k>2\alpha$.
-For each fixed $2\le\ell\le L_0$, both pole factors have horizontal
-distance at least $c/n$ from the window.
-The factorization \eqref{eq:critical-w-pole-factorization} and the local
-bound \eqref{eq:critical-cosh-local-bound} give a lower bound
-$c n^{-2}$ and, when $|\theta|<1$, an upper bound
-$C|\theta|n^{-2}$ for $|D_\ell(\lambda)|$.  Thus
-$|w-2\pi\mathrm i\ell|=|\theta|\ge c$; this argument also covers a
-possible coalescence $\alpha=\ell k$.
-
-For $\ell>L_0$ and $q=\ell k/n\le q_0$, the two poles are conjugate,
-with $t_{\ell,n}\ge cq$.  If $h_{\ell,n}$ is their common real part,
-then every $\lambda\in\Omega_{d,n}$ has horizontal separation
-\[
- \Re\lambda-h_{\ell,n}
- \ge u_{\ell,n}:=\frac{\alpha-d}{n}+1-\cos q.
-\]
-Equation \eqref{eq:critical-conjugate-product-bound} therefore gives
-$|D_\ell(\lambda)|\ge c u_{\ell,n}q$.  If
-$\theta=w-2\pi\mathrm i\ell$ and $|\theta|<1$, then
-\eqref{eq:critical-cosh-local-bound}, together with $q\ge L_0k/n$,
-gives $|D_\ell(\lambda)|\le Cq|\theta|/n$.  Hence
-\[
- |\theta|\ge cnu_{\ell,n}\ge c(\alpha-d).
-\]
-For $q\in[q_0,\pi]$, the fixed horizontal separation used in item 1
-again gives distance at least one.  Thus
-$\operatorname{dist}(w,2\pi\mathrm i\Z)\ge c\min\{1,A/n\}$, and
-equation
-\eqref{eq:critical-green-distance-reduction} proves item 2.
+The finite Green formula and \eqref{eq:coth-distance-bound} therefore
+give, throughout this complementary region,
+\begin{equation}\label{eq:critical-green-distance-reduction}
+ |G_n(\lambda)|\le C\left\{1+
+       d_{*,n}(w)^{-1}\right\}.
+\end{equation}
+Equation \eqref{eq:critical-zero-cancellation} bounds the first region.
+On the second region, combine
+\eqref{eq:critical-green-distance-reduction} with item 1 or item 2 of
+Lemma~\ref{lem:critical-pole-distance}.  This gives respectively
+\eqref{eq:critical-green-exclusion-bound} and
+\eqref{eq:critical-green-exclusion-bound-super}, with exactly the
+stated dependence of the constants.
 \end{proof}
 
 \begin{definition}[Critical first cluster]\label{def:critical-first-cluster}
@@ -1891,7 +2031,7 @@ $\mathcal C_{1,n}(A)=\mathcal C_{1,n}(A_0)$ for all sufficiently large
 $n$.  Every nonzero eigenvalue with maximal real part belongs to this
 critical first cluster.  More precisely, if
 $\Lambda_{1,n}$ is the largest real part within that cluster, then every
-eigenvalue outside the cluster
+nonzero eigenvalue outside the cluster
 satisfies
 \begin{equation}\label{eq:critical-exhaustion-separation}
  \Re\lambda\le\Lambda_{1,n}-
@@ -1915,20 +2055,36 @@ large.  Assume $b\ne0$.
 
 Gershgorin's theorem confines all eigenvalues to a fixed disk; choose
 $R$ so that this disk lies in $|\lambda|\le R$ and use Lemma
-\ref{lem:critical-green-off-pole} with that $R$.  If
-$\alpha\le k$, choose a midpoint value $B$ from
-Lemma~\ref{lem:critical-green-off-pole}, first so large that the
-protected first root lies strictly inside $\Omega_{B,n}$ and then so that
-$2|b|C/\sqrt B<1/8$; choose $A_0$ so that
-$2|b|C_B/A_0<1/8$.  If $\alpha>k$, use the window $\Omega_{d,n}$ from
-item 2 of that lemma and choose $A_0$ so that
-$2|b|C_d/A_0<1/4$.  In either case, increase $A_0$ further, if
-necessary, so that the zeros in all the simple-pole and grouped
-comparisons below lie strictly inside their respective disks, and fix
-any $A\ge A_0$.  Finally increase $n$ until
-$2|b|C_B/n<1/4$ in the first case or $2|b|C_d/n<1/4$ in the second.
-Since $2\delta=2b/n$, the two
-off-pole estimates give in either case
+\ref{lem:critical-green-off-pole} with that $R$.  The constants are
+chosen in the following order.
+\begin{enumerate}
+\item If $\alpha\le k$, choose a midpoint value $B$ first so that the
+  protected first root lies inside $\Omega_{B,n}$ with an
+  $n^{-2}$-scale margin and then so that
+  $2|b|C/\sqrt B<1/8$.  If $\alpha>k$, fix once and for all a
+  $d\in(d_1,d_2)$ and use $\Omega_{d,n}$.
+\item Choose $A_0$ so that
+  $2|b|C_B/A_0<1/8$ in the first case or
+  $2|b|C_d/A_0<1/4$ in the second.  Increase $A_0$, if necessary, so
+  that every zero of the affine simple-pole comparisons and both zeros
+  of the grouped comparison lie a fixed relative distance inside the
+  corresponding $A_0$-disk.
+\item Fix any $A\ge A_0$.  Only now choose $n$ large enough for the
+  estimates with this $A$ and, additionally, for
+  $2|b|C_B/n<1/4$ or $2|b|C_d/n<1/4$, respectively.
+\end{enumerate}
+Since $2\delta=2b/n$, item 1 of the off-pole estimate gives explicitly
+\[
+ |2\delta G_n|
+ \le \frac{2|b|C_B}{n}+\frac{2|b|C_B}{A}
+       +\frac{2|b|C}{\sqrt B}<\frac12
+\]
+when $\alpha\le k$.  Item 2 gives
+\[
+ |2\delta G_n|
+ \le \frac{2|b|C_d}{n}+\frac{2|b|C_d}{A}<\frac12
+\]
+when $\alpha>k$.  Thus in either case
 \begin{equation}\label{eq:critical-secular-exclusion}
  |2\delta G_n(\lambda)|<\frac12.
 \end{equation}
@@ -1964,6 +2120,14 @@ affected zero and
  =p_{\ell,n}^\pm
   -4bR_{\ell,n}^\pm n^{-2}+O(n^{-3}).
 \end{equation}
+To relate this pole-cleared count to the polynomial count, write
+$H_{n,-}^{(0)}=(\lambda-p_{\ell,n}^\pm)J_{\ell,n}$ on the disk.
+The factor $J_{\ell,n}$ is nonvanishing there, and
+$R_{\ell,n}^\pm\ne0$ at every nonzero-wave simple pole.  Since
+$b\ne0$, the right side of \eqref{eq:critical-simple-rouche} is
+nonzero at $\lambda=p_{\ell,n}^\pm$.  Hence the homogeneous pole is
+canceled rather than retained, and the single Rouch\'e zero is exactly
+one zero of $Q_{n,-}$, counted with algebraic multiplicity.
 Together with \eqref{eq:critical-secular-exclusion}, this accounts for
 every affected root in either right-edge window except the grouped
 first neighborhood at $\alpha=k$, which belongs to the first cluster
@@ -2001,9 +2165,21 @@ By the choice of $A_0$, both zeros of $P_{0,n}$ lie strictly inside the
 circle.  The difference between the
 two sides is $O(A^2n^{-4})$, whereas
 $|P_{0,n}|\ge c_A n^{-3}$ on the circle.  Rouch\'e's theorem therefore
-gives exactly two affected roots in the grouped disk.  If $b=0$, these
-are the two homogeneous odd-sector roots.  This proves the asserted
-root count and the independence from increasing $A$ in
+gives exactly two affected roots in the grouped disk.  The quadratic
+factor $\Delta^2-r_n^2$ is the full homogeneous factor on this disk;
+the remaining factor of $H_{n,-}^{(0)}$ is nonvanishing.  Thus the two
+Rouch\'e zeros are exactly the two zeros of $Q_{n,-}$ there, counted
+with algebraic multiplicity.
+
+At $\alpha=k$, this completes the affected-root accounting in the
+right-edge window: every simple disk contains its one counted root, the
+grouped disk contains the two just counted, and
+\eqref{eq:critical-secular-exclusion} leaves none on the complement.
+Applying the grouped comparison once with $A_0$ and once with $A$ shows
+that the annular difference contains no affected root.  The protected
+first roots are independent of $A$, so
+$\mathcal C_{1,n}(A)=\mathcal C_{1,n}(A_0)$ with multiplicity.  This
+proves the stabilization asserted in
 Definition~\ref{def:critical-first-cluster}.
 
 Suppose first that $\alpha<k$.  For every fixed $\ell\ge1$, the two
@@ -2018,8 +2194,8 @@ Equations \eqref{eq:critical-uniform-simple-shift}--
 \eqref{eq:critical-residue-real-half} show that the same parity is
 selected for every fixed $\ell$, and that the $\ell=2$ cluster is to the
 left of the first by $3k^2/(2n^2)+O(n^{-3})$.  The choice of $B$ puts
-every possible competitor either among these finitely many clusters or
-to their left and separates all roots outside the window from the first
+every possible nonzero competitor either among these finitely many clusters or
+to their left and separates all nonzero roots outside the window from the first
 cluster by a fixed multiple of $n^{-2}$.  To locate the endpoint root,
 write $\varepsilon=\lambda+2\alpha/n$.  Equation
 \eqref{eq:critical-endpoint-green} turns the pole-cleared secular equation
@@ -2071,7 +2247,7 @@ protected pole in $\Omega_{d,n}$ is the first slow pole, and
 \eqref{eq:critical-secular-exclusion}--
 \eqref{eq:critical-uniform-simple-shift} show that its affected partner
 is the only affected root there.  Both have real part
-$-d_1/n+O(n^{-2})$, whereas every root outside the window has real part
+$-d_1/n+O(n^{-2})$, whereas every nonzero root outside the window has real part
 at most $-d/n$.  This gives a separation of order $n^{-1}$ and completes
 the proof.
 \end{proof}

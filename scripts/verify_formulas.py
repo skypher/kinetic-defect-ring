@@ -75,6 +75,26 @@ def exact_polynomial(n: int, omega: float, omega0: float, lam: complex) -> compl
     return base + (omega0 - omega) * correction / n
 
 
+def spectral_gap(n: int, omega: float, omega0: float) -> float:
+    values = np.linalg.eigvals(generator(n, omega, omega0))
+    if float(np.min(np.abs(values))) > 2.0e-9:
+        raise AssertionError("stationary eigenvalue audit failed")
+    if float(np.max(values.real)) > 2.0e-9:
+        raise AssertionError("Markov spectral half-plane audit failed")
+    nonzero = values[np.abs(values) > 1.0e-9]
+    return -float(np.max(nonzero.real))
+
+
+def homogeneous_gap(n: int, omega: float) -> float:
+    q = 2.0 * math.pi / n
+    return (
+        1.0
+        - math.cos(q)
+        + omega
+        - math.sqrt(max(0.0, omega * omega - math.sin(q) ** 2))
+    )
+
+
 def determinant_audit(n: int, omega: float, omega0: float) -> None:
     matrix = generator(n, omega, omega0)
     samples = [0.37 + 0.19j, -0.8 + 0.31j, -2.4 + 0.07j]
@@ -111,24 +131,86 @@ def transfer_audit(n: int, omega: float, omega0: float) -> None:
             raise AssertionError("transfer determinant audit failed")
 
 
+def small_ring_formula_audit() -> None:
+    for n in range(2, 10):
+        omega = 0.51 + 0.13 * n
+        omega0 = 0.0 if n % 3 == 0 else 1.37
+        lam = -0.23 + (0.11 + 0.017 * n) * 1.0j
+        matrix = generator(n, omega, omega0)
+        direct = np.linalg.det(lam * np.eye(2 * n) - matrix)
+        polynomial = exact_polynomial(n, omega, omega0, lam)
+
+        rates = [omega0] + [omega] * (n - 1)
+        monodromy = np.eye(2, dtype=complex)
+        denominator = 1.0 + 0.0j
+        for rate in rates:
+            b = lam + 1.0 + rate
+            transfer = np.array(
+                [[1.0, rate], [-rate, b * b - rate * rate]],
+                dtype=complex,
+            ) / b
+            monodromy = transfer @ monodromy
+            denominator *= b
+        transfer_value = denominator * (np.trace(monodromy) - 2.0)
+        scale = max(1.0, abs(direct), abs(polynomial), abs(transfer_value))
+        determinant_error = abs(direct - polynomial) / scale
+        transfer_error = abs(direct - transfer_value) / scale
+        print(
+            f"small_ring_formula n={n}"
+            f" determinant_error={determinant_error:.3e}"
+            f" transfer_error={transfer_error:.3e}",
+            flush=True,
+        )
+        if max(determinant_error, transfer_error) > 2.0e-9:
+            raise AssertionError("small-ring formula audit failed")
+
+
 def gap_audit(n: int, omega: float, omega0: float) -> None:
-    values = np.linalg.eigvals(generator(n, omega, omega0))
-    nonzero = values[np.abs(values) > 1.0e-9]
-    exact_gap = -float(np.max(nonzero.real))
-    q = 2.0 * math.pi / n
-    homogeneous_gap = (
-        1.0
-        - math.cos(q)
-        + omega
-        - math.sqrt(max(0.0, omega * omega - math.sin(q) ** 2))
-    )
+    exact_gap = spectral_gap(n, omega, omega0)
+    protected_gap = homogeneous_gap(n, omega)
     print(
         "gap"
         f" exact={exact_gap:.12g}"
-        f" protected={homogeneous_gap:.12g}"
-        f" difference={exact_gap-homogeneous_gap:.3e}",
+        f" protected={protected_gap:.12g}"
+        f" difference={exact_gap-protected_gap:.3e}",
         flush=True,
     )
+    if exact_gap < -2.0e-9:
+        raise AssertionError("spectral gap sign audit failed")
+
+
+def fixed_gap_asymptotic_audit() -> None:
+    omega = 1.3
+    n = 80
+
+    slow_omega0 = 0.4
+    slow_gap = spectral_gap(n, omega, slow_omega0)
+    protected_gap = homogeneous_gap(n, omega)
+    slow_error = abs(slow_gap - protected_gap)
+    print(
+        f"fixed_gap_slow n={n} error={slow_error:.3e}",
+        flush=True,
+    )
+    if slow_error > 5.0e-10:
+        raise AssertionError("fixed slow-defect gap audit failed")
+
+    fast_omega0 = 2.0
+    fast_gap = spectral_gap(n, omega, fast_omega0)
+    coefficient = (
+        4.0
+        * math.pi**2
+        * (fast_omega0 - omega)
+        * (1.0 + omega)
+        / (omega * omega * (1.0 + fast_omega0))
+    )
+    predicted = protected_gap - coefficient * n ** (-3)
+    scaled_error = abs(fast_gap - predicted) * n**4
+    print(
+        f"fixed_gap_fast n={n} scaled_n4_error={scaled_error:.9g}",
+        flush=True,
+    )
+    if scaled_error > 5.0:
+        raise AssertionError("fixed fast-defect gap audit failed")
 
 
 def localization_audit(omega: float, omega0: float) -> None:
@@ -164,16 +246,29 @@ def localization_audit(omega: float, omega0: float) -> None:
                 f" match_defect={abs(match_defect):.3e}",
                 flush=True,
             )
+            if max(abs(dispersion_defect), abs(match_defect)) > 2.0e-10:
+                raise AssertionError("localization identity audit failed")
 
 
 def flat_band_audit() -> None:
-    cases = [
-        (5, 0.4, [4, 4, 4]),
-        (7, 0.4, [6, 7, 7]),
-        (7, 0.75, [6, 7, 8]),
-        (8, 0.4, [7, 8, 8]),
-    ]
-    for n, omega0, expected in cases:
+    cases = []
+    for n in range(2, 13):
+        homogeneous_expected = (
+            [n, n + 2, n + 2] if n % 4 == 0 else [n, n, n]
+        )
+        cases.append((n, 1.0, homogeneous_expected, "homogeneous"))
+
+        if n % 4 in (1, 2):
+            generic_expected = [n - 1, n - 1, n - 1]
+        else:
+            generic_expected = [n - 1, n, n]
+        cases.append((n, 0.4, generic_expected, "generic_defect"))
+
+        if n % 4 == 3:
+            tuned = (n - 1.0) / (n + 1.0)
+            cases.append((n, tuned, [n - 1, n, n + 1], "tuned_J3"))
+
+    for n, omega0, expected, regime in cases:
         nilpotent = generator(n, 1.0, omega0) + 2.0 * np.eye(2 * n)
         nullities = []
         power = np.eye(2 * n)
@@ -182,7 +277,8 @@ def flat_band_audit() -> None:
             rank = np.linalg.matrix_rank(power, tol=1.0e-9)
             nullities.append(2 * n - rank)
         print(
-            f"flat_band n={n} omega0={omega0} nullities={nullities}",
+            f"flat_band n={n} regime={regime} omega0={omega0}"
+            f" nullities={nullities}",
             flush=True,
         )
         if nullities != expected:
@@ -193,7 +289,7 @@ def compact_localization_audit() -> None:
     omega = 2.0
     omega0 = (omega * omega + 1.0) / (2.0 * omega)
     lam = -1.0 - omega
-    for n in [4, 7, 12]:
+    for n in [2, 3, 4, 7, 12]:
         shifted = generator(n, omega, omega0) - lam * np.eye(2 * n)
         singular_values = np.linalg.svd(shifted, compute_uv=False)
         residual = float(singular_values[-1])
@@ -345,6 +441,68 @@ def critical_grouped_remainder_audit() -> None:
             raise AssertionError("critical grouped remainder audit failed")
 
 
+def critical_zero_wave_cancellation_audit() -> None:
+    alpha = 2.0 * math.pi
+    previous_inverse_distance = 0.0
+    for n in [200, 400, 800, 1600]:
+        omega = alpha / n
+        lam = (0.4 + 0.7j) / n**2
+        a = lam + 1.0 + omega
+        x = (a * a + 1.0 - omega * omega) / (2.0 * a)
+        w = n * np.arccosh(x)
+        theta = (lam + 1.0 - x) / np.sinh(w / n)
+        canceled = theta / np.tanh(w / 2.0)
+        leading = (lam + 2.0) / (n * (lam + 2.0 * omega))
+        inverse_distance = 1.0 / abs(w)
+        scaled_remainder = n * abs(canceled - leading)
+        print(
+            f"critical_zero_wave n={n}"
+            f" inverse_distance={inverse_distance:.9g}"
+            f" canceled_absolute={abs(canceled):.9g}"
+            f" scaled_remainder={scaled_remainder:.9g}",
+            flush=True,
+        )
+        if inverse_distance <= previous_inverse_distance:
+            raise AssertionError("zero-wave pole-distance audit failed")
+        if abs(canceled) > 1.0 or scaled_remainder > 0.2:
+            raise AssertionError("zero-wave cancellation audit failed")
+        previous_inverse_distance = inverse_distance
+
+
+def critical_side_gap_audit() -> None:
+    k = 2.0 * math.pi
+    n = 120
+    cases = [(3.0, 0.0), (3.0, 6.0), (8.0, 3.0), (8.0, 12.0)]
+    for alpha, beta in cases:
+        exact_gap = spectral_gap(n, alpha / n, beta / n)
+        if alpha < k:
+            predicted = (
+                alpha / n
+                + (k * k / 2.0 - 2.0 * max(alpha - beta, 0.0)) / n**2
+            )
+        else:
+            root = math.sqrt(alpha * alpha - k * k)
+            predicted = (
+                (alpha - root) / n
+                + (
+                    k * k / 2.0
+                    - 2.0
+                    * max(beta - alpha, 0.0)
+                    * (alpha - root)
+                    / root
+                )
+                / n**2
+            )
+        scaled_error = abs(exact_gap - predicted) * n**3
+        print(
+            f"critical_side_gap alpha={alpha} beta={beta} n={n}"
+            f" scaled_n3_error={scaled_error:.9g}",
+            flush=True,
+        )
+        if scaled_error > 60.0:
+            raise AssertionError("critical side-gap audit failed")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--n", type=int, default=18)
@@ -353,13 +511,18 @@ def main() -> None:
     args = parser.parse_args()
     determinant_audit(args.n, args.omega, args.omega0)
     transfer_audit(args.n, args.omega, args.omega0)
+    small_ring_formula_audit()
     gap_audit(args.n, args.omega, args.omega0)
+    fixed_gap_asymptotic_audit()
     localization_audit(args.omega, args.omega0)
     flat_band_audit()
     compact_localization_audit()
     zero_denominator_localization_audit()
     critical_boundary_audit()
     critical_grouped_remainder_audit()
+    critical_zero_wave_cancellation_audit()
+    critical_side_gap_audit()
+    print("all formula audits passed", flush=True)
 
 
 if __name__ == "__main__":
