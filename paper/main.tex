@@ -127,9 +127,10 @@ exact spectrum, exceptional points, and relaxation crossover}
 We solve the spectral problem for one continuous-time run-and-tumble
 particle on an $n$-site ring when the tumbling rate at one site is
 $\omega _0$ and the bulk rate is $\omega$.  The defect changes the
-$2n\times2n$ generator by rank one.  The characteristic polynomial is
-the homogeneous polynomial plus $(\omega _0-\omega)/n$ times its
-$\omega$-derivative.  This identity gives Chebyshev and transfer-matrix
+$2n\times2n$ generator by rank at most one.  The characteristic
+polynomial is the homogeneous polynomial plus
+$(\omega _0-\omega)/n$ times its $\omega$-derivative.  This identity gives
+Chebyshev and transfer-matrix
 quantization formulas, a parity factorization, and finite polynomial
 tests for every Jordan block.  We separately resolve the singular
 flat-band point $\omega=1$, where the eigenvalue $-2$ can carry Jordan
@@ -1550,12 +1551,11 @@ Indeed, the residue at every slow homogeneous pole is nonzero, so
 multiplication by $H_{n,-}^{(0)}$ cancels the pole of $f_n$ but does not
 leave a zero there.
 
-We first exclude affected zeros that do not tend to zero.  Gershgorin's
-theorem places every finite-ring eigenvalue in a fixed disk and in the
-closed left half-plane.  If the desired exclusion failed, there would
-be $\epsilon>0$ and a sequence of affected zeros in $\Omega_n$ with
-$|\lambda|\ge\epsilon$; a subsequence would converge to
-$\lambda_*\ne0$ with $\Re\lambda_*=0$.  For a bulk Bloch vector at
+We first exclude sequences of affected zeros that do not tend to zero.
+Gershgorin's theorem places every finite-ring eigenvalue in a fixed disk
+and in the closed left half-plane.  If such a sequence $\lambda_n$
+existed, pass to a subsequence for which $|\lambda_n|\ge\epsilon>0$ and
+$\lambda_n\to\lambda_*\ne0$ with $\Re\lambda_*=0$.  For a bulk Bloch vector at
 wave number $q$, the real part of its quadratic form is the negative of
 $(1-\cos q)$ times its squared norm, together with the nonnegative
 tumbling form.  Equality therefore forces $q=0$ and equal orientation
@@ -1587,38 +1587,34 @@ terms at each site.  These operations are valid first for finitely
 supported vectors and then for all $u\in\ell^2$ by density and
 boundedness of $L_\infty$.
 Equality in \eqref{eq:infinite-dissipation} forces an $\ell^2$ vector to
-vanish.  The subsequence contradiction therefore supplies
-$\epsilon>0$ such that no affected zero in $\Omega_n$ can satisfy
-$|\lambda|\ge\epsilon$.
+vanish.  Consequently every sequence of affected zeros in $\Omega_n$
+tends to zero.
 
-It remains to exhaust the affected zeros that tend to zero.  On the
+It remains to exhaust these affected zeros.  On the
 $\zeta=n^2\lambda$ scale, choose a closed disk $U$ about the limiting first
 pole which contains no other limiting pole, and then choose $M_*$ so that
 $U\subset\{|\zeta|\le M_*\}$.  Let $C_{M_*}$ be the constant from item 1 of
 Lemma~\ref{lem:fixed-threshold-green}.  We now choose $A$ so large that
 $2|\delta|C_{M_*}/A<M_0/4$.  Only after these choices do we increase $n$.
-We claim that
-\begin{equation}\label{eq:fixed-exclusion-margin}
- |f_n(\lambda)|\ge \frac{M_0}{2}
-\end{equation}
-throughout $\Omega_n\cap\{\Re\lambda\le0\}$ near zero, apart from
-$|\lambda-\lambda_1^+|<A n^{-3}$.  This is the required domain because
-Gershgorin's theorem puts every eigenvalue in the closed left half-plane.
-Otherwise there would be a sequence $\lambda_n$ violating
-\eqref{eq:fixed-exclusion-margin}.  The definition of $\Omega_n$ and
-\eqref{eq:slow-dispersion-bound} give
+Suppose, to the contrary, that there were a sequence $n\to\infty$ and
+affected zeros $\lambda_n\in\Omega_n$ outside
+$|\lambda-\lambda_1^+|<A n^{-3}$.  Gershgorin's theorem gives
+$\Re\lambda_n\le0$, and the preceding paragraph gives $\lambda_n\to0$.
+The definition of $\Omega_n$ and \eqref{eq:slow-dispersion-bound} give
 $-C n^{-2}\le\Re\lambda_n\le0$.  Pass to a subsequence according as
 $\zeta_n=n^2\lambda_n$ is bounded or unbounded.
 In the bounded case, pass once more so that $\zeta_n\to\zeta_*$.  If
-$\zeta_*$ is not the limiting first pole, the expansion in the proof of
-Lemma~\ref{lem:fixed-threshold-green} gives $G_n(\lambda_n)\to g_0$.
+$\zeta_*$ is not the limiting first pole,
+\eqref{eq:fixed-threshold-green-expanded}--\eqref{eq:coth-distance-bound}
+give $G_n(\lambda_n)\to g_0$.
 If it is the limiting first pole, then $\zeta_n\in U$ for all sufficiently
 large $n$, and the first assertion of that lemma and the choice of $A$ give
 $|G_n(\lambda_n)-g_0|\le C_{M_*}/A+o(1)$.  In both alternatives,
 $|f_n(\lambda_n)|>M_0/2$ for large $n$, a contradiction.  In the
 unbounded case, the second assertion of the lemma gives
-$G_n(\lambda_n)=g_0+o(1)$ and the same contradiction.  This proves
-\eqref{eq:fixed-exclusion-margin}.
+$G_n(\lambda_n)=g_0+o(1)$ and the same contradiction.  Hence, for all
+sufficiently large $n$, every affected zero in $\Omega_n$ lies in the
+first-pole disk.
 
 Finally, on the circle $|\lambda-\lambda_1^+|=A n^{-3}$ write
 \[
