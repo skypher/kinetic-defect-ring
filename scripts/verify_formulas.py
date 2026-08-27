@@ -448,10 +448,17 @@ def critical_zero_wave_cancellation_audit() -> None:
         omega = alpha / n
         lam = (0.4 + 0.7j) / n**2
         a = lam + 1.0 + omega
-        x = (a * a + 1.0 - omega * omega) / (2.0 * a)
-        w = n * np.arccosh(x)
-        theta = (lam + 1.0 - x) / np.sinh(w / n)
+        x_minus_one = lam * (lam + 2.0 * omega) / (2.0 * a)
+        w = 2.0 * n * np.arcsinh(np.sqrt(x_minus_one / 2.0))
+        theta = lam * (lam + 2.0) / (2.0 * a * np.sinh(w / n))
         canceled = theta / np.tanh(w / 2.0)
+        factorized = (
+            (lam + 2.0)
+            / (lam + 2.0 * omega)
+            * np.tanh(w / (2.0 * n))
+            / np.tanh(w / 2.0)
+        )
+        factorization_defect = abs(canceled - factorized)
         leading = (lam + 2.0) / (n * (lam + 2.0 * omega))
         inverse_distance = 1.0 / abs(w)
         scaled_remainder = n * abs(canceled - leading)
@@ -459,11 +466,14 @@ def critical_zero_wave_cancellation_audit() -> None:
             f"critical_zero_wave n={n}"
             f" inverse_distance={inverse_distance:.9g}"
             f" canceled_absolute={abs(canceled):.9g}"
+            f" factorization_defect={factorization_defect:.3e}"
             f" scaled_remainder={scaled_remainder:.9g}",
             flush=True,
         )
         if inverse_distance <= previous_inverse_distance:
             raise AssertionError("zero-wave pole-distance audit failed")
+        if factorization_defect > 5.0e-11:
+            raise AssertionError("zero-wave exact factorization audit failed")
         if abs(canceled) > 1.0 or scaled_remainder > 0.2:
             raise AssertionError("zero-wave cancellation audit failed")
         previous_inverse_distance = inverse_distance

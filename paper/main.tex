@@ -276,8 +276,8 @@ rate $\omega_j$.  Put
 Equations \eqref{eq:generator-plus}--\eqref{eq:generator-minus} use the
 same one-particle convention as equations (6)--(10) of
 \cite{MallminBlytheEvans2019}.  That paper records the homogeneous
-eigenvalues in its equation (11), the homogeneous exceptional points in
-equation (14), and the first-mode relaxation rate in equations
+eigenvalues in its equation (10), the homogeneous exceptional points in
+equation (13), and the first-mode relaxation rate in equations
 (20)--(21).
 
 \begin{lemma}[Rank-one defect]\label{lem:rank-one}
@@ -2117,16 +2117,40 @@ of the tumble pole $-2\omega$ and a fixed distance to the right of
 $-2-2\omega$.  Consequently $|a|$ is bounded below and
 \eqref{eq:critical-theta-square} gives $|\Theta|\le C$ there.  Fix a
 small $\eta>0$.  If $d_{0,n}(w)\le\eta$, a branch change puts
-$|w|\le\eta$.  Taylor expansion of
-$\cosh(w/n)-1$, $\sinh(w/n)$, and $\coth(w/2)$, together with
-$s=\sinh(w/n)$ and the exact identities
-\eqref{eq:fixed-exact-x-identities}, gives
+$|w|\le\eta$.  Taking the quotient of the two identities in
+\eqref{eq:fixed-exact-x-identities} where it is defined, extending
+through removable points by analytic continuation, and using
+$(\cosh t-1)/\sinh t=\tanh(t/2)$ gives the exact factorization
+\begin{equation}\label{eq:critical-zero-exact-factorization}
+ \Theta\coth(w/2)
+ =\frac{\lambda+2}{\lambda+2\omega}
+   \tanh\!\left(\frac{w}{2n}\right)\coth(w/2).
+\end{equation}
+The defining half-planes give
+$|\lambda+2\omega|\ge c(n^{-1}+|\Im\lambda|)$.  Since $|w|\le\eta$,
+the first identity in \eqref{eq:fixed-exact-x-identities} and the upper
+bound on $|a|$ imply
+$|\lambda(\lambda+2\omega)|\le Cn^{-2}$, and hence
+$|\lambda|\le Cn^{-1}$.  The lower bound on $|a|$ and the same identity
+then give
+\[
+ |w|^2\le Cn^2|\lambda|\,|\lambda+2\omega|
+       \le Cn|\lambda+2\omega|.
+\]
+Finally, Taylor's theorem gives, uniformly for $n\ge1$ and
+$|w|\le\eta$,
+\[
+ n\tanh\!\left(\frac{w}{2n}\right)\coth(w/2)
+ =1+O(w^2).
+\]
+Substitution in \eqref{eq:critical-zero-exact-factorization} therefore
+gives
 \begin{equation}\label{eq:critical-zero-cancellation}
  \Theta\coth(w/2)=
    \frac{\lambda+2}{n(\lambda+2\omega)}+O(1),
 \end{equation}
-uniformly in either window.  This is bounded because
-$|\lambda+2\omega|\ge c(n^{-1}+|\Im\lambda|)$.
+uniformly in either window.  The displayed lower bound for
+$|\lambda+2\omega|$ shows that this expression is bounded.
 
 If $d_{0,n}(w)>\eta$, then
 \[
@@ -2460,7 +2484,8 @@ $(\alpha,\beta)$.  In particular, \eqref{eq:critical-below} and
 \eqref{eq:critical-above} are side expansions for fixed
 $\alpha\ne k$ and are not uniform as $\alpha\to k$; the exact scaling
 $\alpha=k$ is the separate regime \eqref{eq:critical-at-slow}--
-\eqref{eq:critical-at-fast}.
+\eqref{eq:critical-at-fast}.  No uniformity as $\alpha\downarrow0$ is
+asserted for either the remainder constants or the lower bound on $n$.
 Thus the first homogeneous exceptional scaling is a square-root boundary
 layer for a faster defect, while the side selecting the affected parity
 mode reverses as $\alpha$ passes through $2\pi$.
@@ -2690,6 +2715,9 @@ the negative real part, gives \eqref{eq:telegraph-critical}.
 
 \begin{proposition}[Point-defect telegraph secular equation]
 \label{prop:telegraph-defect}
+Let $\delta\in\mathbb R$.  For the kinetic defect in
+Definition~\ref{def:generator}, one has
+$\delta=\omega_0-\omega\ge-\omega$.
 On the circle cut at zero, define the point-defect telegraph operator by
 \[
  {\cal A}_\delta(\rho,m)=(-m',-\rho'-2\omega m)
@@ -2840,7 +2868,8 @@ fixed-rate or double-scaling regimes.
 The manuscript source and the formula-audit code are available at
 \url{https://github.com/skypher/kinetic-defect-ring}.  The archived
 submission revision is identified by the Git tag
-\texttt{paper-2026-08-28}.  From the repository root, the audit is run as
+\texttt{paper-2026-08-28-reviewed}.  From the repository root, the
+audit is run as
 \begin{center}
 \texttt{python3 -u scripts/verify\_formulas.py}.
 \end{center}
