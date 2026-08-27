@@ -415,29 +415,52 @@ eigenvalue one.  Its determinant is one, so this is equivalent to trace
 two.  To identify the polynomial, retain temporarily arbitrary rates
 $r_0,\ldots,r_{n-1}$, denote the resulting generator by
 $L_n(r_0,\ldots,r_{n-1})$, and put $b_j=\lambda+1+r_j$.
-Eliminate successively with the first equation at each site, whose pivot
-is $b_j$.  The substituted second equations are precisely the recurrence
-for the pairs $(u_{j-1}^+,u_j^-)$ displayed above.  After one circuit the
-residual condition is $(M-I)(u_{n-1}^+,u_0^-)^{\mathsf T}=0$, where
-$M=T_{r_{n-1}}\cdots T_{r_0}$.  More explicitly, after the $n$ pivots
-$b_j$, use the coefficients $-1$ of
-$u_{j+1}^-$ in $n-2$ consecutive recurrence equations as unit pivots.
-The two equations left are the displayed residual system, up to
-triangular row additions of determinant one.  Hence the
-Schur-complement determinant is
-$\pm\prod_jb_j\det(M-I)$; comparison with the leading coefficient
-$+\lambda^{2n}$ fixes the sign as
-$-\prod_jb_j\det(M-I)$.  Since $\det M=1$, one has
+Let $E_j^+$ and $E_j^-$ denote the two equation residuals, with their
+right-hand sides moved to the left.  For $b_j\ne0$, replace each row pair
+by
+\[
+ \binom{F_j^+}{F_j^-}
+ =\begin{pmatrix}b_j^{-1}&0\\-r_jb_j^{-1}&-1\end{pmatrix}
+   \binom{E_j^+}{E_j^-}.
+\]
+This block row operation has determinant $-b_j^{-1}$.  If
+$y_j=(u_j^+,u_{j+1}^-)^{\mathsf T}$, the transformed equations are
+exactly
+\begin{equation}\label{eq:transfer-cyclic-system}
+ y_j-T_{r_j}(\lambda)y_{j-1}=0,
+ \qquad j\in\mathbb Z/n\mathbb Z.
+\end{equation}
+Let $A$ be the original coefficient matrix, $F$ the matrix after these
+row operations, and $C$ the matrix of
+\eqref{eq:transfer-cyclic-system} with columns ordered as
+$y_0,y_1,\ldots,y_{n-1}$.  The column reordering cyclically sends
+$(u_0^-,u_1^-,\ldots,u_{n-1}^-)$ to
+$(u_1^-,\ldots,u_{n-1}^-,u_0^-)$ and fixes the plus variables, so its
+sign is $(-1)^{n-1}$.  Therefore
+\[
+ \det F=\frac{(-1)^n}{\prod_jb_j}\det A,
+ \qquad \det C=(-1)^{n-1}\det F.
+\]
+Successively eliminating $y_0,\ldots,y_{n-2}$ in
+\eqref{eq:transfer-cyclic-system}, using its identity diagonal blocks,
+leaves
+$(I-M)y_{n-1}=0$, where $M=T_{r_{n-1}}\cdots T_{r_0}$; hence
+$\det C=\det(I-M)$.  Combining the three determinant identities gives
+\[
+ \det A=-\prod_jb_j\det(I-M)=-\prod_jb_j\det(M-I).
+\]
+Since $\det M=1$, one has
 $-\det(M-I)=\operatorname{tr}M-2$.  Consequently
 \begin{equation}\label{eq:general-transfer-determinant}
  \det(\lambda I-L_n(r_0,\ldots,r_{n-1}))
  =\left(\prod_{j=0}^{n-1}b_j\right)
   \left[\operatorname{tr}(T_{r_{n-1}}\cdots T_{r_0})-2\right].
 \end{equation}
-This is an identity of rational functions where all $b_j\ne0$;
-multiplication by the displayed pivots makes both sides polynomials, so
-the identity extends to every $\lambda$.  Taking $r_0=\omega_0$ and all
-other rates equal to $\omega$, and using cyclicity of the trace, gives
+This is an identity of rational functions where all $b_j\ne0$.  The
+displayed product clears every denominator on the right, giving a
+polynomial, so the identity extends to every $\lambda$.  Taking
+$r_0=\omega_0$ and all other rates equal to $\omega$, and using cyclicity
+of the trace, gives
 \eqref{eq:transfer-char}, including algebraic multiplicities.  Equation
 \eqref{eq:transfer-cheb} is the Cayley--Hamilton identity for a
 unimodular $2\times2$ matrix.
@@ -1404,10 +1427,14 @@ $2|\delta|C/A<M_0/4$.  We claim that, after increasing $n$,
 \begin{equation}\label{eq:fixed-exclusion-margin}
  |f_n(\lambda)|\ge \frac{M_0}{2}
 \end{equation}
-throughout $\Omega_n$ near zero, apart from
-$|\lambda-\lambda_1^+|<A n^{-3}$.  Otherwise there would be a sequence
-$\lambda_n$ violating \eqref{eq:fixed-exclusion-margin}.  Pass to a
-subsequence according as $\zeta_n=n^2\lambda_n$ is bounded or unbounded.
+throughout $\Omega_n\cap\{\Re\lambda\le0\}$ near zero, apart from
+$|\lambda-\lambda_1^+|<A n^{-3}$.  This is the required domain because
+Gershgorin's theorem puts every eigenvalue in the closed left half-plane.
+Otherwise there would be a sequence $\lambda_n$ violating
+\eqref{eq:fixed-exclusion-margin}.  The definition of $\Omega_n$ and
+\eqref{eq:slow-dispersion-bound} give
+$-C n^{-2}\le\Re\lambda_n\le0$.  Pass to a subsequence according as
+$\zeta_n=n^2\lambda_n$ is bounded or unbounded.
 In the bounded case, pass once more so that $\zeta_n\to\zeta_*$.  If
 $\zeta_*$ is not the limiting first pole, the expansion in the proof of
 Lemma~\ref{lem:fixed-threshold-green} gives $G_n(\lambda_n)\to g_0$.
@@ -1576,11 +1603,18 @@ and is interpreted by meromorphic continuation at $\kappa=0$.  Then:
         {n\{(\lambda-\lambda_c)^2-r_n^2\}}+H_n(\lambda),
    \qquad |H_n(\lambda)|\le C.
   \end{equation}
+\item There are $\eta,C>0$ and analytic functions $K_n$ on
+  $|n\lambda+2\alpha|\le\eta$ such that
+  \begin{equation}\label{eq:critical-endpoint-green}
+   G_n(\lambda)=\frac{1}{n(\lambda+2\alpha/n)}+K_n(\lambda),
+   \qquad |K_n(\lambda)|\le C.
+  \end{equation}
 \end{enumerate}
 \end{lemma}
 
 \begin{proof}
-Let $w_n(\nu)=n\operatorname{arccosh}x(\nu/n)$ on any local branch.
+Let $w_n(\nu)=n\operatorname{arccosh}x(\nu/n)$ on a local branch
+satisfying $w_n/n\to0$; such normalized branches differ only by sign.
 The exact identities \eqref{eq:fixed-exact-x-identities} give
 \begin{align}
  \cosh(w_n/n)
@@ -1594,11 +1628,21 @@ The exact identities \eqref{eq:fixed-exact-x-identities} give
 \end{align}
 On a compact $\nu$-set, Taylor's theorem applied to
 \eqref{eq:critical-exact-w} yields
-$w_n^2=\nu(\nu+2\alpha)+O(n^{-1})$.  Substitution of
+$w_n^2=\nu(\nu+2\alpha)+O(n^{-1})$ uniformly.  Substitution of
 \eqref{eq:critical-exact-coefficient} into the exact formula
 \eqref{eq:finite-green-z}, with
-$(1+z^n)/(1-z^n)=\coth(w_n/2)$, proves item 1.  The formula is even in
-$w_n$, so the conclusion agrees on overlapping branch neighborhoods.
+$(1+z^n)/(1-z^n)=\coth(w_n/2)$, gives the pointwise limit in item 1.
+The resulting expression is even and meromorphic in $w_n$, hence
+meromorphic in $w_n^2$, with its value at $w_n=0$ taken by continuation.
+On a compact set avoiding the limiting poles, the denominators in this
+even expression stay uniformly separated from zero.  Uniform convergence
+of $w_n^2$, together with the explicit coefficients in
+\eqref{eq:critical-exact-coefficient}, therefore gives uniform convergence
+there.  A general branch change has the form
+$w_n\mapsto\pm w_n+2\pi\mathrm i n m$; the sign changes in
+$\sinh(w_n/n)$ and $\coth(w_n/2)$ cancel, and the additive term is a
+period of both factors.  Thus the conclusion agrees on overlapping
+branch neighborhoods and is independent of the normalized branch.
 
 For item 2, the limiting poles are
 \[
@@ -1624,6 +1668,16 @@ item 1 bounds $G_n(\nu/n)$ and direct inspection bounds the grouped
 term.  Their difference is analytic inside because both first poles
 have been removed.  The maximum-modulus theorem gives the asserted
 uniform bound on a smaller disk.
+
+Finally, the first summand of \eqref{eq:Gfinite} is exactly
+$1/\{n(\lambda+2\alpha/n)\}$.  The point $-2\alpha$ is distinct from
+all the limiting poles with $\ell\ge1$.  Choose a fixed disk about it in
+the $\nu$-plane containing no such pole.  For large $n$, the corresponding
+scaled disk contains no finite-ring pole except the $q=0$ pole.  On the
+boundary, item 1 bounds $G_n(\nu/n)$ and the displayed summand; their
+difference is analytic in the disk.  The maximum-modulus theorem on a
+smaller disk proves
+\eqref{eq:critical-endpoint-green}.
 \end{proof}
 
 \begin{lemma}[Critical off-pole Green estimate]
@@ -1679,6 +1733,12 @@ It follows by squaring the second identity in
 \[
  x+1=\frac{(\lambda+2)(\lambda+2+2\omega)}{2a}.
 \]
+A change of the arccosh branch replaces
+$w$ by $\pm w+2\pi\mathrm i n m$.  Under the sign change both
+$s=\sinh(w/n)$ and $\coth(w/2)$ change sign, while the additive term is
+a period; hence $\Theta\coth(w/2)$ is unchanged.  The quantity
+$\operatorname{dist}(w,2\pi\mathrm i\mathbb Z)$ is also unchanged.
+Thus all subsequent estimates are branch independent.
 The right-edge windows stay a fixed multiple of $n^{-1}$ to the right
 of the tumble pole $-2\omega$.  Consequently $|a|$ is bounded below
 and $|\Theta|$ is bounded there.  If $w$ is near zero, the apparent
@@ -1960,8 +2020,28 @@ selected for every fixed $\ell$, and that the $\ell=2$ cluster is to the
 left of the first by $3k^2/(2n^2)+O(n^{-3})$.  The choice of $B$ puts
 every possible competitor either among these finitely many clusters or
 to their left and separates all roots outside the window from the first
-cluster by a fixed multiple of $n^{-2}$.  The endpoint tumble root has
-real part $-2\alpha/n+O(n^{-2})$.  This proves
+cluster by a fixed multiple of $n^{-2}$.  To locate the endpoint root,
+write $\varepsilon=\lambda+2\alpha/n$.  Equation
+\eqref{eq:critical-endpoint-green} turns the pole-cleared secular equation
+into
+\begin{equation}\label{eq:critical-endpoint-root-equation}
+ \varepsilon\left(1+\frac{2b}{n}K_n(\lambda)\right)
+       +\frac{2b}{n^2}=0.
+\end{equation}
+Let $C_0$ be the bound for $K_n$ in
+\eqref{eq:critical-endpoint-green}.  On
+$|\varepsilon+2b/n^2|=R n^{-3}$, the difference between the left-hand
+side and $\varepsilon+2b/n^2$ is at most
+\[
+ \frac{2|b|C_0}{n}\left(\frac{2|b|}{n^2}+\frac{R}{n^3}\right)
+ \le C_1n^{-3}
+\]
+for $n\ge R$, where $C_1$ is independent of $R$.  Choosing $R>C_1$ and
+applying Rouch\'e's theorem gives the unique affected endpoint root
+\begin{equation}\label{eq:critical-endpoint-root}
+ \lambda_{0,-}=-\frac{2\alpha}{n}-\frac{2b}{n^2}+O(n^{-3}).
+\end{equation}
+In particular, its real part is $-2\alpha/n+O(n^{-2})$.  This proves
 \eqref{eq:critical-exhaustion-separation} for $\alpha<k$.
 
 At $\alpha=k$, the first protected cluster contains
@@ -2141,8 +2221,11 @@ higher, endpoint, and off-pole affected root in both cases.
 
 The standard one-dimensional telegraph system follows from the
 right- and left-moving continuum equations in
-\cite[Sec.~II, Eqs.~(2.2)--(2.4)]{Schnitzer1993}.  We compare it with
-the next lattice correction before introducing a point defect.
+\cite[Sec.~II, Eqs.~(2.2)--(2.4)]{Schnitzer1993}.  In that convention a
+particle reverses direction at one half of the collision rate.  Setting
+the speed to one and identifying that collision rate with $2\omega$
+gives the normalization below.  We compare it with the next lattice
+correction before introducing a point defect.
 
 \begin{definition}[Two continuum approximations]\label{def:telegraph}
 For a homogeneous ring of circumference $n$, the standard telegraph
