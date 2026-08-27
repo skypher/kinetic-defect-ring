@@ -28,6 +28,33 @@ def d_factor(lam: complex, omega: float, q: float) -> complex:
     return (lam + 1.0 - c) * (lam + 1.0 + 2.0 * omega - c) + s * s
 
 
+def finite_green(n: int, omega: float, lam: complex) -> complex:
+    wave_numbers = 2.0 * math.pi * np.arange(n) / n
+    cosines = np.cos(wave_numbers)
+    numerators = lam + 1.0 - cosines
+    denominators = numerators * (
+        lam + 1.0 + 2.0 * omega - cosines
+    ) + np.sin(wave_numbers) ** 2
+    return complex(np.sum(numerators / denominators) / n)
+
+
+def finite_green_derivative(n: int, omega: float, lam: complex) -> complex:
+    wave_numbers = 2.0 * math.pi * np.arange(n) / n
+    cosines = np.cos(wave_numbers)
+    numerators = lam + 1.0 - cosines
+    denominators = numerators * (
+        lam + 1.0 + 2.0 * omega - cosines
+    ) + np.sin(wave_numbers) ** 2
+    denominator_derivatives = 2.0 * (lam + 1.0 + omega - cosines)
+    return complex(
+        np.sum(
+            (denominators - numerators * denominator_derivatives)
+            / (denominators * denominators)
+        )
+        / n
+    )
+
+
 def homogeneous_polynomial(n: int, omega: float, lam: complex) -> complex:
     value = 1.0 + 0.0j
     for k in range(n):
@@ -182,9 +209,6 @@ def compact_localization_audit() -> None:
 def critical_boundary_audit() -> None:
     k = 2.0 * math.pi
     n = 10000
-    wave_numbers = 2.0 * math.pi * np.arange(n) / n
-    cosines = np.cos(wave_numbers)
-    sine_squares = np.sin(wave_numbers) ** 2
     for beta in [0.0, 3.0]:
         omega = k / n
         delta = (beta - k) / n
@@ -196,21 +220,8 @@ def critical_boundary_audit() -> None:
             + 2.0 * h * n ** (-2.0)
         )
         for _ in range(20):
-            numerator = lam + 1.0 - cosines
-            denominator = numerator * (
-                lam + 1.0 + 2.0 * omega - cosines
-            ) + sine_squares
-            derivative_denominator = 2.0 * (
-                lam + 1.0 + omega - cosines
-            )
-            green = np.sum(numerator / denominator) / n
-            green_derivative = np.sum(
-                (
-                    denominator
-                    - numerator * derivative_denominator
-                )
-                / (denominator * denominator)
-            ) / n
+            green = finite_green(n, omega, lam)
+            green_derivative = finite_green_derivative(n, omega, lam)
             residual = 1.0 + 2.0 * delta * green
             step = residual / (2.0 * delta * green_derivative)
             lam -= step
@@ -227,6 +238,50 @@ def critical_boundary_audit() -> None:
         if error > 2.0e-2:
             raise AssertionError("critical boundary audit failed")
 
+    beta = 8.0
+    omega = k / n
+    delta = (beta - k) / n
+    center = math.cos(k / n) - 1.0 - omega
+    predicted = 2.0 * math.sqrt(k * (beta - k))
+    lam = center + predicted * n ** (-1.5)
+    for _ in range(20):
+        green = finite_green(n, omega, lam)
+        green_derivative = finite_green_derivative(n, omega, lam)
+        residual = 1.0 + 2.0 * delta * green
+        step = residual / (2.0 * delta * green_derivative)
+        lam -= step
+        if abs(step) < 1.0e-15:
+            break
+    observed = (lam.real - center) * n ** 1.5
+    error = abs(observed - predicted)
+    print(
+        f"critical_boundary beta={beta} displacement={observed:.9g}"
+        f" predicted={predicted:.9g} error={error:.3e}",
+        flush=True,
+    )
+    if error > 8.0e-2:
+        raise AssertionError("critical square-root boundary audit failed")
+
+
+def critical_grouped_remainder_audit() -> None:
+    k = 2.0 * math.pi
+    for n in [400, 800, 1600, 3200]:
+        omega = k / n
+        center = math.cos(k / n) - 1.0 - omega
+        radius = math.sqrt((k / n) ** 2 - math.sin(k / n) ** 2)
+        delta_lam = (1.1 + 0.7j) * n ** (-1.5)
+        lam = center + delta_lam
+        grouped = 2.0 * (delta_lam - k / n) / (
+            n * (delta_lam * delta_lam - radius * radius)
+        )
+        remainder = finite_green(n, omega, lam) - grouped
+        print(
+            f"critical_grouped_remainder n={n} absolute={abs(remainder):.9g}",
+            flush=True,
+        )
+        if abs(remainder) > 10.0:
+            raise AssertionError("critical grouped remainder audit failed")
+
 
 def main() -> None:
     parser = argparse.ArgumentParser()
@@ -241,6 +296,7 @@ def main() -> None:
     flat_band_audit()
     compact_localization_audit()
     critical_boundary_audit()
+    critical_grouped_remainder_audit()
 
 
 if __name__ == "__main__":

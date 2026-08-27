@@ -153,9 +153,9 @@ spectral gap; telegraph equation.
 \section{Introduction}
 
 Persistent random walks provide a microscopic description of motion with
-a finite directional memory.  Continuum formulations with
-space-dependent turning statistics arise, for example, in the theory of
-chemotactic random walks \cite{Schnitzer1993}, while lattice
+a finite directional memory.  Continuum random-walk formulations of
+biased chemotactic motion arise, for example, in
+\cite{Schnitzer1993}, while lattice
 run-and-tumble models retain the individual hopping and reversal events
 and connect directly to nonequilibrium particle systems
 \cite{ThompsonTailleurCatesBlythe2011}.  For a homogeneous ring, the
@@ -207,8 +207,8 @@ rate $\omega_j$.  Put
 Equations \eqref{eq:generator-plus}--\eqref{eq:generator-minus} use the
 same one-particle convention as equations (6)--(10) of
 \cite{MallminBlytheEvans2019}.  That paper records the homogeneous
-eigenvalues in its equation (10), the homogeneous exceptional points in
-equation (13), and the first-mode relaxation rate in equations
+eigenvalues in its equation (11), the homogeneous exceptional points in
+equation (14), and the first-mode relaxation rate in equations
 (20)--(21).
 
 \begin{lemma}[Rank-one defect]\label{lem:rank-one}
@@ -379,13 +379,21 @@ Periodic boundary conditions require the product monodromy to have
 eigenvalue one.  Its determinant is one, so this is equivalent to trace
 two.  To identify the polynomial, retain temporarily arbitrary rates
 $r_0,\ldots,r_{n-1}$, denote the resulting generator by
-$L_n(r_0,\ldots,r_{n-1})$, and put $b_j=\lambda+1+r_j$.  Gaussian elimination
-of the $2n$ eigenvalue equations, in the order
-$u_0^+,u_1^+,\ldots,u_{n-1}^+$, has pivots $b_0,\ldots,b_{n-1}$.
-If $M=T_{r_{n-1}}\cdots T_{r_0}$, the two remaining cyclic boundary
-equations have coefficient matrix $M-I$.  The cyclic row ordering
-contributes one minus sign, and
-$-\det(M-I)=\operatorname{tr}M-2$ because $\det M=1$.  Consequently
+$L_n(r_0,\ldots,r_{n-1})$, and put $b_j=\lambda+1+r_j$.
+Eliminate successively with the first equation at each site, whose pivot
+is $b_j$.  The substituted second equations are precisely the recurrence
+for the pairs $(u_{j-1}^+,u_j^-)$ displayed above.  After one circuit the
+residual condition is $(M-I)(u_{n-1}^+,u_0^-)^{\mathsf T}=0$, where
+$M=T_{r_{n-1}}\cdots T_{r_0}$.  More explicitly, after the $n$ pivots
+$b_j$, use the coefficients $-1$ of
+$u_{j+1}^-$ in $n-2$ consecutive recurrence equations as unit pivots.
+The two equations left are the displayed residual system, up to
+triangular row additions of determinant one.  Hence the
+Schur-complement determinant is
+$\pm\prod_jb_j\det(M-I)$; comparison with the leading coefficient
+$+\lambda^{2n}$ fixes the sign as
+$-\prod_jb_j\det(M-I)$.  Since $\det M=1$, one has
+$-\det(M-I)=\operatorname{tr}M-2$.  Consequently
 \begin{equation}\label{eq:general-transfer-determinant}
  \det(\lambda I-L_n(r_0,\ldots,r_{n-1}))
  =\left(\prod_{j=0}^{n-1}b_j\right)
@@ -654,15 +662,18 @@ for $n\equiv3\pmod4$, and therefore
 \begin{equation}\label{eq:flat-isotropic-projection}
  d^{\mathsf T}\Pi d=0.
 \end{equation}
-The eigenspace of $N$ is
+The bulk relations derived above show directly that the eigenspace of $N$ is
 $K=E\cap\ker d^{\mathsf T}$, which has dimension $n-1$.  If
 $v\in K\cap\operatorname{ran}N$, write $v=Nu$ and apply $\Pi$:
 \begin{equation}\label{eq:flat-range-line}
  v=\Pi Nu=-\delta\,\Pi d\,(d^{\mathsf T}u).
 \end{equation}
-Thus $K\cap\operatorname{ran}N$ has dimension at most one.  It has
-dimension one because the algebraic multiplicity exceeds the geometric
-multiplicity.  Hence exactly one Jordan block at zero for $N$ is
+Thus $K\cap\operatorname{ran}N$ has dimension at most one.  For a finite
+matrix, every Jordan block of size at least two contributes its leading
+eigenvector to $\ker N\cap\operatorname{ran}N$, these vectors are
+independent, and they span that intersection.  The algebraic multiplicity
+exceeds the geometric multiplicity here, so the intersection has
+dimension one.  Hence exactly one Jordan block at zero for $N$ is
 nontrivial.  It is a $J_2$ when the algebraic multiplicity is $n$, and
 the additional algebraic order at $\delta=-2/(n+1)$ makes that same
 block a $J_3$.  This proves all six cases and excludes the alternative
@@ -682,7 +693,7 @@ by Lemma \ref{lem:no-coincidences}.  This proves the final classification
 without asserting cyclicity at the removed flat primary component.
 \end{proof}
 
-\begin{corollary}[Finite algebraic exceptional set]\label{cor:resultant}
+\begin{corollary}[Finite-ring algebraic exceptional locus]\label{cor:resultant}
 For fixed $n$, all non-flat affected exceptional parameters lie on the
 explicit algebraic set
 \[
@@ -719,6 +730,15 @@ as the standard branch on $x\in\C\setminus[-1,1]$ satisfying
 $s/x\to1$ as $|x|\to\infty$.  Equivalently, it is the branch satisfying
 $s(\lambda)\sim x(\lambda)$ as $|\lambda|\to\infty$.  Put $z=x-s$, so
 $|z|<1$.
+
+Let $L_\infty^{(0)}$ act on $\ell^2(\Z;\C^2)$ by
+\eqref{eq:generator-plus}--\eqref{eq:generator-minus} with every local
+rate equal to $\omega$, and let
+$L_\infty=L_\infty^{(0)}-\delta dd^{\mathsf T}$, where now $d$ is the
+polarization vector at the origin.  These operators are bounded because
+they are finite linear combinations of bilateral shifts and bounded
+multiplication operators.  Infinite-line eigenvalues below always mean
+$\ell^2$ eigenvalues of $L_\infty$.
 \end{definition}
 
 \begin{theorem}[Infinite-line localization criterion]
@@ -785,7 +805,14 @@ The polarization entry of the bulk resolvent at the defect site is
        \frac1{2\pi}\int_0^{2\pi}\frac{dq}{x-\cos q}\right]\\
  &=\frac1{2a}\left(1+\frac{\lambda+1-x}{s}\right).
 \end{align*}
-The rank-one eigenvalue equation is \eqref{eq:localization-secular}.  Since
+If $(\lambda-L_\infty)u=0$, then
+\[
+ u=-\delta(\lambda-L_\infty^{(0)})^{-1}d\,(d^{\mathsf T}u).
+\]
+The scalar $d^{\mathsf T}u$ cannot vanish unless $u=0$.  Applying
+$d^{\mathsf T}$ therefore gives \eqref{eq:localization-secular}.
+Conversely, when that scalar equation holds, the displayed resolvent
+vector is a nonzero $\ell^2$ eigenvector.  Since
 $x=(z+z^{-1})/2$ and $s=(z^{-1}-z)/2$, elementary simplification gives
 the second expression in \eqref{eq:localization-green}, and the Green
 kernel decays as $z^{|j|}$.  Clearing the denominator in
@@ -826,8 +853,9 @@ $\lambda_\infty$, and
 \[
  \lambda_n-\lambda_\infty=O(|z_\infty|^n).
 \]
-The corresponding right eigenvector has site mass bounded by
-$C|z_\infty|^{2\operatorname{dist}(j,0)}$ after normalization.
+If the corresponding right eigenvector is normalized in $\ell^2$, define
+its site mass as $|u_j^+|^2+|u_j^-|^2$.  This mass is bounded by
+$C|z_\infty|^{2\operatorname{dist}(j,0)}$.
 In the compact case \eqref{eq:compact-localization}, the infinite and
 finite eigenvalues agree exactly and the eigenvector is supported where
 $\operatorname{dist}(j,0)\le1$.
@@ -864,9 +892,16 @@ Equation
 on $B$ by $C_Br^n$: for the derivative, the only additional factor is
 $n\rho^{n-1}=O(r^n)$.  Rouch\'e's theorem on $\partial B$, followed by
 the simple-zero estimate at $\lambda_\infty$, gives one zero
-$\lambda_n$.  Evaluation of \eqref{eq:finite-green-error} at
-$\lambda_\infty$, together with
-$z(\lambda_n)=z_\infty+O(\lambda_n-\lambda_\infty)$, gives
+$\lambda_n$ and first yields
+$\lambda_n-\lambda_\infty=O(r^n)$.  The root equation and
+\eqref{eq:finite-green-error} then give
+\[
+ |\lambda_n-\lambda_\infty|
+ \le C|z(\lambda_n)|^n.
+\]
+Since $z_\infty\ne0$ and
+$z(\lambda_n)/z_\infty=1+O(r^n)$, one has
+$|z(\lambda_n)/z_\infty|^n=\exp(O(nr^n))=O(1)$.  Hence
 $\lambda_n-\lambda_\infty=O(|z_\infty|^n)$.
 
 The Fourier coefficients of the two bulk resolvent entries are linear
@@ -897,14 +932,101 @@ eigenvalue.  Define
  =-\max\{\Re\lambda:\lambda\in\spec L_n(\omega,\omega_0),
                             \ \lambda\ne0\}.
 \]
-Put $q=2\pi/n$ and
+Put $q=2\pi/n$ and define the protected first-mode decay rate
 \begin{equation}\label{eq:hom-gap}
  \gamma_n^{\rm hom}(\omega)
  =1-\cos q+\omega-\sqrt{\omega^2-\sin^2q},
 \end{equation}
 where the square root is positive once $n$ is sufficiently large for
-fixed $\omega>0$.
+fixed $\omega>0$.  For each fixed $\omega$, this rate equals the
+homogeneous spectral gap for all sufficiently large $n$; no such
+identity is asserted for small $n$, where the tumble mode can be slower.
 \end{definition}
+
+\begin{lemma}[Fixed-rate regular Green estimate]
+\label{lem:fixed-regular-green}
+Let $K\subset(0,\infty)\times[0,\infty)$ be compact and let $A>0$.
+For $(\omega,\omega_0)\in K$, put
+\[
+ p_n=\lambda_1^+,
+ \qquad
+ R_n=-\frac{\omega-r_1}{2r_1},
+ \qquad r_1=\sqrt{\omega^2-\sin^2(2\pi/n)}.
+\]
+For all sufficiently large $n$, define the regular part on
+$|\lambda-p_n|\le A n^{-3}$ by
+\[
+ G_n^{\rm reg}(\lambda)
+ =G_n(\lambda)-\frac{2R_n}{n(\lambda-p_n)}.
+\]
+There is $C=C(K,A)$ such that throughout this disk
+\begin{equation}\label{eq:fixed-regular-green-bounds}
+ \left|G_n^{\rm reg}(\lambda)-\frac1{2(1+\omega)}\right|
+ \le \frac Cn,
+ \qquad
+ \left|(G_n^{\rm reg})'(\lambda)\right|\le Cn.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Write $q_k^*=2\pi\min(k,n-k)/n$.  Choose $\eta>0$, uniformly for
+$(\omega,\omega_0)\in K$, so that
+$|\sin q|\le\omega/2$ for $0\le q\le\eta$.  On this interval put
+\[
+ p^\pm(q)=\cos q-1-\omega
+       \pm\sqrt{\omega^2-\sin^2q},
+ \qquad
+ R^+(q)=-\frac{\omega-\sqrt{\omega^2-\sin^2q}}
+                   {2\sqrt{\omega^2-\sin^2q}}.
+\]
+Taylor's theorem with remainder, applied uniformly on the compact
+$\omega$-projection of $K$, gives constants $c,C>0$ such that
+\begin{align}
+ c q^2&\le -p^+(q)\le Cq^2,
+ &|R^+(q)|&\le Cq^2,\label{eq:fixed-small-wave-bounds}\\
+ |p^+(q_k^*)-p^+(q_1^*)|
+   &\ge c(k^2-1)n^{-2}\qquad(2\le k\le \eta n/(2\pi)).
+ \label{eq:fixed-pole-spacing}
+\end{align}
+For the last inequality, regard $p^+(q)$ as a function of $q^2$;
+its derivative at zero is $-(1+\omega)/(2\omega)$ and, after decreasing
+$\eta$, its modulus is bounded below by a positive constant.  The fast
+root $p^-(q)$ stays a fixed distance from zero on $[0,\eta]$.
+For $\eta\le q\le\pi$, both roots stay a fixed distance from zero:
+the real-part dissipation of the homogeneous Fourier block can vanish
+only at $q=0$ in the density direction, and the Heine--Borel theorem
+applied to the remaining compact parameter set supplies a uniform
+positive distance.
+
+For an interior paired wave number, partial fractions give
+\[
+ \frac{\lambda+1-\cos q_k}{D_k(\lambda)}
+ =\frac{R^+(q_k^*)}{\lambda-p^+(q_k^*)}
+  +\frac{1-R^+(q_k^*)}{\lambda-p^-(q_k^*)}.
+\]
+Let $S_n$ be the convex hull of zero and
+$\{|\lambda-p_n|\le A n^{-3}\}$.  Every point of $S_n$ lies to the
+right of the second slow pole by at least
+$c(k^2-1)n^{-2}$ at index $k\ge2$, after decreasing $c$ and increasing
+$n$.  Hence equations
+\eqref{eq:fixed-small-wave-bounds}--\eqref{eq:fixed-pole-spacing}
+bound the derivative of the regular slow-pole sum throughout $S_n$ by
+\[
+ Cn\sum_{k=2}^\infty\frac{k^2}{(k^2-1)^2}\le C'n.
+\]
+The fast-pole terms, the wave numbers $q_k^*\ge\eta$, and the endpoint
+terms have total derivative $O(1)$.  This proves the derivative bound in
+\eqref{eq:fixed-regular-green-bounds}.
+
+At $\lambda=0$, every unpaired nonzero-wave Fourier summand is exactly
+$1/[2(1+\omega)]$.  The $q=0$ term and the removed first-pole
+term each change the average by $O(n^{-1})$, using
+\eqref{eq:fixed-small-wave-bounds}.  Hence
+$G_n^{\rm reg}(0)=1/[2(1+\omega)]+O(n^{-1})$.
+Finally $|p_n|=O(n^{-2})$, so integration of the derivative bound along
+the segment from zero to the displayed disk proves the first bound in
+\eqref{eq:fixed-regular-green-bounds}.
+\end{proof}
 
 \begin{lemma}[Protected first mode and affected pole]
 \label{lem:gap-pole}
@@ -933,27 +1055,140 @@ Thus
  G_n(\lambda)=\frac{2R_1}{n(\lambda-\lambda_1^+)}
                   +G_n^{\rm reg}(\lambda).
 \]
-At $\lambda=0$, every nonzero-wave summand is exactly
-$1/[2(1+\omega)]$.  Splitting the sum into
-$|q_k|\le n^{-1/2}$ and its complement and using
-$\lambda_1^+=O(n^{-2})$ gives
+If $\delta=0$, the affected root equals the protected root and the
+formula follows.  Suppose $\delta\ne0$ and put
 \[
- G_n^{\rm reg}(\lambda_1^+)
- =\frac1{2(1+\omega)}+O(n^{-1}),
- \qquad
- (G_n^{\rm reg})'(\lambda)=O(n)
+ M(\lambda)=1+2\delta G_n^{\rm reg}(\lambda),
+ \qquad M_0=\frac{1+\omega_0}{1+\omega}.
 \]
-for $|\lambda-\lambda_1^+|=O(n^{-3})$.  Solving
-$1+2\delta G_n=0$ gives
+Lemma \ref{lem:fixed-regular-green} gives, uniformly on every fixed
+$O(n^{-3})$ disk about $\lambda_1^+$,
+\[
+ M(\lambda)=M_0+O(|\delta|n^{-1}),
+ \qquad M'(\lambda)=O(|\delta|n).
+\]
+The pole-cleared secular equation is
+\[
+ h_n(\lambda):=(\lambda-\lambda_1^+)M(\lambda)
+                  +\frac{4\delta R_1}{n}=0.
+\]
+Its affine comparison has the zero
+\[
+ \lambda_* -\lambda_1^+=-\frac{4\delta R_1}{nM_0}=O(|\delta|n^{-3}).
+\]
+On a circle of radius $C|\delta|n^{-4}$ about $\lambda_*$, the
+difference between $h_n$ and
+$M_0(\lambda-\lambda_*)$ is at most
+$C_1\delta^2n^{-4}+O(\delta^2n^{-5})$.  Since $\delta$ ranges over a
+fixed bounded set, choosing $C$ larger than $C_1|\delta|/M_0$ makes the
+affine term strictly dominant.  Rouch\'e's theorem gives a unique root
+in this circle.  Therefore
 \[
  \lambda_{1,-}-\lambda_1^+
  =\frac{2\delta(\omega-r_1)}{nr_1}
     \frac{1}{1+\delta/(1+\omega)}+O(|\delta|n^{-4}),
 \]
-which expands to \eqref{eq:affected-gap-shift}.  The proportional
-remainder follows because the secular equation is identical to the
-homogeneous one at $\delta=0$; tracking the estimates for the regular
-part above leaves a factor $\delta$ in every omitted term.
+where the constant is uniform on the compact parameter sets of the
+lemma.  Finally
+$(\omega-r_1)/r_1=q^2/(2\omega^2)+O(q^4)$, which proves
+\eqref{eq:affected-gap-shift}.
+\end{proof}
+
+\begin{lemma}[Fixed-rate threshold Green bounds]
+\label{lem:fixed-threshold-green}
+Fix a compact $K\subset(0,\infty)\times[0,\infty)$, put
+$D=(1+\omega)/(2\omega)$ and $g_0=1/[2(1+\omega)]$, and let
+$p_n=\lambda_1^+$.  The following estimates hold uniformly for
+$(\omega,\omega_0)\in K$.
+\begin{enumerate}
+\item For every $M<\infty$ there is $C_M$ such that, whenever
+  $\lambda=\zeta/n^2$, $|\zeta|\le M$, and
+  \[
+    \Re\lambda\ge\Re p_n-\pi^2D n^{-2},
+    \qquad |\lambda-p_n|\ge A n^{-3},\qquad A\ge1,
+  \]
+  \begin{equation}\label{eq:fixed-bounded-threshold-bound}
+   |G_n(\lambda)-g_0|\le \frac{C_M}{A}+\frac{C_M}{n}.
+  \end{equation}
+\item If $\lambda_n\to0$ satisfies
+  $-C n^{-2}\le\Re\lambda_n\le0$ and
+  $n^2|\lambda_n|\to\infty$, then
+  \begin{equation}\label{eq:fixed-unbounded-threshold-limit}
+    G_n(\lambda_n)=g_0+o(1).
+  \end{equation}
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Use the exact identities
+\begin{equation}\label{eq:fixed-exact-x-identities}
+ x-1=\frac{\lambda(\lambda+2\omega)}{2a},
+ \qquad
+ \lambda+1-x=\frac{\lambda(\lambda+2)}{2a}.
+\end{equation}
+For $\lambda=\zeta/n^2$, choose either local branch of
+$w_n=n\operatorname{arccosh}x$.  Since all expressions below are even
+in $w_n$, the choice is immaterial.  Taylor's theorem on $|\zeta|\le M$
+and \eqref{eq:fixed-exact-x-identities} give
+\begin{align}
+ w_n^2&=\frac{\zeta}{D}+O_M(n^{-2}),\label{eq:fixed-threshold-w}\\
+ \frac{\lambda+1-x}{2a\sinh(w_n/n)}
+  &=\frac{w_n}{4\omega(1+\omega)n}+O_M(n^{-3}).
+  \label{eq:fixed-threshold-coefficient}
+\end{align}
+Here the quotients at $w_n=0$ mean their analytic continuations.  To
+verify the second line without dividing by a small $w_n$, expand
+$\cosh(w_n/n)-1=x-1$: it gives
+$\zeta=(1+\omega)w_n^2/(2\omega)+O_M(n^{-2})$, and substitution into
+the second identity in \eqref{eq:fixed-exact-x-identities} gives
+\eqref{eq:fixed-threshold-coefficient}.
+
+Since $z^n=e^{-w_n}$, the exact finite Green formula becomes
+\begin{equation}\label{eq:fixed-threshold-green-expanded}
+ G_n(\zeta/n^2)=g_0+
+ \frac{w_n}{4\omega(1+\omega)n}\coth(w_n/2)+E_n,
+\end{equation}
+where
+\[
+ |E_n|\le C_Mn^{-2}+C_Mn^{-3}|\coth(w_n/2)|.
+\]
+The only nonzero pole in the stated scaled half-plane has
+$w_n=2\pi\mathrm i$ up to sign and is exactly $\lambda=p_n$.
+The derivative of the analytic map $\zeta\mapsto w_n$ at this pole is
+bounded above and below away from zero.  The complex inverse-function
+theorem, uniformly on the compact parameter set, therefore gives
+$|w_n-2\pi\mathrm i|\ge cA/n$ outside
+$|\lambda-p_n|<A n^{-3}$.  On a fundamental strip,
+\begin{equation}\label{eq:coth-distance-bound}
+ |\coth(w/2)|\le C\left(1+
+       \operatorname{dist}(w,2\pi\mathrm i\Z)^{-1}\right);
+\end{equation}
+indeed, subtract the nearest $2\pi\mathrm i\ell$, use
+$\sinh(w/2)=w/2+O(w^3)$ for $|w|\le1$, and use continuity on the
+remaining closed strip together with $\coth(w/2)\to\pm1$ as
+$\Re w\to\pm\infty$.  Equations
+\eqref{eq:fixed-threshold-green-expanded}--\eqref{eq:coth-distance-bound}
+prove \eqref{eq:fixed-bounded-threshold-bound}.
+
+For item 2, the real-part assumptions imply
+$|\Im\lambda_n|/|\lambda_n|\to1$.  By the first identity in
+\eqref{eq:fixed-exact-x-identities}, $x-1$ lies, for large $n$, in one
+of two closed sectors about the positive or negative imaginary axis.
+The expansion
+\[
+ \operatorname{arccosh}(1+u)=\sqrt{2u}\,(1+O(u))
+\]
+on those sectors gives
+$\Re\operatorname{arccosh}x\ge c\sqrt{|\lambda_n|}$.  Hence
+\[
+ |z(\lambda_n)|^n
+ \le\exp(-cn\sqrt{|\lambda_n|})\longrightarrow0.
+\]
+Moreover, the two identities in
+\eqref{eq:fixed-exact-x-identities} give
+$|(\lambda_n+1-x)/s|\le C\sqrt{|\lambda_n|}$.  Substitution in
+\eqref{eq:finite-green-z} now proves
+\eqref{eq:fixed-unbounded-threshold-limit}.
 \end{proof}
 
 \begin{lemma}[Right-edge root separation]\label{lem:right-edge-separation}
@@ -1005,8 +1240,13 @@ theorem places every finite-ring eigenvalue in a fixed disk and in the
 closed left half-plane.  If the desired exclusion failed, there would
 be $\epsilon>0$ and a sequence of affected zeros in $\Omega_n$ with
 $|\lambda|\ge\epsilon$; a subsequence would converge to
-$\lambda_*\ne0$ with $\Re\lambda_*=0$.  The bulk spectral set meets the
-imaginary axis only at zero, so \eqref{eq:finite-green-error} gives
+$\lambda_*\ne0$ with $\Re\lambda_*=0$.  For a bulk Bloch vector at
+wave number $q$, the real part of its quadratic form is the negative of
+$(1-\cos q)$ times its squared norm, together with the nonnegative
+tumbling form.  Equality therefore forces $q=0$ and equal orientation
+components, and the corresponding eigenvalue is zero.  Thus the bulk
+spectral set meets the imaginary axis only at zero, so
+\eqref{eq:finite-green-error} gives
 $G_n\to g_\infty$ locally uniformly at $\lambda_*$.  The limiting
 secular equation would produce an $\ell^2$ eigenvector $u$ of the
 infinite defective generator with eigenvalue $\lambda_*$.  This is
@@ -1016,68 +1256,44 @@ impossible because
  =\frac12\sum_{j,\sigma}|u_{j+1}^\sigma-u_j^\sigma|^2
    +\sum_j\omega_j|u_j^+-u_j^-|^2.
 \end{equation}
+Here \eqref{eq:infinite-dissipation} follows by expanding the inner
+product, shifting the two hopping sums, and pairing the two tumbling
+terms at each site.  These operations are valid first for finitely
+supported vectors and then for all $u\in\ell^2$ by density and
+boundedness of $L_\infty$.
 Equality in \eqref{eq:infinite-dissipation} forces an $\ell^2$ vector to
 vanish.  The subsequence contradiction therefore supplies
 $\epsilon>0$ such that no affected zero in $\Omega_n$ can satisfy
 $|\lambda|\ge\epsilon$.
 
-It remains to exhaust the zeros tending to zero.  Put $\lambda=\zeta/n^2$
-and, using meromorphic continuation of \eqref{eq:finite-green-z}, choose
-either local branch of
-\[
- w_n(\zeta)=n\operatorname{arccosh}x(\zeta/n^2),
- \qquad z(\zeta/n^2)^n=e^{-w_n(\zeta)}.
-\]
-The quantities $w_n^2$ and $w_n\coth(w_n/2)$ below are even in $w_n$,
-so the choice does not affect the argument, including on the continued
-bulk cut.
-The definitions of $a$ and $x$ give
-\begin{equation}\label{eq:fixed-threshold-expansions}
- x-1=\frac{\omega}{1+\omega}\lambda+O(\lambda^2),
- \qquad
- \lambda+1-x=\frac{\lambda}{1+\omega}+O(\lambda^2).
-\end{equation}
-Since $s=\sinh(w_n/n)$, equations
-\eqref{eq:finite-green-z} and \eqref{eq:fixed-threshold-expansions} give the
-uniform expansion on bounded $\zeta$-sets away from its poles
-\begin{align}
- w_n(\zeta)^2&=\frac{\zeta}{D}+O(n^{-2}),
- \label{eq:fixed-scaled-w}\\
- G_n(\zeta/n^2)
- &=g_0+\frac{w_n(\zeta)}{4\omega(1+\omega)n}
-       \coth\!\left(\frac{w_n(\zeta)}2\right)+O(n^{-2}).
- \label{eq:fixed-scaled-green}
-\end{align}
-The error in \eqref{eq:fixed-scaled-green} remains $O(n^{-2})$ when the
-distance from a nonzero pole of the hyperbolic cotangent is at least
-$A/n$, for fixed $A>0$.  The poles in the limiting $\zeta$-plane are
-$-4\pi^2Dk^2$.  The scaled half-plane $n^2\Omega_n$ contains only the
-first one, $-4\pi^2D$.  Near that pole the second term in
-\eqref{eq:fixed-scaled-green} is bounded by $C/A$ outside
-$|\lambda-\lambda_1^+|<A n^{-3}$.  Choose $A$ so that
-$2|\delta|C/A<M_0/4$.  After increasing $n$,
-\eqref{eq:fixed-scaled-green} gives
+It remains to exhaust the affected zeros that tend to zero.  We first
+choose $A$ so large that the local constant in
+Lemma~\ref{lem:fixed-threshold-green}, at the limiting first pole, obeys
+$2|\delta|C/A<M_0/4$.  We claim that, after increasing $n$,
 \begin{equation}\label{eq:fixed-exclusion-margin}
  |f_n(\lambda)|\ge \frac{M_0}{2}
 \end{equation}
-there, outside a disk
-$|\lambda-\lambda_1^+|<A n^{-3}$, provided $A$ and then $n$ are large
-enough.  If instead $\lambda\in\Omega_n$ tends to zero while
-$n^2|\lambda|\to\infty$, then its imaginary part dominates its negative
-real part.  Since $x-1=\omega\lambda/(1+\omega)+O(\lambda^2)$, the
-standard square-root expansion of $\operatorname{arccosh}$ gives
-$\Re\operatorname{arccosh}x(\lambda)\ge c\sqrt{|\lambda|}$.
-Consequently $z(\lambda)^n\to0$, and
-\eqref{eq:finite-green-z} again gives $G_n(\lambda)=g_0+o(1)$ and
-\eqref{eq:fixed-exclusion-margin}.  These two cases exhaust the region
-near zero.
+throughout $\Omega_n$ near zero, apart from
+$|\lambda-\lambda_1^+|<A n^{-3}$.  Otherwise there would be a sequence
+$\lambda_n$ violating \eqref{eq:fixed-exclusion-margin}.  Pass to a
+subsequence according as $\zeta_n=n^2\lambda_n$ is bounded or unbounded.
+In the bounded case, pass once more so that $\zeta_n\to\zeta_*$.  If
+$\zeta_*$ is not the limiting first pole, the expansion in the proof of
+Lemma~\ref{lem:fixed-threshold-green} gives $G_n(\lambda_n)\to g_0$.
+If it is the limiting first pole, the first assertion of that lemma and
+the choice of $A$ give
+$|G_n(\lambda_n)-g_0|\le C/A+o(1)$.  In both alternatives,
+$|f_n(\lambda_n)|>M_0/2$ for large $n$, a contradiction.  In the
+unbounded case, the second assertion of the lemma gives
+$G_n(\lambda_n)=g_0+o(1)$ and the same contradiction.  This proves
+\eqref{eq:fixed-exclusion-margin}.
 
 Finally, on the circle $|\lambda-\lambda_1^+|=A n^{-3}$ write
 \[
  G_n(\lambda)=\frac{2R_1}{n(\lambda-\lambda_1^+)}
                  +G_n^{\rm reg}(\lambda).
 \]
-Equations \eqref{eq:fixed-scaled-green} and
+Lemma~\ref{lem:fixed-regular-green} and
 \eqref{eq:threshold-secular-margin} give
 $1+2\delta G_n^{\rm reg}=M_0+O(n^{-1})$.  After multiplication by
 $\lambda-\lambda_1^+$, the secular equation becomes
@@ -1169,14 +1385,287 @@ $n$, so Theorem \ref{thm:fixed-gap} applies.  Item 1 follows by the same
 sign test and compact-uniform expansion.
 \end{proof}
 
+\begin{definition}[Critical homogeneous poles and residues]
+\label{def:critical-poles}
+For $\omega=\alpha/n$ and $k=2\pi$, put
+\begin{align}
+ p_{\ell,n}^{\pm}
+ &=\cos(\ell k/n)-1-\frac\alpha n
+ \pm\sqrt{\frac{\alpha^2}{n^2}-\sin^2(\ell k/n)},\notag\\
+ R_{\ell,n}^\pm
+ &=\frac{p_{\ell,n}^\pm+1-\cos(\ell k/n)}
+       {p_{\ell,n}^\pm-p_{\ell,n}^\mp}.
+ \label{eq:critical-pole-fraction}
+\end{align}
+When the two poles are distinct, their contribution to $G_n$ is
+$2R_{\ell,n}^\pm/
+\{n(\lambda-p_{\ell,n}^\pm)\}$ for the indicated sign.
+\end{definition}
+
+\begin{lemma}[Critical Green limit and pole remainders]
+\label{lem:critical-green-local}
+Set $\omega=\alpha/n$, where $\alpha>0$ is fixed, and put $k=2\pi$.
+For $\nu\in\C$, define the meromorphic function
+\begin{equation}\label{eq:critical-green-limit}
+ \mathcal G_\alpha(\nu)
+ =\frac12\left[1+\frac{\nu}{\kappa}
+                   \coth\!\left(\frac\kappa2\right)\right],
+ \qquad \kappa^2=\nu(\nu+2\alpha),
+\end{equation}
+where the right-hand side is independent of the choice of square root
+and is interpreted by meromorphic continuation at $\kappa=0$.  Then:
+\begin{enumerate}
+\item $G_n(\nu/n)\to\mathcal G_\alpha(\nu)$ locally uniformly on every
+  compact set containing no pole of \eqref{eq:critical-green-limit}.
+\item Fix $\ell\ge1$ with $\alpha\ne\ell k$, and let
+  $p_{\ell,n}^\pm$ and $R_{\ell,n}^\pm$ be given by
+  \eqref{eq:critical-pole-fraction}.  There are $\eta,C>0$ such
+  that
+  \begin{equation}\label{eq:critical-simple-regular-bound}
+   \left|G_n(\lambda)-
+       \frac{2R_{\ell,n}^\pm}
+            {n(\lambda-p_{\ell,n}^\pm)}\right|\le C
+  \end{equation}
+  whenever $|n\lambda-np_{\ell,n}^\pm|\le\eta$, for all sufficiently
+  large $n$.
+\item If $\alpha=k$, put
+  \[
+   \lambda_c=\cos(k/n)-1-k/n,
+   \qquad r_n=\sqrt{(k/n)^2-\sin^2(k/n)}.
+  \]
+  There are $\eta,C>0$ and analytic functions $H_n$ on
+  $|n(\lambda-\lambda_c)|\le\eta$ such that
+  \begin{equation}\label{eq:critical-grouped-green}
+   G_n(\lambda)=
+   \frac{2(\lambda-\lambda_c-k/n)}
+        {n\{(\lambda-\lambda_c)^2-r_n^2\}}+H_n(\lambda),
+   \qquad |H_n(\lambda)|\le C.
+  \end{equation}
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Let $w_n(\nu)=n\operatorname{arccosh}x(\nu/n)$ on any local branch.
+The exact identities \eqref{eq:fixed-exact-x-identities} give
+\begin{align}
+ \cosh(w_n/n)
+ &=1+\frac{\nu(\nu+2\alpha)}
+           {2n^2\{1+(\nu+\alpha)/n\}},
+ \label{eq:critical-exact-w}\\
+ \frac{\lambda+1-x}{s}
+ &=\frac{\nu(2+\nu/n)}
+ {2n\{1+(\nu+\alpha)/n\}\sinh(w_n/n)},
+ \qquad \lambda=\nu/n.\label{eq:critical-exact-coefficient}
+\end{align}
+On a compact $\nu$-set, Taylor's theorem applied to
+\eqref{eq:critical-exact-w} yields
+$w_n^2=\nu(\nu+2\alpha)+O(n^{-1})$.  Substitution of
+\eqref{eq:critical-exact-coefficient} into the exact formula
+\eqref{eq:finite-green-z}, with
+$(1+z^n)/(1-z^n)=\coth(w_n/2)$, proves item 1.  The formula is even in
+$w_n$, so the conclusion agrees on overlapping branch neighborhoods.
+
+For item 2, the limiting poles are
+\[
+ \nu_\ell^\pm=-\alpha\pm
+       \sqrt{\alpha^2-\ell^2k^2}.
+\]
+The hypothesis $\alpha\ne\ell k$ makes them simple.  Choose a closed
+disk $U$ about one of them that contains no other limiting pole.  For
+large $n$, $G_n(\nu/n)$ has exactly the corresponding pole
+$np_{\ell,n}^\pm$ in $U$, with principal part
+$2R_{\ell,n}^\pm/(\nu-np_{\ell,n}^\pm)$.  Item 1 bounds both the Green
+function and this principal part on $\partial U$.  Their difference is
+analytic in $U$, so the maximum-modulus theorem bounds it throughout a
+smaller concentric disk.  Replacing $\nu$ by $n\lambda$ gives
+\eqref{eq:critical-simple-regular-bound}.
+
+When $\alpha=k$, the two first poles lie at
+$\lambda_c\pm r_n$.  Adding their two summands in
+\eqref{eq:Gfinite} gives exactly the displayed rational term in
+\eqref{eq:critical-grouped-green}.  Choose a fixed disk about $-k$ in
+the $\nu$-plane that contains no other limiting pole.  On its boundary,
+item 1 bounds $G_n(\nu/n)$ and direct inspection bounds the grouped
+term.  Their difference is analytic inside because both first poles
+have been removed.  The maximum-modulus theorem gives the asserted
+uniform bound on a smaller disk.
+\end{proof}
+
+\begin{lemma}[Critical off-pole Green estimate]
+\label{lem:critical-green-off-pole}
+Fix $\alpha>0$, put $\omega=\alpha/n$ and $k=2\pi$, and restrict
+$\lambda$ to an arbitrary fixed disk.  The following estimates hold.
+\begin{enumerate}
+\item Suppose $\alpha\le k$.  For an integer $L\ge1$, set
+  \[
+   B=\frac{k^2}{4}\{L^2+(L+1)^2\},\qquad
+   \Omega_{B,n}=\{\Re\lambda\ge-\alpha/n-B/n^2\}.
+  \]
+  Delete the disks of radius $A n^{-2}$ about all simple homogeneous
+  poles in $\Omega_{B,n}$.  If $\alpha=k$, replace the two disks at the
+  first poles by the disk of radius $A n^{-3/2}$ about their midpoint.
+  There are constants $C$ and $C_B$, independent of $A$ and $n$, such
+  that on the remaining set, for $A\ge1$ and all sufficiently large
+  $n$,
+  \begin{equation}\label{eq:critical-green-exclusion-bound}
+   |G_n(\lambda)|\le
+      C_B\left(1+\frac nA\right)+C\frac n{\sqrt B}.
+  \end{equation}
+\item Suppose $\alpha>k$.  Define
+  \[
+   d_1=\alpha-\sqrt{\alpha^2-k^2},\qquad
+   d_2=\alpha-\Re\sqrt{\alpha^2-4k^2},
+  \]
+  choose $d\in(d_1,d_2)$, and put
+  $\Omega_{d,n}=\{\Re\lambda\ge-d/n\}$.  After deleting the disk of
+  radius $A n^{-2}$ about the slow first pole, one has
+  \begin{equation}\label{eq:critical-green-exclusion-bound-super}
+    |G_n(\lambda)|\le C_d\left(1+\frac nA\right)
+  \end{equation}
+  throughout $\Omega_{d,n}$, for $A\ge1$ and all sufficiently large
+  $n$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Write $w=n\operatorname{arccosh}x$ and
+$\Theta=(\lambda+1-x)/s$.  Besides
+\eqref{eq:finite-green-z}, we use the exact identity
+\begin{equation}\label{eq:critical-theta-square}
+ \Theta^2=
+ \frac{\lambda(\lambda+2)}
+ { (\lambda+2\omega)(\lambda+2+2\omega)}.
+\end{equation}
+It follows by squaring the second identity in
+\eqref{eq:fixed-exact-x-identities} and using
+\[
+ x+1=\frac{(\lambda+2)(\lambda+2+2\omega)}{2a}.
+\]
+The right-edge windows stay a fixed multiple of $n^{-1}$ to the right
+of the tumble pole $-2\omega$.  Consequently $|a|$ is bounded below
+and $|\Theta|$ is bounded there.  If $w$ is near zero, the apparent
+singularity of the cotangent cancels: Taylor expansion in the two exact
+identities gives
+\begin{equation}\label{eq:critical-zero-cancellation}
+ \Theta\coth(w/2)=
+   \frac{\lambda+2}{n(\lambda+2\omega)}+O(1),
+\end{equation}
+uniformly in either window.  This is bounded because
+$|\lambda+2\omega|\ge c(n^{-1}+|\Im\lambda|)$.  Away from $w=0$,
+\eqref{eq:finite-green-z} and \eqref{eq:coth-distance-bound} therefore
+give
+\begin{equation}\label{eq:critical-green-distance-reduction}
+ |G_n(\lambda)|\le C\left\{1+
+       \operatorname{dist}(w,2\pi\mathrm i\Z)^{-1}\right\}.
+\end{equation}
+
+We now bound the distance in \eqref{eq:critical-green-distance-reduction}.
+The exact factorization
+\begin{equation}\label{eq:critical-w-pole-factorization}
+ 2a\{\cosh(w/n)-\cos(\ell k/n)\}
+  =D_\ell(\lambda)
+  =(\lambda-p_{\ell,n}^+)(\lambda-p_{\ell,n}^-)
+\end{equation}
+shows that $w=2\pi\mathrm i\ell$ precisely at the two poles with index
+$\ell$.  Suppose first that
+$\theta=w-2\pi\mathrm i\ell$ has $|\theta|<1$, and choose the
+representative $q=\ell k/n\in[0,\pi]$.  Taylor's theorem gives the
+uniform upper bound
+\begin{equation}\label{eq:critical-cosh-local-bound}
+ |D_\ell(\lambda)|
+ \le C\left(\frac{|\sin q|}{n}|\theta|
+                  +\frac{|\theta|^2}{n^2}\right).
+\end{equation}
+For each of the finitely many simple poles inside $\Omega_{B,n}$, the
+scaled map $\nu=n\lambda\mapsto w$ has a derivative bounded above and
+below at the pole.  The inverse-function theorem and compactness of
+the boundaries of fixed scaled neighborhoods therefore give
+$|w-2\pi\mathrm i\ell|\ge cA/n$ off the deleted disk, once
+$n\ge N(A,B)$.  At $\alpha=k$, write
+$\Delta=\lambda-\lambda_c$.  If
+$|\Delta|\ge A n^{-3/2}$, then
+\[
+ |D_1(\lambda)|=|\Delta^2-r_n^2|\ge cA^2n^{-3},
+ \qquad r_n=O(n^{-2}),
+\]
+and \eqref{eq:critical-cosh-local-bound}, with
+$|\sin(k/n)|\asymp n^{-1}$, gives
+$|w-2\pi\mathrm i|\ge cA^2/n\ge cA/n$.
+
+It remains to control the first pole just outside $\Omega_{B,n}$.
+Choose $q_0\in(0,\pi/2)$.  For $q\le q_0$ and exterior
+$\ell\ge L+1$, the two poles are conjugate for large $n$; write them
+$h_{\ell,n}\pm\mathrm i t_{\ell,n}$.  Their horizontal distance from
+the window is
+\[
+ u_{\ell,n}=1-\cos(\ell k/n)-B/n^2.
+\]
+The midpoint definition of $B$ and the expansion
+$1-\cos q=q^2/2+O(q^4)$ show first that
+$u_{L+1,n}\ge c\sqrt B\,n^{-2}$ and then, by monotonicity of
+$1-\cos q$ on $[0,q_0]$, that the same lower bound holds for every
+such exterior index.  Moreover
+$t_{\ell,n}=\sqrt{\sin^2q-\alpha^2/n^2}\ge c q$ because
+$\ell\ge L+1\ge2$ and $\alpha\le k$.  For $u\ge0$ and real $y,t$,
+\begin{equation}\label{eq:critical-conjugate-product-bound}
+ |(u+\mathrm i(y-t))(u+\mathrm i(y+t))|\ge2u|t|;
+\end{equation}
+this follows by squaring both sides and completing the square in
+$y^2$.  Consequently the right side of
+\eqref{eq:critical-w-pole-factorization} is at least
+$c u_{\ell,n}q$.  Since $q\ge2k/n$ and $|\theta|<1$,
+\eqref{eq:critical-cosh-local-bound} is at most
+$Cq|\theta|/n$.  Hence
+$|\theta|\ge cn u_{\ell,n}\ge c\sqrt B/n$.
+
+For $q\in[q_0,\pi]$, both homogeneous poles have real part at most
+$-c(q_0)<0$, whereas the window boundary tends to zero.  Thus
+$|D_\ell(\lambda)|\ge c(q_0)^2$.  This contradicts
+\eqref{eq:critical-cosh-local-bound} when $|\theta|<1$ and $n$ is
+large, so in this range the distance is at least one.  We have proved
+\[
+ \operatorname{dist}(w,2\pi\mathrm i\Z)
+ \ge c\min\{1,A/n,\sqrt B/n\}
+\]
+outside the deleted disks.  Combining this with
+\eqref{eq:critical-green-distance-reduction} proves item 1.
+
+For $\alpha>k$, the choice $d_1<d<d_2$ leaves only the slow first pole
+in $\Omega_{d,n}$.  The scaled inverse-function argument gives distance
+$cA/n$ off its disk.  Every other fixed-index pole is separated from
+the window by a positive constant on the $n\lambda$ scale, so the same
+argument gives distance $c$ there.  For growing indices, the horizontal
+separation increases until $q$ is bounded below, where the last
+fixed-distance argument above applies.  Thus
+$\operatorname{dist}(w,2\pi\mathrm i\Z)\ge c\min\{1,A/n\}$, and
+equation
+\eqref{eq:critical-green-distance-reduction} proves item 2.
+\end{proof}
+
+\begin{definition}[Critical first cluster]\label{def:critical-first-cluster}
+Fix a sufficiently large constant $A$.  If $\alpha\ne k$, the critical
+first cluster consists, with algebraic multiplicity, of the protected
+roots $p_{1,n}^\pm$ and the affected roots in the two disks
+$|\lambda-p_{1,n}^\pm|<A n^{-2}$.  If $\alpha=k$, it consists of the
+two protected roots and all affected roots in the disk centered at
+$\lambda_c=\cos(k/n)-1-k/n$ given by
+\[
+ |\lambda-\lambda_c|<A n^{-3/2}.
+\]
+The root counts in the proof below show that this definition is
+independent of any further increase of $A$ once $n$ is sufficiently
+large.
+\end{definition}
+
 \begin{lemma}[Critical right-edge exhaustion]
 \label{lem:critical-exhaustion}
 Set $\omega=\alpha/n$ and $\omega_0=\beta/n$, where
 $\alpha>0$ and $\beta\ge0$ are fixed, and put $k=2\pi$.  For all
 sufficiently large $n$, every nonzero eigenvalue with maximal real part
-belongs to the protected or affected cluster born from
-$q=\pm k/n$.  More precisely, if $\Lambda_{1,n}$ is the largest real
-part within that cluster, then every eigenvalue outside the cluster
+belongs to the critical first cluster of
+Definition~\ref{def:critical-first-cluster}.  More precisely, if
+$\Lambda_{1,n}$ is the largest real part within that cluster, then every
+eigenvalue outside the cluster
 satisfies
 \begin{equation}\label{eq:critical-exhaustion-separation}
  \Re\lambda\le\Lambda_{1,n}-
@@ -1189,107 +1678,39 @@ for a constant $c=c(\alpha,\beta)>0$.
 \end{lemma}
 
 \begin{proof}
-The protected roots are the homogeneous roots, so only the affected
-sector requires an exhaustion argument.  If $\beta=\alpha$, the two
-parity restrictions are homogeneous, the result follows directly from
-their explicit dispersion, and \eqref{eq:critical-uniform-simple-shift}
-below holds with zero shift.  Assume henceforth that
-$b:=\beta-\alpha\ne0$.  Write
-\[
- p_{\ell,n}^{\pm}=\cos(\ell k/n)-1-\frac\alpha n
- \pm\sqrt{\frac{\alpha^2}{n^2}-\sin^2(\ell k/n)}
-\]
-for its homogeneous poles.  Away from a double pole, the paired
-$q=\pm\ell k/n$ contribution to $G_n$ has the partial-fraction form
-\begin{equation}\label{eq:critical-pole-fraction}
- \frac{2R_{\ell,n}^\pm}
-      {n(\lambda-p_{\ell,n}^\pm)},
- \qquad
- R_{\ell,n}^\pm=
- \frac{p_{\ell,n}^\pm+1-\cos(\ell k/n)}
-      {p_{\ell,n}^\pm-p_{\ell,n}^\mp}.
-\end{equation}
+The protected roots are the homogeneous roots from
+Definition~\ref{def:critical-poles}.
+Put $b=\beta-\alpha$.  If $b=0$, the affected polynomial is the
+homogeneous odd factor, so the assertion follows directly from the
+displayed dispersion; the shift formula
+\eqref{eq:critical-uniform-simple-shift} below then holds with zero
+shift.  Assume $b\ne0$.
 
-We first prove an off-pole estimate that exhausts the affected roots.
-Gershgorin's theorem confines all eigenvalues to a fixed disk, so below
-we restrict the right-edge windows to that disk.  If
-$\alpha\le k$, choose $B>0$ large enough to contain the protected first
-root and, when $\alpha<k$, its affected $O(n^{-2})$ displacement scale.
-We take $B$ midway between two consecutive fixed-index coefficients
-$\ell^2k^2/2$ and consider
-\[
- \Omega_{B,n}=\left\{\Re\lambda\ge
-             -\frac\alpha n-\frac B{n^2}\right\};
-\]
-if $\alpha>k$, choose $d$ strictly between
-\[
- d_1=\alpha-\sqrt{\alpha^2-k^2},\qquad
- d_2=\alpha-\Re\sqrt{\alpha^2-4k^2},
-\]
-and put $\Omega_{d,n}=\{\Re\lambda\ge-d/n\}$.  Only finitely many
-fixed-index pole centers lie in $\Omega_{B,n}$: indeed, their indices
-satisfy $1-\cos(\ell k/n)\le Bn^{-2}$.  In $\Omega_{d,n}$ only the slow
-first pole can occur for all sufficiently large $n$.  Remove the disks
-of radius $A n^{-2}$ about these simple poles.  When $\alpha=k$, replace
-the two first-pole disks by the single disk of radius $A n^{-3/2}$ about
-$(p_{1,n}^++p_{1,n}^-)/2$.
-
-On the remaining set the exact Fourier sum satisfies
-\begin{equation}\label{eq:critical-green-exclusion-bound}
- |G_n(\lambda)|\le C_0(B)+C_1\log n
-             +C_2(B)\frac nA+C_3\frac n{\sqrt B}
- \qquad(\alpha\le k),
-\end{equation}
-where $C_1,C_3$ are independent of $A,B,n$ once $B$ exceeds a fixed
-threshold.  For $\alpha>k$ the same bound holds without the
-$C_3n/\sqrt B$ term and with the remaining constants depending on $d$.
-Here is the estimate.  First combine the
-two roots belonging to each quadratic $D_\ell$; this cancellation is
-essential.  For $|q_\ell|\le q_0$, the poles outside the finite set have
-horizontal distance at least
-$c\ell^2n^{-2}-Bn^{-2}$ from $\Omega_{B,n}$.  After scaling imaginary
-parts by $n$, choose the pole whose scaled imaginary part is closest to
-$n\Im\lambda$ and call its index $\ell_0$.  Its contribution is at most
-$Cn/\sqrt B$; the midpoint choice of $B$ gives the required coefficient
-gap at the first exterior index.  The $j$th neighboring index contributes
-at most $C/(1+j)$.
-This gives the last and logarithmic terms in
-\eqref{eq:critical-green-exclusion-bound}.  Each removed simple-pole
-term is at most $Cn/A$ off its disk.  At $\alpha=k$, the exact grouped
-first contribution, with
-$\Delta=\lambda-(p_{1,n}^++p_{1,n}^-)/2$, is
-\[
- \frac{2(\Delta-k/n)}
-      {n\{\Delta^2-(p_{1,n}^+-p_{1,n}^-)^2/4\}},
-\]
-and is at most $Cn/A^2$ outside the $A n^{-3/2}$ disk.  Finally, the
-terms with $|q_\ell|\ge q_0$ have denominators bounded away from zero
-in these right-edge windows and form a bounded Riemann sum.  These four
-estimates prove \eqref{eq:critical-green-exclusion-bound}.
-
-Since $2\delta=2b/n$, first enlarge $B$ so that
-$2|b|C_3/\sqrt B<1/8$, then enlarge $A$ so that
-$2|b|C_2(B)/A<1/8$, and finally increase $n$ so that the constant and
-logarithmic terms contribute less than $1/4$.  In the case $\alpha>k$,
-choose $A$ first and then $n$.  Thus
-\eqref{eq:critical-green-exclusion-bound} implies
+Gershgorin's theorem confines all eigenvalues to a fixed disk.  If
+$\alpha\le k$, choose a midpoint value $B$ from
+Lemma~\ref{lem:critical-green-off-pole}, first so large that the
+protected first root lies strictly inside $\Omega_{B,n}$ and then so that
+$2|b|C/\sqrt B<1/8$.  Next choose $A$ so that
+$2|b|C_B/A<1/8$, and finally increase $n$ until
+$2|b|C_B/n<1/4$.  If $\alpha>k$, use the window $\Omega_{d,n}$ from
+item 2 of that lemma, choose $A$ so that $2|b|C_d/A<1/4$, and then
+increase $n$ so that $2|b|C_d/n<1/4$.  Since $2\delta=2b/n$, the two
+off-pole estimates give in either case
 \begin{equation}\label{eq:critical-secular-exclusion}
  |2\delta G_n(\lambda)|<\frac12.
 \end{equation}
-Thus every zero of $1+2\delta G_n$ in a right-edge window lies in one of
-the displayed pole neighborhoods.
+Thus every affected zero in the chosen right-edge window lies in one of
+the pole neighborhoods specified in that lemma.
 
-We also need the root count inside a simple-pole disk.  There
+For a simple pole in one of these neighborhoods,
+Lemma~\ref{lem:critical-green-local} gives
 \[
  G_n(\lambda)=\frac{2R_{\ell,n}^\pm}
   {n(\lambda-p_{\ell,n}^\pm)}+G_{\ell,n}^{\rm reg}(\lambda),
  \qquad G_{\ell,n}^{\rm reg}=O(1).
 \]
-The last bound follows directly from \eqref{eq:Gfinite}: for the
-remaining small wave numbers the combined quadratic summand is bounded
-by $C/(1+|j^2-\ell^2|)$ up to $j\asymp\sqrt n$, while each of the
-remaining $O(n)$ summands is $O(n^{-1})$.  Multiplication of the secular
-equation by $\lambda-p_{\ell,n}^\pm$ gives
+Multiplication of the secular equation by
+$\lambda-p_{\ell,n}^\pm$ gives
 \begin{equation}\label{eq:critical-simple-rouche}
  (\lambda-p_{\ell,n}^\pm)(1+2\delta G_n)
  =(\lambda-p_{\ell,n}^\pm)
@@ -1311,7 +1732,30 @@ affected zero and
   -4bR_{\ell,n}^\pm n^{-2}+O(n^{-3}).
 \end{equation}
 Together with \eqref{eq:critical-secular-exclusion}, this accounts for
-every affected root in either right-edge window.
+every affected root in either right-edge window except the grouped
+first neighborhood at $\alpha=k$, which belongs to the first cluster
+by Definition~\ref{def:critical-first-cluster}.
+
+At $\alpha=k$, Lemma~\ref{lem:critical-green-local} gives, with
+$\Delta=\lambda-\lambda_c$,
+\begin{equation}\label{eq:critical-grouped-pole-cleared}
+ (\Delta^2-r_n^2)(1+2\delta G_n)
+ = (\Delta^2-r_n^2)\left(1+\frac{2b}{n}H_n\right)
+   +\frac{4b}{n^2}(\Delta-k/n).
+\end{equation}
+On $|\Delta|=A n^{-3/2}$, compare this with
+\[
+ P_{0,n}(\Delta)=\Delta^2-r_n^2
+                 +\frac{4b}{n^2}(\Delta-k/n).
+\]
+For fixed nonzero $b$ and sufficiently large $A$, both zeros of
+$P_{0,n}$ lie strictly inside the circle.  The difference between the
+two sides is $O(A^2n^{-4})$, whereas
+$|P_{0,n}|\ge c_A n^{-3}$ on the circle.  Rouch\'e's theorem therefore
+gives exactly two affected roots in the grouped disk.  If $b=0$, these
+are the two homogeneous odd-sector roots.  This proves the asserted
+root count and the independence from increasing $A$ in
+Definition~\ref{def:critical-first-cluster}.
 
 Suppose first that $\alpha<k$.  For every fixed $\ell\ge1$, the two
 poles are nonreal conjugates and
@@ -1431,46 +1875,56 @@ block is
    =\frac{k^2}{\sqrt3\,n^2}+O(n^{-4}),
 \]
 which proves \eqref{eq:critical-at-slow} when the protected root wins.
-Near the center of this
-block, put
+Near the center of this block, put
 \[
  \lambda_c=\cos(k/n)-1-k/n,\qquad
  r_n=\sqrt{(k/n)^2-\sin^2(k/n)},\qquad
  \Delta=\lambda-\lambda_c.
 \]
-The two $q=\pm k/n$ terms can be retained exactly, while the remaining
-terms are uniformly bounded for $|\Delta|\asymp n^{-3/2}$:
+Lemma~\ref{lem:critical-green-local} gives the uniform identity
 \begin{equation}\label{eq:critical-green-two-terms}
  G_n(\lambda)
- =\frac{2(\Delta-k/n)}{n(\Delta^2-r_n^2)}+O(1)
- =-\frac{2k}{n^2\Delta^2}+\frac{2}{n\Delta}+O(1).
+ =\frac{2(\Delta-k/n)}{n(\Delta^2-r_n^2)}+H_n(\lambda),
+ \qquad |H_n(\lambda)|\le C,
 \end{equation}
-For completeness, the bounded remainder follows by pairing wave numbers
-$\ell$ and $n-\ell$: for each fixed $\ell\ne1$ its magnitude is bounded
-by a constant times $(\ell^2-1)^{-1}$, the sum of these bounds
-converges, and the terms with $|q_\ell|$ bounded away from zero form a
-bounded Riemann sum.
-For $\beta>k$, put $b=\beta-k$.  Substitution of
-$\Delta=n^{-3/2}y$ in $1+2bG_n/n=0$ gives
-$y^2=4kb+O(n^{-1/2})$.  Rouch\'e's theorem on disks of radius
-$C n^{-2}$ about the two approximations, with fixed sufficiently large
-$C$, gives two affected roots
+throughout a fixed $n\Delta$-neighborhood of zero.  In particular this
+bound is uniform on every contour used below.
+
+For $\beta>k$, put $b=\beta-k$, $\epsilon=n^{-1/2}$, and
+$\Delta=n^{-3/2}Y$.  Since
+\[
+ n^4r_n^2=\frac{k^4}{3}+O(n^{-2}),
+\]
+the secular equation, uniformly for $Y$ in a compact set bounded away
+from zero, is
+\begin{equation}\label{eq:critical-fast-scaled-secular}
+ F_n(Y)=1-\frac{4kb}{Y^2}+\frac{4b\epsilon}{Y}
+             +O(\epsilon^2)=0.
+\end{equation}
+The limiting function has simple zeros
+$Y_\pm=\pm2\sqrt{kb}$.  On
+$|Y-Y_\pm|=C\epsilon$, its modulus is bounded below by
+$cC\epsilon$, while the difference in
+\eqref{eq:critical-fast-scaled-secular} is at most $C_1\epsilon$.
+Choosing $C>C_1/c$, Rouch\'e's theorem gives one zero in each disk and
+hence two affected roots
 \[
  \Delta=\mathord\pm2\sqrt{kb}\,n^{-3/2}+O(n^{-2}).
 \]
 The positive displacement gives \eqref{eq:critical-at-fast}.
-For $\beta<k$, put $h=k-\beta>0$ and substitute
-\[
- \Delta=n^{-3/2}\bigl(y+xn^{-1/2}\bigr)
-\]
-in $1-2hG_n/n=0$.  The constant and $n^{-1/2}$ coefficients in
-\eqref{eq:critical-green-two-terms} give, respectively,
-\[
- y^2=-4kh,\qquad x=2h.
-\]
-Rouch\'e's theorem on two disks of radius $C n^{-5/2}$ about the
-resulting approximations, with fixed sufficiently large $C$, gives the
-affected pair
+
+For $\beta<k$, put $h=k-\beta>0$.  With the same scaling, the secular
+equation is
+\begin{equation}\label{eq:critical-slow-scaled-secular}
+ \widetilde F_n(Y)=1+\frac{4kh}{Y^2}
+                    -\frac{4h\epsilon}{Y}+O(\epsilon^2)=0.
+\end{equation}
+Its two leading zeros are $Y_\pm=\pm2\ii\sqrt{kh}$.  Substitution shows
+that $Y_\pm+2h\epsilon$ has residual $O(\epsilon^2)$.  On the circles
+$|Y-(Y_\pm+2h\epsilon)|=C\epsilon^2$, the affine part has modulus at
+least $cC\epsilon^2$ and the remaining error is at most
+$C_1\epsilon^2$.  A second application of Rouch\'e's theorem therefore
+gives the affected pair
 \begin{equation}\label{eq:critical-slow-affected-pair}
  \Delta=\mathord\pm2\ii\sqrt{kh}\,n^{-3/2}
         +2h n^{-2}+O(n^{-5/2}).
@@ -1514,6 +1968,50 @@ Its slow eigenvalue is
                          +\sqrt{\omega^2-q^2}.
 \end{equation}
 \end{definition}
+
+\begin{lemma}[Second-order lattice expansion]
+\label{lem:telegraph-taylor}
+Let $\rho,m\in C^4(\mathbb R/n\Z)$ and sample
+$u_j^\pm=\{\rho(j)\pm m(j)\}/2$.  The homogeneous lattice generator
+induces
+\begin{align}
+ \dot\rho_j&=-m'(j)+\tfrac12\rho''(j)+r_{\rho,j},\notag\\
+ \dot m_j&=-\rho'(j)+\tfrac12m''(j)-2\omega m(j)+r_{m,j},
+ \label{eq:lattice-taylor-system}
+\end{align}
+where
+\begin{align}
+ |r_{\rho,j}|&\le\tfrac16\|m'''\|_\infty
+                    +\tfrac1{24}\|\rho^{(4)}\|_\infty,\notag\\
+ |r_{m,j}|&\le\tfrac16\|\rho'''\|_\infty
+                    +\tfrac1{24}\|m^{(4)}\|_\infty.
+ \label{eq:lattice-taylor-remainder}
+\end{align}
+Thus \eqref{eq:corrected-telegraph-system} is the second-order
+long-wave truncation of the lattice equations, with the remainder
+controlled in the sampled $\ell^\infty$ norm by
+\eqref{eq:lattice-taylor-remainder}.
+\end{lemma}
+
+\begin{proof}
+Adding and subtracting the two homogeneous equations
+\eqref{eq:generator-plus}--\eqref{eq:generator-minus} gives the exact
+sampled identities
+\begin{align*}
+ \dot\rho_j
+ &=\frac{\rho(j-1)+\rho(j+1)}2-\rho(j)
+   +\frac{m(j-1)-m(j+1)}2,\\
+ \dot m_j
+ &=\frac{\rho(j-1)-\rho(j+1)}2
+   +\frac{m(j-1)+m(j+1)}2-m(j)-2\omega m(j).
+\end{align*}
+Taylor's theorem on the unit intervals adjacent to $j$ bounds the
+error in each centered first difference by one sixth of the supremum
+of the third derivative, and the error in each centered second
+difference by one twenty-fourth of the supremum of the fourth
+derivative.  Substitution gives
+\eqref{eq:lattice-taylor-system}--\eqref{eq:lattice-taylor-remainder}.
+\end{proof}
 
 \begin{theorem}[Exact relaxation rate versus telegraph rates]
 \label{thm:telegraph-comparison}
@@ -1585,7 +2083,11 @@ square root is required.  The affected-parity eigenvalues satisfy
  1+\delta\frac{\lambda}{\kappa}
             \coth\left(\frac{n\kappa}{2}\right)=0.
 \end{equation}
-The reflection-even telegraph modes are unchanged.  Formula
+For the involution
+\[
+ {\cal R}(\rho,m)(x)=(\rho(n-x),-m(n-x)),
+\]
+the reflection-even telegraph modes are unchanged.  Formula
 \eqref{eq:telegraph-defect} is the
 continuum counterpart of \eqref{eq:resolvent-form}; the exact lattice
 formula retains $1-\cos q$ and $\sin q$, and
@@ -1642,8 +2144,9 @@ resolvent is
 The series converges normally away from the homogeneous spectrum and
 the last expression supplies its meromorphic continuation when
 $\kappa$ is purely imaginary, in agreement with the direct jump
-calculation.  Finally, reflection-even modes have $m(0)=0$, so the jump
-vanishes and those modes are protected exactly as in Lemma
+calculation.  Finally, a reflection-even vector satisfies
+$m(0+)=-m(n-)$; continuity of $m$ therefore gives $m(0)=0$.  The jump
+vanishes, so these modes are protected exactly as in Lemma
 \ref{lem:protected-sector}.
 \end{proof}
 
@@ -1660,13 +2163,16 @@ its cleared polynomial identity is used at their zeros.
 classify the algebraic and geometric multiplicities of every eigenvalue,
 including every exceptional point.
 \item Theorem \ref{thm:localization} gives an exact criterion and decay
-length for a defect-localized mode.
+length for a defect-localized mode, and Proposition
+\ref{prop:localized-convergence} gives its finite-ring convergence.
 \item Theorems \ref{thm:fixed-gap} and \ref{thm:critical-gap} give the
 fixed-rate, vanishing-defect, and bulk-critical large-$n$ gap
 asymptotics.
-\item Theorem \ref{thm:telegraph-comparison} and Proposition
-\ref{prop:telegraph-defect} compare the exact relaxation rate with the
-standard and diffusion-corrected telegraph approximations.
+\item Lemma \ref{lem:telegraph-taylor}, Theorem
+\ref{thm:telegraph-comparison}, and Proposition
+\ref{prop:telegraph-defect} derive the corrected continuum system and
+compare the exact relaxation rate with the standard and
+diffusion-corrected telegraph approximations.
 \end{enumerate}
 Each item retains the hypotheses stated in its cited theorem: in
 particular, localization is asserted off the bulk spectrum (with the
