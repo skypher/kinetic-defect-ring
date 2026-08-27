@@ -61,6 +61,29 @@ def determinant_audit(n: int, omega: float, omega0: float) -> None:
             raise AssertionError("characteristic formula audit failed")
 
 
+def transfer_audit(n: int, omega: float, omega0: float) -> None:
+    samples = [0.37 + 0.19j, -0.8 + 0.31j, -2.4 + 0.07j]
+    for lam in samples:
+        monodromy = np.eye(2, dtype=complex)
+        rates = [omega0] + [omega] * (n - 1)
+        denominator = 1.0 + 0.0j
+        for rate in rates:
+            b = lam + 1.0 + rate
+            transfer = np.array(
+                [[1.0, rate], [-rate, b * b - rate * rate]],
+                dtype=complex,
+            ) / b
+            monodromy = transfer @ monodromy
+            denominator *= b
+        direct = exact_polynomial(n, omega, omega0, lam)
+        formula = denominator * (np.trace(monodromy) - 2.0)
+        scale = max(1.0, abs(direct), abs(formula))
+        error = abs(direct - formula) / scale
+        print(f"transfer lambda={lam} relative_error={error:.3e}", flush=True)
+        if error > 2.0e-9:
+            raise AssertionError("transfer determinant audit failed")
+
+
 def gap_audit(n: int, omega: float, omega0: float) -> None:
     values = np.linalg.eigvals(generator(n, omega, omega0))
     nonzero = values[np.abs(values) > 1.0e-9]
@@ -139,6 +162,72 @@ def flat_band_audit() -> None:
             raise AssertionError("flat-band Jordan audit failed")
 
 
+def compact_localization_audit() -> None:
+    omega = 2.0
+    omega0 = (omega * omega + 1.0) / (2.0 * omega)
+    lam = -1.0 - omega
+    for n in [4, 7, 12]:
+        shifted = generator(n, omega, omega0) - lam * np.eye(2 * n)
+        singular_values = np.linalg.svd(shifted, compute_uv=False)
+        residual = float(singular_values[-1])
+        print(
+            f"compact_localization n={n} lambda={lam}"
+            f" smallest_singular_value={residual:.3e}",
+            flush=True,
+        )
+        if residual > 2.0e-9:
+            raise AssertionError("compact localization audit failed")
+
+
+def critical_boundary_audit() -> None:
+    k = 2.0 * math.pi
+    n = 10000
+    wave_numbers = 2.0 * math.pi * np.arange(n) / n
+    cosines = np.cos(wave_numbers)
+    sine_squares = np.sin(wave_numbers) ** 2
+    for beta in [0.0, 3.0]:
+        omega = k / n
+        delta = (beta - k) / n
+        h = k - beta
+        center = math.cos(k / n) - 1.0 - omega
+        lam = (
+            center
+            + 2.0j * math.sqrt(k * h) * n ** (-1.5)
+            + 2.0 * h * n ** (-2.0)
+        )
+        for _ in range(20):
+            numerator = lam + 1.0 - cosines
+            denominator = numerator * (
+                lam + 1.0 + 2.0 * omega - cosines
+            ) + sine_squares
+            derivative_denominator = 2.0 * (
+                lam + 1.0 + omega - cosines
+            )
+            green = np.sum(numerator / denominator) / n
+            green_derivative = np.sum(
+                (
+                    denominator
+                    - numerator * derivative_denominator
+                )
+                / (denominator * denominator)
+            ) / n
+            residual = 1.0 + 2.0 * delta * green
+            step = residual / (2.0 * delta * green_derivative)
+            lam -= step
+            if abs(step) < 1.0e-15:
+                break
+        observed = (-lam.real - k / n) * n * n
+        predicted = k * k / 2.0 - 2.0 * h
+        error = abs(observed - predicted)
+        print(
+            f"critical_boundary beta={beta} coefficient={observed:.9g}"
+            f" predicted={predicted:.9g} error={error:.3e}",
+            flush=True,
+        )
+        if error > 2.0e-2:
+            raise AssertionError("critical boundary audit failed")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--n", type=int, default=18)
@@ -146,9 +235,12 @@ def main() -> None:
     parser.add_argument("--omega0", type=float, default=0.4)
     args = parser.parse_args()
     determinant_audit(args.n, args.omega, args.omega0)
+    transfer_audit(args.n, args.omega, args.omega0)
     gap_audit(args.n, args.omega, args.omega0)
     localization_audit(args.omega, args.omega0)
     flat_band_audit()
+    compact_localization_audit()
+    critical_boundary_audit()
 
 
 if __name__ == "__main__":
