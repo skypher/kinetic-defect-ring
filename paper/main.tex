@@ -168,7 +168,9 @@ Spatial inhomogeneity has been studied through position-dependent speed
 {BenDorWoillezKafriKardarSolon2019}, and saturating space-dependent rates
 on the line \cite[Sec.~II, Eqs.~(3)--(4)]{JainChatterjee2024}.  Those
 works emphasize probability laws, steady states, or relaxation in
-extended media.  The present problem instead asks for the full
+extended media.  Persistent lattice walks with site disorder have also
+been studied through random asymmetric transmittances
+\cite{SadjadiMiri2008}.  The present problem instead asks for the full
 finite-ring characteristic polynomial and Jordan structure of a single
 lattice tumbling defect, together with its large-ring spectral ordering.
 
@@ -776,12 +778,26 @@ and, when the denominator is nonzero,
  a=\frac{2\delta z(\omega+z)}{1-z^2+2\delta z},
  \qquad \lambda=a-1-\omega.
 \end{equation}
+The zero-denominator branch in \eqref{eq:localization-recovery} occurs
+precisely when
+\begin{equation}\label{eq:localization-zero-denominator}
+ 0<\omega<1,\qquad
+ \omega_0=\frac{\omega^2+1}{2\omega},\qquad z=-\omega.
+\end{equation}
+At these parameters there are two admissible values
+\begin{equation}\label{eq:localization-zero-denominator-roots}
+ a_\pm=\frac{-\omega^2-1
+       \pm\sqrt{5\omega^4-2\omega^2+1}}{2\omega},
+ \qquad \lambda_\pm=a_\pm-1-\omega,
+\end{equation}
+and both give noncompact localized modes with decay root $z=-\omega$.
 A root of \eqref{eq:localization-cubic} is accepted only when
 \eqref{eq:localization-secular}, or equivalently both
 \eqref{eq:loc-dispersion} and \eqref{eq:loc-match}, is satisfied; this
 removes roots introduced by elimination or by clearing denominators.
 
-There is one additional compact case, at the point where $a=0$.  If
+The value $z=0$, excluded above, gives a further compact case at the
+point where $a=0$.  If
 $\omega\ne1$, then
 \begin{equation}\label{eq:compact-localization}
  \lambda=-1-\omega
@@ -821,6 +837,24 @@ kernel decays as $z^{|j|}$.  Clearing the denominator in
 \eqref{eq:loc-dispersion}.  Eliminating $a$ gives
 \eqref{eq:localization-cubic}, while solving \eqref{eq:loc-match} for
 $a$ gives \eqref{eq:localization-recovery}.
+
+Put $C=1-z^2+2\delta z$.  If $C=0$, the matching equation reduces to
+$2\delta z(\omega+z)=0$.  Since $\delta\ne0$ and $z\ne0$, this forces
+$z=-\omega$, and then $C=0$ is equivalent to
+$\delta=(1-\omega^2)/(2\omega)$.  The condition $|z|<1$ is exactly
+$0<\omega<1$.  Substitution in the dispersion equation gives
+\[
+ a^2+(\omega+\omega^{-1})a+1-\omega^2=0,
+\]
+whose two roots are the values in
+\eqref{eq:localization-zero-denominator-roots}.  Conversely, each root
+satisfies both \eqref{eq:loc-dispersion} and \eqref{eq:loc-match}.
+At this tuning the cubic itself factors as
+\[
+ \frac{1-\omega^2}{\omega}\,z(z+\omega)^2,
+\]
+so its double nonzero root accounts for the two values of $a$ rather
+than for a repeated eigenvalue.
 
 It remains to evaluate the point omitted by division by $a$.  At
 $\lambda=-1-\omega$ the Fourier denominator is the nonzero constant
@@ -1632,11 +1666,33 @@ outside the deleted disks.  Combining this with
 
 For $\alpha>k$, the choice $d_1<d<d_2$ leaves only the slow first pole
 in $\Omega_{d,n}$.  The scaled inverse-function argument gives distance
-$cA/n$ off its disk.  Every other fixed-index pole is separated from
-the window by a positive constant on the $n\lambda$ scale, so the same
-argument gives distance $c$ there.  For growing indices, the horizontal
-separation increases until $q$ is bounded below, where the last
-fixed-distance argument above applies.  Thus
+$cA/n$ off its disk.  Choose an integer $L_0$ with $L_0k>2\alpha$.
+For each fixed $2\le\ell\le L_0$, both pole factors have horizontal
+distance at least $c/n$ from the window.
+The factorization \eqref{eq:critical-w-pole-factorization} and the local
+bound \eqref{eq:critical-cosh-local-bound} give a lower bound
+$c n^{-2}$ and, when $|\theta|<1$, an upper bound
+$C|\theta|n^{-2}$ for $|D_\ell(\lambda)|$.  Thus
+$|w-2\pi\mathrm i\ell|=|\theta|\ge c$; this argument also covers a
+possible coalescence $\alpha=\ell k$.
+
+For $\ell>L_0$ and $q=\ell k/n\le q_0$, the two poles are conjugate,
+with $t_{\ell,n}\ge cq$.  If $h_{\ell,n}$ is their common real part,
+then every $\lambda\in\Omega_{d,n}$ has horizontal separation
+\[
+ \Re\lambda-h_{\ell,n}
+ \ge u_{\ell,n}:=\frac{\alpha-d}{n}+1-\cos q.
+\]
+Equation \eqref{eq:critical-conjugate-product-bound} therefore gives
+$|D_\ell(\lambda)|\ge c u_{\ell,n}q$.  If
+$\theta=w-2\pi\mathrm i\ell$ and $|\theta|<1$, then
+\eqref{eq:critical-cosh-local-bound}, together with $q\ge L_0k/n$,
+gives $|D_\ell(\lambda)|\le Cq|\theta|/n$.  Hence
+\[
+ |\theta|\ge cnu_{\ell,n}\ge c(\alpha-d).
+\]
+For $q\in[q_0,\pi]$, the fixed horizontal separation used in item 1
+again gives distance at least one.  Thus
 $\operatorname{dist}(w,2\pi\mathrm i\Z)\ge c\min\{1,A/n\}$, and
 equation
 \eqref{eq:critical-green-distance-reduction} proves item 2.
@@ -1735,6 +1791,18 @@ Together with \eqref{eq:critical-secular-exclusion}, this accounts for
 every affected root in either right-edge window except the grouped
 first neighborhood at $\alpha=k$, which belongs to the first cluster
 by Definition~\ref{def:critical-first-cluster}.
+
+When $\alpha>k$, the right-edge window contains only the slow first
+pole, whereas Definition~\ref{def:critical-first-cluster} also includes
+the disk about the fast first pole.  Choose a fixed disk about the
+limiting fast pole
+$-\alpha-\sqrt{\alpha^2-k^2}$ on the $n\lambda$ scale.  Lemma
+\ref{lem:critical-green-local} gives the same bounded regular part there,
+and the Rouch\'e comparison in
+\eqref{eq:critical-simple-rouche} applies without change.  Thus that
+disk also contains exactly one affected root, with the expansion
+\eqref{eq:critical-uniform-simple-shift}.  This supplies the root count
+for both disks in Definition~\ref{def:critical-first-cluster}.
 
 At $\alpha=k$, Lemma~\ref{lem:critical-green-local} gives, with
 $\Delta=\lambda-\lambda_c$,
@@ -1944,6 +2012,11 @@ higher, endpoint, and off-pole affected root in both cases.
 
 \section{Telegraph comparison}
 
+The standard one-dimensional telegraph system follows from the
+right- and left-moving continuum equations in
+\cite[Sec.~II, Eqs.~(2.2)--(2.4)]{Schnitzer1993}.  We compare it with
+the next lattice correction before introducing a point defect.
+
 \begin{definition}[Two continuum approximations]\label{def:telegraph}
 For a homogeneous ring of circumference $n$, the standard telegraph
 system is
@@ -2078,7 +2151,8 @@ spectrum, put
 and interpret
 $\kappa^{-1}\coth(n\kappa/2)$ as the even meromorphic function of
 $\kappa$ obtained by analytic continuation; no sign choice for the
-square root is required.  The affected-parity eigenvalues satisfy
+square root is required.  The affected-parity eigenvalues outside the
+homogeneous telegraph spectrum are exactly the zeros of
 \begin{equation}\label{eq:telegraph-defect}
  1+\delta\frac{\lambda}{\kappa}
             \coth\left(\frac{n\kappa}{2}\right)=0.
@@ -2133,6 +2207,14 @@ Substitution of the even hyperbolic-cosine solution into
  =2\delta\lambda\cosh(n\kappa/2),
 \]
 which is exactly \eqref{eq:telegraph-defect}.
+Conversely, if \eqref{eq:telegraph-defect} holds outside the homogeneous
+spectrum, take $A=1$, $B=0$ in the displayed hyperbolic solution and
+put $\rho=-m'/\lambda$.  Equation
+\eqref{eq:telegraph-derivative-jump} and the continuity of $m$ then give
+both conditions in \eqref{eq:telegraph-jump-domain}, so this construction
+is a nonzero eigenfunction.  Moreover
+$m(n-x)=m(x)$ and $\rho(n-x)=-\rho(x)$, hence
+${\cal R}(\rho,m)=-(\rho,m)$ and the eigenfunction has affected parity.
 
 Equivalently, the polarization entry of the homogeneous telegraph
 resolvent is

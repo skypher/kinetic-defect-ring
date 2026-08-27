@@ -206,6 +206,68 @@ def compact_localization_audit() -> None:
             raise AssertionError("compact localization audit failed")
 
 
+def zero_denominator_localization_audit() -> None:
+    omega = 0.5
+    omega0 = (omega * omega + 1.0) / (2.0 * omega)
+    delta = omega0 - omega
+    z = -omega
+    recovery_denominator = 1.0 - z * z + 2.0 * delta * z
+    discriminant = 5.0 * omega**4 - 2.0 * omega * omega + 1.0
+    limiting_eigenvalues = []
+    for sign in [-1.0, 1.0]:
+        a = (
+            -omega * omega
+            - 1.0
+            + sign * math.sqrt(discriminant)
+        ) / (2.0 * omega)
+        lam = a - 1.0 - omega
+        dispersion_defect = (
+            a * a
+            + 1.0
+            - omega * omega
+            - a * (z + 1.0 / z)
+        )
+        match_defect = (
+            a * (1.0 - z * z)
+            + 2.0 * delta * z * (a - omega - z)
+        )
+        green = z * (lam + 1.0 - z) / (a * (1.0 - z * z))
+        secular_defect = 1.0 + 2.0 * delta * green
+        print(
+            "zero_denominator_localization"
+            f" z={z} lambda={lam}"
+            f" recovery_denominator={recovery_denominator:.3e}"
+            f" dispersion_defect={abs(dispersion_defect):.3e}"
+            f" match_defect={abs(match_defect):.3e}"
+            f" secular_defect={abs(secular_defect):.3e}",
+            flush=True,
+        )
+        if max(
+            abs(recovery_denominator),
+            abs(dispersion_defect),
+            abs(match_defect),
+            abs(secular_defect),
+        ) > 2.0e-12:
+            raise AssertionError(
+                "zero-denominator localization identity audit failed"
+            )
+        limiting_eigenvalues.append(lam)
+
+    n = 24
+    finite_values = np.linalg.eigvals(generator(n, omega, omega0))
+    for lam in limiting_eigenvalues:
+        finite_error = float(np.min(np.abs(finite_values - lam)))
+        print(
+            "zero_denominator_finite_convergence"
+            f" n={n} lambda={lam} nearest_error={finite_error:.3e}",
+            flush=True,
+        )
+        if finite_error > 2.0e-5:
+            raise AssertionError(
+                "zero-denominator finite convergence audit failed"
+            )
+
+
 def critical_boundary_audit() -> None:
     k = 2.0 * math.pi
     n = 10000
@@ -295,6 +357,7 @@ def main() -> None:
     localization_audit(args.omega, args.omega0)
     flat_band_audit()
     compact_localization_audit()
+    zero_denominator_localization_audit()
     critical_boundary_audit()
     critical_grouped_remainder_audit()
 
