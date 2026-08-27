@@ -1338,9 +1338,10 @@ the segment from zero to the displayed disk proves the first bound in
 \begin{lemma}[Protected first mode and affected pole]
 \label{lem:gap-pole}
 For every $n$, the protected sector contains
-$\lambda_1^+=-\gamma_n^{\rm hom}$.  For fixed $\omega>0$ and
-$\omega_0\ge0$, the affected root born from the same homogeneous pole
-is
+$\lambda_1^+=-\gamma_n^{\rm hom}$.  Let
+$K\subset(0,\infty)\times[0,\infty)$ be compact.  Uniformly for
+$(\omega,\omega_0)\in K$ as $n\to\infty$, the affected root born from
+the same homogeneous pole is
 \begin{equation}\label{eq:affected-gap-shift}
  \lambda_{1,-}=\lambda_1^+
  +\frac{\delta(1+\omega)}{\omega^2(1+\omega_0)}
@@ -1434,22 +1435,33 @@ Use the exact identities
  \qquad
  \lambda+1-x=\frac{\lambda(\lambda+2)}{2a}.
 \end{equation}
-For $\lambda=\zeta/n^2$, choose either local branch of
-$w_n=n\operatorname{arccosh}x$.  Since all expressions below are even
-in $w_n$, the choice is immaterial.  Taylor's theorem on $|\zeta|\le M$
-and \eqref{eq:fixed-exact-x-identities} give
+For $\lambda=\zeta/n^2$, choose either normalized local branch of
+$w_n=n\operatorname{arccosh}x$ satisfying $w_n/n\to0$; the two such
+branches differ by sign.  The products used below are invariant under
+that sign change.  Taylor's theorem on $|\zeta|\le M$ and
+\eqref{eq:fixed-exact-x-identities} give
 \begin{align}
- w_n^2&=\frac{\zeta}{D}+O_M(n^{-2}),\label{eq:fixed-threshold-w}\\
+ w_n^2&=\frac{\zeta}{D}+O_{K,M}(n^{-2}),\label{eq:fixed-threshold-w}\\
  \frac{\lambda+1-x}{2a\sinh(w_n/n)}
-  &=\frac{w_n}{4\omega(1+\omega)n}+O_M(n^{-3}).
+  &=\frac{w_n}{4\omega(1+\omega)n}
+    +O_{K,M}(|w_n|n^{-3}).
   \label{eq:fixed-threshold-coefficient}
 \end{align}
-Here the quotients at $w_n=0$ mean their analytic continuations.  To
-verify the second line without dividing by a small $w_n$, expand
-$\cosh(w_n/n)-1=x-1$: it gives
-$\zeta=(1+\omega)w_n^2/(2\omega)+O_M(n^{-2})$, and substitution into
-the second identity in \eqref{eq:fixed-exact-x-identities} gives
-\eqref{eq:fixed-threshold-coefficient}.
+Here the quotients at $w_n=0$ mean their analytic continuations.  The
+first line in particular bounds $|w_n|$ uniformly.  To verify the
+second line without dividing by a small $w_n$, divide the two identities
+in \eqref{eq:fixed-exact-x-identities} and use
+$(\cosh t-1)/\sinh t=\tanh(t/2)$.  This gives the exact factorization
+\[
+ \frac{\lambda+1-x}{2a\sinh(w_n/n)}
+ =\frac{\lambda+2}{2a(\lambda+2\omega)}
+   \tanh\!\left(\frac{w_n}{2n}\right).
+\]
+Uniformly on $K$ and $|\zeta|\le M$, the prefactor on the right is
+$1/[2\omega(1+\omega)]+O_{K,M}(n^{-2})$, while Taylor's theorem gives
+$\tanh(w_n/(2n))=w_n/(2n)+O_{K,M}(|w_n|^3n^{-3})$.
+The uniform bound on $|w_n|$ proves
+\eqref{eq:fixed-threshold-coefficient}, including at $w_n=0$.
 
 Since $z^n=e^{-w_n}$, the exact finite Green formula becomes
 \begin{equation}\label{eq:fixed-threshold-green-expanded}
@@ -1458,7 +1470,8 @@ Since $z^n=e^{-w_n}$, the exact finite Green formula becomes
 \end{equation}
 where
 \[
- |E_n|\le C_Mn^{-2}+C_Mn^{-3}|\coth(w_n/2)|.
+ |E_n|\le C_{K,M}n^{-2}
+       +C_{K,M}n^{-3}|w_n\coth(w_n/2)|.
 \]
 The only nonzero pole in the stated scaled half-plane has
 $w_n=2\pi\mathrm i$ up to sign and is exactly $\lambda=p_n$.
@@ -1474,9 +1487,21 @@ $|\lambda-p_n|<A n^{-3}$.  On a fundamental strip,
 indeed, subtract the nearest $2\pi\mathrm i\ell$, use
 $\sinh(w/2)=w/2+O(w^3)$ for $|w|\le1$, and use continuity on the
 remaining closed strip together with $\coth(w/2)\to\pm1$ as
-$\Re w\to\pm\infty$.  Equations
-\eqref{eq:fixed-threshold-green-expanded}--\eqref{eq:coth-distance-bound}
-prove \eqref{eq:fixed-bounded-threshold-bound}.
+$\Re w\to\pm\infty$.  If $|w_n|\le\eta$ for a sufficiently small fixed
+$\eta$, then $w_n\coth(w_n/2)$ is bounded by its analytic continuation
+at zero.  Thus the correction term in
+\eqref{eq:fixed-threshold-green-expanded} is $O_{K,M}(n^{-1})$ and
+$E_n=O_{K,M}(n^{-2})$ there.  On the complementary region
+$|w_n|>\eta$, the uniform upper bound on $|w_n|$, the exclusion of the
+first pole, and \eqref{eq:coth-distance-bound} give
+\[
+ |\coth(w_n/2)|\le C_{K,M}\left(1+\frac nA\right).
+\]
+The correction term is consequently bounded by
+$C_{K,M}/n+C_{K,M}/A$, and the new remainder bound gives
+$|E_n|\le C_{K,M}n^{-2}+C_{K,M}/(An^2)$.
+This proves \eqref{eq:fixed-bounded-threshold-bound}, including the
+removable point $w_n=0$.
 
 For item 2, first observe that $\lambda_n$ is not a homogeneous pole
 for all sufficiently large $n$.  Choose $\eta>0$ as in the proof of
@@ -2864,7 +2889,7 @@ fixed-rate or double-scaling regimes.
 The manuscript source and the formula-audit code are available at
 \url{https://github.com/skypher/kinetic-defect-ring}.  The archived
 submission revision is identified by the Git tag
-\texttt{paper-2026-08-28-reviewed}.  From the repository root, the
+\texttt{paper-2026-08-28-reviewed-v2}.  From the repository root, the
 audit is run as
 \begin{center}
 \texttt{python3 -u scripts/verify\_formulas.py}.
