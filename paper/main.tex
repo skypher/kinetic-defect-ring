@@ -186,8 +186,14 @@ calculations of Koster and Slater
 \cite[abstract]{KosterSlater1954}.  Green-function
 reduction of a point perturbation has also been used for non-Hermitian
 lattices, notably to turn a periodic chain into an open one
-\cite[Secs.~II--III and Eqs.~(11)--(15)]{Roccati2021}.  The present
-problem instead asks for the full
+\cite[Secs.~II--III and Eqs.~(11)--(15)]{Roccati2021}.  Exact
+finite-size impurity spectra and size-dependent localization have been
+obtained in nonreciprocal chains \cite{LiuZengLiChen2021}, while recent
+Green-function work treats bound states and exceptional points for
+complex impurities in finite and infinite non-Hermitian lattices
+\cite{KokkinakisKomisMakrisEconomou2026}.  Those tight-binding problems
+concern on-site potentials, boundary sensitivity, and skin or bound-state
+localization.  The present problem instead asks for the full
 finite-ring characteristic polynomial and Jordan structure of a single
 lattice tumbling defect, together with its large-ring spectral ordering.
 
@@ -1300,7 +1306,8 @@ only at $q=0$ in the density direction, and the Heine--Borel theorem
 applied to the remaining compact parameter set supplies a uniform
 positive distance.
 
-For an interior paired wave number, partial fractions give
+For an interior paired wave number with distinct roots, partial fractions
+give
 \[
  \frac{\lambda+1-\cos q_k}{D_k(\lambda)}
  =\frac{R^+(q_k^*)}{\lambda-p^+(q_k^*)}
@@ -1317,13 +1324,19 @@ bound the derivative of the regular slow-pole sum throughout $S_n$ by
  Cn\sum_{k=2}^\infty\frac{k^2}{(k^2-1)^2}\le C'n.
 \]
 For $q_k^*\le\eta$, every fast-pole denominator stays uniformly away
-from $S_n$.  For $q_k^*\ge\eta$, both pole denominators do so by the
-compactness argument above.  After differentiation, each corresponding
-paired contribution to $G_n$ is therefore $O(n^{-1})$; there are at
-most $n/2$ such pairs.  The two endpoint contributions have derivatives
-$O(n^{-1})$ because their poles stay a fixed distance from $S_n$.
-Thus these terms have total derivative $O(1)$.  This proves the derivative
-bound in \eqref{eq:fixed-regular-green-bounds}.
+from $S_n$.  For $q_k^*\ge\eta$, including a coalesced pair with
+$\omega=|\sin q_k|$, use the unreduced summand in
+\eqref{eq:Gfinite}.  The compactness argument above gives
+$|D_k(\lambda)|\ge c>0$ on $S_n$, uniformly in this range.  The numerator,
+$D_k$, and $D_k'$ are uniformly bounded there, so direct differentiation
+of $(\lambda+1-\cos q_k)/D_k(\lambda)$ is $O(1)$.  After the $1/n$
+normalization, each corresponding paired contribution to $G_n$ is
+therefore $O(n^{-1})$, without dividing by the difference of the two
+roots.  There are at most $n/2$ such pairs.  The two endpoint
+contributions have derivatives $O(n^{-1})$ because their poles stay a
+fixed distance from $S_n$.  Thus these terms have total derivative
+$O(1)$.  This proves the derivative bound in
+\eqref{eq:fixed-regular-green-bounds}.
 
 At $\lambda=0$, every unpaired nonzero-wave Fourier summand is exactly
 $1/[2(1+\omega)]$.  The $q=0$ term and the removed first-pole
@@ -1571,34 +1584,57 @@ If $\delta=0$, that sector is homogeneous and the conclusion follows from
  g_0=\frac1{2(1+\omega)},\qquad
  M_0=1+2\delta g_0=\frac{1+\omega_0}{1+\omega}>0.
  \end{equation}
+When parameters vary below, $\Omega_n$, $f_n$, $g_0$, and $M_0$ are
+evaluated at the current parameter pair.
 In a neighborhood of zero, every affected root is a zero of $f_n$.
 Indeed, the residue at every slow homogeneous pole is nonzero, so
 multiplication by $H_{n,-}^{(0)}$ cancels the pole of $f_n$ but does not
 leave a zero there.
 
-We first exclude sequences of affected zeros that do not tend to zero.
-Gershgorin's theorem places every finite-ring eigenvalue in a fixed disk
-and in the closed left half-plane.  If such a sequence $\lambda_n$
-existed, pass to a subsequence for which $|\lambda_n|\ge\epsilon>0$ and
-$\lambda_n\to\lambda_*\ne0$ with $\Re\lambda_*=0$.  For a bulk Bloch vector at
-wave number $q$, the real part of its quadratic form is the negative of
-$(1-\cos q)$ times its squared norm, together with the nonnegative
-tumbling form.  Equality therefore forces $q=0$ and equal orientation
-components, and the corresponding eigenvalue is zero.  Thus the bulk
-spectral set meets the imaginary axis only at zero, so
-\eqref{eq:finite-green-error} gives
-$G_n\to g_\infty$ locally uniformly at $\lambda_*$.  Indeed,
-$\Re\lambda_*=0$ and $\omega>0$ imply
-$|a(\lambda_*)|\geq1+\omega$, so a closed disk $U$ about
-$\lambda_*$ is disjoint from $\Sigma_\omega$, from the point $a=0$,
-and from zero.  On $U$ the branch $z=x-s$ is analytic and satisfies
-$\sup_U|z|=\rho<1$.  Equation \eqref{eq:finite-green-error} then gives
+We first exclude, uniformly on $K$, sequences of affected zeros that do
+not tend to zero.  Suppose otherwise.  After discarding homogeneous
+terms, for which the assertion was already proved, there would be
+$n_j\to\infty$, parameters
+$(\omega^{(j)},\omega_0^{(j)})\in K$ with
+$\delta^{(j)}=\omega_0^{(j)}-\omega^{(j)}\ne0$, and affected zeros
+$\lambda_j\in\Omega_{n_j}$, with the window evaluated at that pair,
+such that $|\lambda_j|\ge\epsilon>0$.
+Gershgorin's theorem places these eigenvalues in a fixed disk and in the
+closed left half-plane.  Pass to a subsequence such that
 \[
- \sup_{\lambda\in U}|G_n(\lambda)-g_\infty(\lambda)|
- \le C_U\frac{\rho^n}{1-\rho^n}\longrightarrow0.
+ (\omega^{(j)},\omega_0^{(j)})\longrightarrow(\omega_*,\omega_{0,*}),
+ \qquad \lambda_j\longrightarrow\lambda_*\ne0.
 \]
-The limiting
-secular equation would produce an $\ell^2$ eigenvector $u$ of the
+Since the boundary of $\Omega_{n_j}$ tends to the imaginary axis,
+$\Re\lambda_*=0$.  For a bulk Bloch vector at wave number $q$, the real
+part of its quadratic form is the negative of $(1-\cos q)$ times its
+squared norm, together with the nonnegative tumbling form.  Equality
+therefore forces $q=0$ and equal orientation components, and the
+corresponding eigenvalue is zero.  Thus
+$\Sigma_{\omega_*}$ meets the imaginary axis only at zero.
+
+Choose a closed disk $U$ about $\lambda_*$ disjoint from zero,
+$\Sigma_{\omega_*}$, and the point $a=0$.  By continuity of the bulk
+symbol and compactness, after shrinking $U$ and increasing $j$, it is
+disjoint from $\Sigma_{\omega^{(j)}}$ and $a=0$ as well.  The local
+branches $z(\lambda;\omega^{(j)})$ can then be chosen jointly on $U$ and
+satisfy $\sup_U|z(\lambda;\omega^{(j)})|\le\rho<1$.  Equation
+\eqref{eq:finite-green-error} gives the uniform estimate
+\[
+ \sup_{\lambda\in U}
+ |G_{n_j}(\lambda;\omega^{(j)})
+      -g_\infty(\lambda;\omega^{(j)})|
+ \le C_U\frac{\rho^{n_j}}{1-\rho^{n_j}}\longrightarrow0.
+\]
+For large $j$, the homogeneous odd factor is nonzero on $U$, so the
+affected polynomial equation there is the secular equation.  It
+therefore passes to
+\[
+ 1+2(\omega_{0,*}-\omega_*)
+     g_\infty(\lambda_*;\omega_*)=0.
+\]
+If $\omega_{0,*}=\omega_*$ this equation is already impossible.
+Otherwise it produces an $\ell^2$ eigenvector $u$ of the limiting
 infinite defective generator with eigenvalue $\lambda_*$.  This is
 impossible because
 \begin{equation}\label{eq:infinite-dissipation}
@@ -1613,33 +1649,47 @@ supported vectors and then for all $u\in\ell^2$ by density and
 boundedness of $L_\infty$.
 Equality in \eqref{eq:infinite-dissipation} forces an $\ell^2$ vector to
 vanish.  Consequently every sequence of affected zeros in $\Omega_n$
-tends to zero.
+tends to zero, uniformly for parameters in $K$.
 
 It remains to exhaust these affected zeros.  On the
-$\zeta=n^2\lambda$ scale, choose a closed disk $U$ about the limiting first
-pole which contains no other limiting pole, and then choose $M_*$ so that
-$U\subset\{|\zeta|\le M_*\}$.  Let $C_{M_*}$ be the constant from item 1 of
-Lemma~\ref{lem:fixed-threshold-green}.  We now choose $A$ so large that
-$2|\delta|C_{M_*}/A<M_0/4$.  Only after these choices do we increase $n$.
-Suppose, to the contrary, that there were a sequence $n\to\infty$ and
+$\zeta=n^2\lambda$ scale, the limiting first pole is
+$-4\pi^2D(\omega)$, where $D(\omega)=(1+\omega)/(2\omega)$.  Its range
+over the compact $\omega$-projection of
+$K$ is compact, and for each $\omega$ it stays uniformly separated from
+the corresponding limiting second pole.  Choose a uniform neighborhood
+radius smaller than half this separation, and then choose $M_*$ large
+enough to contain all the resulting first-pole neighborhoods.  Let
+$C_{M_*}$ be the uniform constant
+from item 1 of Lemma~\ref{lem:fixed-threshold-green}, and put
+\[
+ \Delta_K=\max_K|\omega_0-\omega|,
+ \qquad m_K=\min_K\frac{1+\omega_0}{1+\omega}>0.
+\]
+Choose $A$ so large that $2\Delta_KC_{M_*}/A<m_K/4$.  Only after these
+choices do we increase $n$.
+Suppose, to the contrary, that there were a sequence $n\to\infty$,
+parameters $(\omega_n,\omega_{0,n})\in K$ with
+$\delta_n=\omega_{0,n}-\omega_n\ne0$, and
 affected zeros $\lambda_n\in\Omega_n$ outside
 $|\lambda-\lambda_1^+|<A n^{-3}$.  Gershgorin's theorem gives
 $\Re\lambda_n\le0$, and the preceding paragraph gives $\lambda_n\to0$.
 The definition of $\Omega_n$ and \eqref{eq:slow-dispersion-bound} give
 $-C n^{-2}\le\Re\lambda_n\le0$.  Pass to a subsequence according as
 $\zeta_n=n^2\lambda_n$ is bounded or unbounded.
-In the bounded case, pass once more so that $\zeta_n\to\zeta_*$.  If
-$\zeta_*$ is not the limiting first pole,
+In the bounded case, pass once more so that the parameters converge and
+$\zeta_n\to\zeta_*$.  If $\zeta_*$ is not the corresponding limiting
+first pole,
 \eqref{eq:fixed-threshold-green-expanded}--\eqref{eq:coth-distance-bound}
 give $G_n(\lambda_n)\to g_0$.
-If it is the limiting first pole, then $\zeta_n\in U$ for all sufficiently
-large $n$, and the first assertion of that lemma and the choice of $A$ give
+If it is the limiting first pole, then $\zeta_n$ lies in its chosen
+neighborhood for all sufficiently large $n$, and the first assertion of
+that lemma and the choice of $A$ give
 $|G_n(\lambda_n)-g_0|\le C_{M_*}/A+o(1)$.  In both alternatives,
-$|f_n(\lambda_n)|>M_0/2$ for large $n$, a contradiction.  In the
+$|f_n(\lambda_n)|>m_K/2$ for large $n$, a contradiction.  In the
 unbounded case, the second assertion of the lemma gives
 $G_n(\lambda_n)=g_0+o(1)$ and the same contradiction.  Hence, for all
 sufficiently large $n$, every affected zero in $\Omega_n$ lies in the
-first-pole disk.
+first-pole disk, with a threshold uniform on $K$.
 
 Finally, on the circle $|\lambda-\lambda_1^+|=A n^{-3}$ write
 \[
@@ -2409,8 +2459,11 @@ Thus the nonzero-wave roots outside the first cluster satisfy
 \eqref{eq:critical-exhaustion-separation} with
 $c=\min(c_1,c_2)$.
 
-For completeness, the only unpaired affected pole not included in this
-nonzero-wave partition is the zero-wave endpoint.  To locate its root,
+For completeness, for every fixed $\alpha>0$ the zero-wave endpoint is
+the only unpaired affected pole on the $O(n^{-1})$ scale; the $q=\pi$
+endpoint, when present, stays a fixed distance into the left half-plane.
+The following computation does not use the present assumption
+$\alpha<k$.  To locate the zero-wave root,
 write $\varepsilon=\lambda+2\alpha/n$.  Equation
 \eqref{eq:critical-endpoint-green} turns the pole-cleared secular equation
 into
@@ -2453,7 +2506,11 @@ $\beta\le k$, its largest possible real part is below
 which is positive because $k>2\sqrt3$.  If $\beta>k$, the affected
 higher modes move to the left and the protected comparison is even
 stronger.  Estimate \eqref{eq:critical-secular-exclusion} accounts for
-all remaining affected roots, proving the assertion at $\alpha=k$.
+all remaining affected roots.  The endpoint formula
+\eqref{eq:critical-endpoint-root}, which was derived for every fixed
+$\alpha>0$, puts the zero-wave affected root at $-2k/n+O(n^{-2})$ and
+hence a distance of order $n^{-1}$ to the left of the first cluster.
+This proves the assertion at $\alpha=k$.
 
 Finally, if $\alpha>k$, the first slow pole has decay coefficient
 $d_1=\alpha-\sqrt{\alpha^2-k^2}$.  By the choice of $d$, the only
@@ -2462,8 +2519,10 @@ protected pole in $\Omega_{d,n}$ is the first slow pole, and
 \eqref{eq:critical-uniform-simple-shift} show that its affected partner
 is the only affected root there.  Both have real part
 $-d_1/n+O(n^{-2})$, whereas every nonzero root outside the window has real part
-at most $-d/n$.  This gives a separation of order $n^{-1}$ and completes
-the proof.
+at most $-d/n$.  In particular, the endpoint root
+\eqref{eq:critical-endpoint-root} is at $-2\alpha/n+O(n^{-2})$ and lies
+outside the window because $d<2\alpha$.  This gives a separation of order
+$n^{-1}$ and completes the proof.
 \end{proof}
 
 \begin{theorem}[Bulk-critical double scaling]\label{thm:critical-gap}
@@ -2889,7 +2948,7 @@ fixed-rate or double-scaling regimes.
 The manuscript source and the formula-audit code are available at
 \url{https://github.com/skypher/kinetic-defect-ring}.  The archived
 submission revision is identified by the Git tag
-\texttt{paper-2026-08-28-reviewed-v2}.  From the repository root, the
+\texttt{paper-2026-08-28-reviewed-v3}.  From the repository root, the
 audit is run as
 \begin{center}
 \texttt{python3 -u scripts/verify\_formulas.py}.
