@@ -1144,6 +1144,11 @@ $1+2\delta g_\infty$.  Shrinking it if necessary, choose
 \[
  \rho=\max_{\lambda\in B}|z(\lambda)|<r<1.
 \]
+By Lemma~\ref{lem:homogeneous-polynomial}, every zero of
+$H_{n,-}^{(0)}$ is a finite-ring homogeneous Fourier eigenvalue and
+therefore belongs to $\Sigma_\omega$.  Hence $H_{n,-}^{(0)}$ is
+nonzero on $B$, and the zeros of $1+2\delta G_n$ in $B$ are exactly
+the zeros of $Q_{n,-}$ there.
 Equation
 \eqref{eq:finite-green-error} and its $\lambda$-derivative are bounded
 on $B$ by $C_Br^n$: for the derivative, the only additional factor is
@@ -1472,7 +1477,15 @@ $\Re w\to\pm\infty$.  Equations
 \eqref{eq:fixed-threshold-green-expanded}--\eqref{eq:coth-distance-bound}
 prove \eqref{eq:fixed-bounded-threshold-bound}.
 
-For item 2, the real-part assumptions imply
+For item 2, first observe that $\lambda_n$ is not a homogeneous pole
+for all sufficiently large $n$.  Choose $\eta>0$ as in the proof of
+Lemma~\ref{lem:fixed-regular-green}.  The fast branch on
+$[0,\eta]$ and both branches on $[\eta,\pi]$ stay uniformly away from
+zero.  If a remaining pole were equal to $\lambda_n$, it would have
+the form $p^+(q_k^*)$; then \eqref{eq:fixed-small-wave-bounds} and
+$\Re\lambda_n\ge-Cn^{-2}$ would give $q_k^*=O(n^{-1})$ and hence
+$|\lambda_n|=O(n^{-2})$, contrary to
+$n^2|\lambda_n|\to\infty$.  The real-part assumptions now imply
 $|\Im\lambda_n|/|\lambda_n|\to1$.  By the first identity in
 \eqref{eq:fixed-exact-x-identities}, $x-1$ lies, for large $n$, in one
 of two closed sectors about the positive or negative imaginary axis.
@@ -1747,7 +1760,10 @@ For $\nu\in\C$, define the meromorphic function
  \qquad \kappa^2=\nu(\nu+2\alpha),
 \end{equation}
 where the right-hand side is independent of the choice of square root
-and is interpreted by meromorphic continuation at $\kappa=0$.  Then:
+and is interpreted by meromorphic continuation at $\kappa=0$.
+The decompositions in items 2--4 are identities of meromorphic
+functions.  At each removed pole, the difference defining the regular
+part is evaluated by its unique holomorphic extension.  Then:
 \begin{enumerate}
 \item $G_n(\nu/n)\to\mathcal G_\alpha(\nu)$ locally uniformly on every
   compact set containing no pole of \eqref{eq:critical-green-limit}.
@@ -1827,8 +1843,9 @@ large $n$, $G_n(\nu/n)$ has exactly the corresponding pole
 $np_{\ell,n}^\pm$ in $U$, with principal part
 $2R_{\ell,n}^\pm/(\nu-np_{\ell,n}^\pm)$.  Item 1 bounds both the Green
 function and this principal part on $\partial U$.  Their difference is
-analytic in $U$, so the maximum-modulus theorem bounds it throughout a
-smaller concentric disk.  Replacing $\nu$ by $n\lambda$ gives
+removable at the corresponding pole and extends analytically throughout
+$U$, so the maximum-modulus theorem bounds it on a smaller concentric
+disk.  Replacing $\nu$ by $n\lambda$ gives
 \eqref{eq:critical-simple-regular-bound}.
 
 When $\alpha=k$, the two first poles lie at
@@ -1837,9 +1854,9 @@ $\lambda_c\pm r_n$.  Adding their two summands in
 \eqref{eq:critical-grouped-green}.  Choose a fixed disk about $-k$ in
 the $\nu$-plane that contains no other limiting pole.  On its boundary,
 item 1 bounds $G_n(\nu/n)$ and direct inspection bounds the grouped
-term.  Their difference is analytic inside because both first poles
-have been removed.  The maximum-modulus theorem gives the asserted
-uniform bound on a smaller disk.
+term.  Their difference has removable singularities at both first poles
+and extends analytically inside.  The maximum-modulus theorem gives the
+asserted uniform bound on a smaller disk.
 
 Finally, the first summand of \eqref{eq:Gfinite} is exactly
 $1/\{n(\lambda+2\alpha/n)\}$.  The point $-2\alpha$ is distinct from
@@ -1847,8 +1864,9 @@ all the limiting poles with $\ell\ge1$.  Choose a fixed disk about it in
 the $\nu$-plane containing no such pole.  For large $n$, the corresponding
 scaled disk contains no finite-ring pole except the $q=0$ pole.  On the
 boundary, item 1 bounds $G_n(\nu/n)$ and the displayed summand; their
-difference is analytic in the disk.  The maximum-modulus theorem on a
-smaller disk proves
+difference has a removable singularity at the endpoint pole and extends
+analytically to the disk.  The maximum-modulus theorem on a smaller disk
+proves
 \eqref{eq:critical-endpoint-green}.
 \end{proof}
 
@@ -2292,10 +2310,19 @@ By the choice of $A_0$, both zeros of $P_{0,n}$ lie strictly inside the
 circle.  The difference between the
 two sides is $O(A^2n^{-4})$, whereas
 $|P_{0,n}|\ge c_A n^{-3}$ on the circle.  Rouch\'e's theorem therefore
-gives exactly two affected roots in the grouped disk.  The quadratic
-factor $\Delta^2-r_n^2$ is the full homogeneous factor on this disk;
-the remaining factor of $H_{n,-}^{(0)}$ is nonvanishing.  Thus the two
-Rouch\'e zeros are exactly the two zeros of $Q_{n,-}$ there, counted
+gives exactly two zeros of the pole-cleared function in the grouped
+disk.  At the two homogeneous poles $\Delta=\pm r_n$, the right-hand
+side of \eqref{eq:critical-grouped-pole-cleared} equals
+\[
+ \frac{4b}{n^2}(\pm r_n-k/n),
+\]
+which is nonzero for all sufficiently large $n$, since $b\ne0$ and
+Taylor's theorem gives
+$r_n=k^2/(\sqrt{3}\,n^2)+O(n^{-4})$.  Thus neither homogeneous pole is
+retained.  Moreover,
+$\Delta^2-r_n^2$ is the full homogeneous factor on this disk and the
+remaining factor of $H_{n,-}^{(0)}$ is nonvanishing.  Consequently the
+two Rouch\'e zeros are exactly the two zeros of $Q_{n,-}$ there, counted
 with algebraic multiplicity.
 
 At $\alpha=k$, this completes the affected-root accounting in the
