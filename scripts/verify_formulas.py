@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Short numerical and symbolic audits for the manuscript formulas."""
+"""Short numerical audits for the manuscript formulas."""
 
 from __future__ import annotations
 

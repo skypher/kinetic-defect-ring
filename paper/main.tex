@@ -177,9 +177,9 @@ works emphasize probability laws, steady states, or relaxation in
 extended media.  Persistent lattice walks with site disorder have also
 been studied through random asymmetric transmittances
 \cite{SadjadiMiri2008}.  For nonpersistent confined lattice walks,
-pseudo-Green functions and Chebyshev formulas give exact propagators and
-the treatment of defective trapping sites
-\cite[Sec.~VI]{Giuggioli2020}.  The present problem instead asks for the full
+exact propagators admit Chebyshev representations; the same framework
+treats partially absorbing defects and connects to pseudo-Green functions
+\cite[Secs.~VI--VII and Apps.~C and E]{Giuggioli2020}.  The present problem instead asks for the full
 finite-ring characteristic polynomial and Jordan structure of a single
 lattice tumbling defect, together with its large-ring spectral ordering.
 
@@ -735,28 +735,62 @@ without asserting cyclicity at the removed flat primary component.
 \end{proof}
 
 \begin{corollary}[Finite-ring algebraic exceptional locus]\label{cor:resultant}
-For fixed $n$, all non-flat affected exceptional parameters lie on the
-explicit algebraic set
+For fixed $n$ and $\omega\ne1$, the non-flat affected exceptional
+parameters are exactly those satisfying
 \[
  \Res_\lambda\bigl(Q_{n,-},\partial_\lambda Q_{n,-}\bigr)=0,
 \]
-with $Q_{n,-}$ given by \eqref{eq:Qminus-poly}.  At $\omega=1$, define
-$r_-=\operatorname{ord}_{\lambda=-2}Q_{n,-}$ at the fixed parameter pair and take
-the resultant of $Q_{n,-}/(\lambda+2)^{r_-}$ instead.  The protected
-exceptional parameters \eqref{eq:protected-ep} and the flat-band cases
-of Theorem \ref{thm:flat-band} are supplied separately; they are not
-asserted to arise from this affected-sector resultant.  Root orders and
-Theorems \ref{thm:jordan-regular}--\ref{thm:flat-band} distinguish
-exceptional points from semisimple parity crossings without a numerical
-tolerance.
+with $Q_{n,-}$ given by \eqref{eq:Qminus-poly}.  At $\omega=1$, put
+\begin{equation}\label{eq:flat-affected-order}
+r_-=\begin{cases}
+ (n+1)/2,&\omega_0=1,\ n\text{ odd},\\
+ n/2,&\omega_0=1,\ n\equiv2\pmod4,\\
+ n/2+1,&\omega_0=1,\ n\equiv0\pmod4,\\
+ (n-1)/2,&\omega_0\ne1,\ n\equiv1\pmod4,\\
+ n/2-1,&\omega_0\ne1,\ n\text{ even},\\
+ (n+1)/2,&\omega_0\ne1,\ n\equiv3\pmod4,
+       \ \omega_0\ne(n-1)/(n+1),\\
+ (n+3)/2,&n\equiv3\pmod4,\ \omega_0=(n-1)/(n+1),
+\end{cases}
+\end{equation}
+and define
+\[
+ \widehat Q_{n,-}(\lambda)
+   =\frac{Q_{n,-}(\lambda)}{(\lambda+2)^{r_-}}.
+\]
+On each parameter stratum in \eqref{eq:flat-affected-order}, the
+non-flat affected exceptional parameters are exactly those satisfying
+\[
+ \Res_\lambda\bigl(\widehat Q_{n,-},
+                  \partial_\lambda\widehat Q_{n,-}\bigr)=0.
+\]
+The protected exceptional parameters \eqref{eq:protected-ep} and the
+flat-band cases of Theorem \ref{thm:flat-band} are supplied separately;
+they are not asserted to arise from these affected-sector resultants.
+Root orders and Theorems
+\ref{thm:jordan-regular}--\ref{thm:flat-band} distinguish exceptional
+points from semisimple parity crossings without a numerical tolerance.
 \end{corollary}
 
 \begin{proof}
 The resultant vanishes exactly when the two displayed polynomials share
-a root.  At $\omega=1$ the same statement is applied to the specified
-reduced polynomial.  The preceding two theorems identify the Jordan
-block attached to every such root and separately account for the
-protected and flat contributions.
+a root.  It remains only to verify the exponent in
+\eqref{eq:flat-affected-order}.  Definition \ref{def:parity-polynomials}
+gives
+\[
+ \operatorname{ord}_{\lambda=-2}H_{n,+}=\begin{cases}
+  (n-1)/2,&n\text{ odd},\\
+  n/2,&n\equiv2\pmod4,\\
+  n/2+1,&n\equiv0\pmod4.
+ \end{cases}
+\]
+Subtracting these protected orders from the total flat algebraic
+multiplicities in Theorem \ref{thm:flat-band} gives every line of
+\eqref{eq:flat-affected-order}.  Thus $\widehat Q_{n,-}$ removes the
+exact affected flat primary factor on each stratum.  Theorems
+\ref{thm:jordan-regular}--\ref{thm:flat-band} then identify the Jordan
+block attached to every repeated non-flat root and separately account
+for the protected and flat contributions.
 \end{proof}
 
 \section{Defect-localized modes}
@@ -2122,6 +2156,8 @@ Its slow Fourier eigenvalue at wave number $q$ is
 \begin{equation}\label{eq:telegraph-eigenvalue}
  \lambda_{\rm tel}^+(q)=-\omega+\sqrt{\omega^2-q^2}.
 \end{equation}
+Here and below the square root has nonnegative real part and, when it is
+purely imaginary, nonnegative imaginary part.
 The lattice-diffusion-corrected system is
 \begin{equation}\label{eq:corrected-telegraph-system}
  \partial_t\rho=-\partial_xm+\tfrac12\partial_x^2\rho,
@@ -2182,8 +2218,8 @@ derivative.  Substitution gives
 \begin{theorem}[Exact relaxation rate versus telegraph rates]
 \label{thm:telegraph-comparison}
 Fix $\omega>0$, let $q=2\pi/n$, and define
-$\gamma_{\rm tel}=-\lambda_{\rm tel}^+(q)$ and
-$\gamma_{\rm td}=-\lambda_{\rm td}^+(q)$.  Then
+$\gamma_{\rm tel}=-\Re\lambda_{\rm tel}^+(q)$ and
+$\gamma_{\rm td}=-\Re\lambda_{\rm td}^+(q)$.  Then, as $n\to\infty$,
 \begin{align}
  \gamma_n^{\rm hom}-\gamma_{\rm tel}
  &=\frac{q^2}{2}
@@ -2200,14 +2236,17 @@ Consequently
  \qquad
  \frac{\gamma_{\rm td}}{\gamma_n^{\rm hom}}\longrightarrow1.
 \end{equation}
-In the bulk-critical scaling $\omega=\alpha/n$, the standard telegraph
-rate does recover the leading term:
+Separately, let $\alpha>0$ be fixed and set $\omega=\alpha/n$.  The
+standard telegraph decay rate is exactly
 \begin{equation}\label{eq:telegraph-critical}
  \gamma_{\rm tel}
  =\frac{\alpha-\Re\sqrt{\alpha^2-(2\pi)^2}}{n},
 \end{equation}
-which agrees with the leading terms of
-\eqref{eq:critical-below}--\eqref{eq:critical-at-fast}.
+which agrees with the coefficient of $n^{-1}$ in
+\eqref{eq:critical-below}--\eqref{eq:critical-at-fast}.  For fixed
+$\beta\ge0$, the defect-dependent corrections under
+$\omega_0=\beta/n$, of orders $n^{-2}$ and $n^{-3/2}$ in those formulas,
+are beyond this homogeneous telegraph comparison.
 \end{theorem}
 
 \begin{proof}
@@ -2217,8 +2256,8 @@ $\cos q$, $\sin^2q$, and the square root gives
 \eqref{eq:telegraph-error}--\eqref{eq:corrected-telegraph-error}.
 Dividing by the leading exact rate $(1+\omega)q^2/(2\omega)$ gives
 \eqref{eq:telegraph-ratios}.  Substitution of $\omega=\alpha/n$ and
-$q=2\pi/n$ into \eqref{eq:telegraph-eigenvalue} gives
-\eqref{eq:telegraph-critical}.
+$q=2\pi/n$ into \eqref{eq:telegraph-eigenvalue}, followed by taking
+the negative real part, gives \eqref{eq:telegraph-critical}.
 \end{proof}
 
 \begin{proposition}[Point-defect telegraph secular equation]
