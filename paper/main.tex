@@ -276,8 +276,8 @@ rate $\omega_j$.  Put
 Equations \eqref{eq:generator-plus}--\eqref{eq:generator-minus} use the
 same one-particle convention as equations (6)--(10) of
 \cite{MallminBlytheEvans2019}.  That paper records the homogeneous
-eigenvalues in its equation (10), the homogeneous exceptional points in
-equation (13), and the first-mode relaxation rate in equations
+eigenvalues in its equation (11), the homogeneous exceptional points in
+equation (14), and the first-mode relaxation rate in equations
 (20)--(21).
 
 \begin{lemma}[Rank-one defect]\label{lem:rank-one}
@@ -1198,9 +1198,31 @@ $n=2$), proving the last assertion.
 
 \section{Large-ring spectral gap}
 
+\begin{lemma}[Irreducibility]\label{lem:irreducibility}
+For every $n\ge2$, $\omega>0$, and $\omega_0\ge0$, the directed transition
+graph of $L_n(\omega,\omega_0)$ is strongly connected.  Consequently zero
+is an algebraically simple eigenvalue of $L_n(\omega,\omega_0)$.
+\end{lemma}
+
+\begin{proof}
+Choose a bulk site $r\ne0$.  Starting from any state, repeated hops in its
+current orientation reach $r$.  At $r$ the orientation can be retained or
+reversed, the latter transition having rate $\omega>0$.  Repeated hops in
+the selected orientation then reach any prescribed target site with the
+prescribed orientation.  Thus every state communicates with every other
+state, including when $\omega_0=0$.
+
+For every $t>0$, each such finite path has positive probability of being
+completed before time $t$, so every entry of $e^{tL_n}$ is positive.  This
+matrix is stochastic.  The Perron--Frobenius theorem therefore makes its
+eigenvalue one algebraically simple.  A nontrivial Jordan chain of $L_n$ at
+zero would exponentiate to a nontrivial Jordan chain of $e^{tL_n}$ at one,
+which is impossible.  Hence zero is algebraically simple.
+\end{proof}
+
 \begin{definition}[Spectral gap]\label{def:gap}
-For $\omega>0$ and $n\ge2$, irreducibility makes zero a simple
-eigenvalue.  Define
+For $\omega>0$ and $n\ge2$, Lemma~\ref{lem:irreducibility} makes zero a
+simple eigenvalue.  Define
 \[
  \gamma_n(\omega,\omega_0)
  =-\max\{\Re\lambda:\lambda\in\spec L_n(\omega,\omega_0),
@@ -1556,10 +1578,13 @@ vanish.  The subsequence contradiction therefore supplies
 $\epsilon>0$ such that no affected zero in $\Omega_n$ can satisfy
 $|\lambda|\ge\epsilon$.
 
-It remains to exhaust the affected zeros that tend to zero.  We first
-choose $A$ so large that the local constant in
-Lemma~\ref{lem:fixed-threshold-green}, at the limiting first pole, obeys
-$2|\delta|C/A<M_0/4$.  We claim that, after increasing $n$,
+It remains to exhaust the affected zeros that tend to zero.  On the
+$\zeta=n^2\lambda$ scale, choose a closed disk $U$ about the limiting first
+pole which contains no other limiting pole, and then choose $M_*$ so that
+$U\subset\{|\zeta|\le M_*\}$.  Let $C_{M_*}$ be the constant from item 1 of
+Lemma~\ref{lem:fixed-threshold-green}.  We now choose $A$ so large that
+$2|\delta|C_{M_*}/A<M_0/4$.  Only after these choices do we increase $n$.
+We claim that
 \begin{equation}\label{eq:fixed-exclusion-margin}
  |f_n(\lambda)|\ge \frac{M_0}{2}
 \end{equation}
@@ -1574,9 +1599,9 @@ $\zeta_n=n^2\lambda_n$ is bounded or unbounded.
 In the bounded case, pass once more so that $\zeta_n\to\zeta_*$.  If
 $\zeta_*$ is not the limiting first pole, the expansion in the proof of
 Lemma~\ref{lem:fixed-threshold-green} gives $G_n(\lambda_n)\to g_0$.
-If it is the limiting first pole, the first assertion of that lemma and
-the choice of $A$ give
-$|G_n(\lambda_n)-g_0|\le C/A+o(1)$.  In both alternatives,
+If it is the limiting first pole, then $\zeta_n\in U$ for all sufficiently
+large $n$, and the first assertion of that lemma and the choice of $A$ give
+$|G_n(\lambda_n)-g_0|\le C_{M_*}/A+o(1)$.  In both alternatives,
 $|f_n(\lambda_n)|>M_0/2$ for large $n$, a contradiction.  In the
 unbounded case, the second assertion of the lemma gives
 $G_n(\lambda_n)=g_0+o(1)$ and the same contradiction.  This proves
@@ -2295,10 +2320,25 @@ poles are nonreal conjugates and
 Equations \eqref{eq:critical-uniform-simple-shift}--
 \eqref{eq:critical-residue-real-half} show that the same parity is
 selected for every fixed $\ell$, and that the $\ell=2$ cluster is to the
-left of the first by $3k^2/(2n^2)+O(n^{-3})$.  The choice of $B$ puts
-every possible nonzero competitor either among these finitely many clusters or
-to their left and separates all nonzero roots outside the window from the first
-cluster by a fixed multiple of $n^{-2}$.  To locate the endpoint root,
+left of the first by $3k^2/(2n^2)+O(n^{-3})$.  We now make the global
+partition explicit.  The midpoint definition of $B$ in
+Lemma~\ref{lem:critical-pole-distance} puts precisely the fixed-index
+nonzero-wave poles with $1\le\ell\le L$ in $\Omega_{B,n}$ for all large
+$n$.  The pole-disk Rouch\'e counts above give one affected root at each
+of their simple poles, while \eqref{eq:critical-secular-exclusion} leaves
+no affected root on the complement of those disks.  Among the finitely
+many clusters with $2\le\ell\le L$, the preceding comparison puts every
+selected root at least $c_1n^{-2}$ to the left of the selected first
+cluster.  Every remaining nonzero-wave root is outside $\Omega_{B,n}$;
+because the protected first root lies inside that window with the margin
+fixed in item 1 of the constant choice, such a root is at least
+$c_2n^{-2}$ to the left of the largest real part in the first cluster.
+Thus the nonzero-wave roots outside the first cluster satisfy
+\eqref{eq:critical-exhaustion-separation} with
+$c=\min(c_1,c_2)$.
+
+For completeness, the only unpaired affected pole not included in this
+nonzero-wave partition is the zero-wave endpoint.  To locate its root,
 write $\varepsilon=\lambda+2\alpha/n$.  Equation
 \eqref{eq:critical-endpoint-green} turns the pole-cleared secular equation
 into
@@ -2767,6 +2807,20 @@ compact case treated separately), finite-ring localization convergence
 assumes a simple noncompact root, and the gap results use their stated
 fixed-rate or double-scaling regimes.
 \end{remark}
+
+\section*{Code availability}
+
+The manuscript source and the formula-audit code are available at
+\url{https://github.com/skypher/kinetic-defect-ring}.  The archived
+submission revision is identified by the Git tag
+\texttt{paper-2026-08-28}.  From the repository root, the audit is run as
+\begin{center}
+\texttt{python3 -u scripts/verify\_formulas.py}.
+\end{center}
+It compares the characteristic, transfer, flat-band Jordan, localization,
+and gap formulas with direct finite-matrix or defining-equation
+calculations.  These computations are independent checks of the displayed
+formulas and are not used in place of the proofs in the manuscript.
 
 \section*{AI-use disclosure}
 
