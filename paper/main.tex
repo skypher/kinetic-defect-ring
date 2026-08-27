@@ -888,6 +888,72 @@ multiplication operators.  Infinite-line eigenvalues below always mean
 $\ell^2$ eigenvalues of $L_\infty$.
 \end{definition}
 
+\begin{lemma}[Bulk spectrum and cyclic Green identities]
+\label{lem:green-identities}
+The homogeneous infinite-chain spectrum is exactly
+\[
+ \spec L_\infty^{(0)}=\Sigma_\omega.
+\]
+For $x\in\C\setminus[-1,1]$, with $s=\sqrt{x^2-1}$ and $z=x-s$ on
+the branch of Definition~\ref{def:bulk-set},
+\begin{align}
+ \frac1{2\pi}\int_0^{2\pi}\frac{dq}{x-\cos q}
+   &=\frac1s,\label{eq:green-circle-integral}\\
+ \frac1n\sum_{k=0}^{n-1}\frac1{x-\cos q_k}
+   &=\frac1s\frac{1+z^n}{1-z^n}.
+   \label{eq:green-root-unity}
+\end{align}
+The right side of \eqref{eq:green-root-unity} is invariant under the
+simultaneous branch change $(s,z)\mapsto(-s,z^{-1})$ and therefore
+extends meromorphically to every $x\in\C$ away from the finite set
+$\{\cos q_k:0\le k<n\}$, where it equals the finite sum on the left.
+\end{lemma}
+
+\begin{proof}
+The unitary Fourier transform identifies $L_\infty^{(0)}$ with
+multiplication on $L^2([0,2\pi];\C^2)$ by the continuous matrix symbol
+\[
+ W(q)=\begin{pmatrix}
+ e^{\ii q}-1-\omega&\omega\\
+ \omega&e^{-\ii q}-1-\omega
+ \end{pmatrix}.
+\]
+Its two pointwise eigenvalues are
+\[
+ \cos q-1-\omega\pm\sqrt{\omega^2-\sin^2q},
+\]
+whose union is $\Sigma_\omega$.  If $\lambda\notin\Sigma_\omega$,
+then $\lambda I-W(q)$ is invertible for every $q$ and its inverse is a
+continuous matrix function on the compact circle, hence is uniformly
+bounded and defines $(\lambda-L_\infty^{(0)})^{-1}$.  Conversely, if
+$\lambda$ is a pointwise eigenvalue at $q_0$, choose a corresponding
+nonzero vector and normalized scalar functions supported in shrinking
+neighborhoods of $q_0$.  The resulting Fourier-space vectors form an
+approximate eigenvector sequence by continuity of $W$, so
+$\lambda\in\spec L_\infty^{(0)}$.  This proves the spectral identity.
+
+For \eqref{eq:green-circle-integral}, put $\zeta=e^{\ii q}$.  Since
+$z+z^{-1}=2x$ and $|z|<1$, the two roots of the resulting denominator
+are $z$ and $z^{-1}$, and only $z$ lies inside the unit circle.  The
+residue theorem gives
+\[
+ \frac1{2\pi}\oint_{|\zeta|=1}
+   \frac{2\ii\,d\zeta}{(\zeta-z)(\zeta-z^{-1})}
+ =\frac{2}{z^{-1}-z}=\frac1s.
+\]
+Also, the absolutely convergent Poisson-kernel expansion is
+\[
+ \frac1{x-\cos q}
+ =\frac1s\left(1+2\sum_{r=1}^{\infty}z^r\cos(rq)\right).
+\]
+Averaging over $q_k=2\pi k/n$ removes every term for which $n\nmid r$.
+Summing the remaining geometric series proves
+\eqref{eq:green-root-unity}.  Finally, the displayed branch change
+fixes its right side.  It consequently defines a single-valued
+meromorphic function, which agrees with the finite rational sum on
+$\C\setminus[-1,1]$ and hence everywhere away from their poles.
+\end{proof}
+
 \begin{theorem}[Infinite-line localization criterion]
 \label{thm:localization}
 Let $\delta\ne0$ and $\lambda\notin\Sigma_\omega$.  First suppose
@@ -949,8 +1015,9 @@ $\omega\ne1$, then
  \quad\hbox{is localized if and only if}\quad
  \omega_0=\frac{\omega^2+1}{2\omega}.
 \end{equation}
-Its decay root is $z=0$, its localization length is $\xi=0$, and its
-eigenvector is supported at the defect and its two neighboring sites.
+Its decay root is $z=0$, its localization length is $\xi=0$ by the
+finite-support convention, and its eigenvector is supported at the
+defect and its two neighboring sites.
 Thus the admissible range in the preceding formulas is $0<|z|<1$;
 $z=0$ is accepted precisely in \eqref{eq:compact-localization}.
 \end{theorem}
@@ -966,6 +1033,7 @@ The polarization entry of the bulk resolvent at the defect site is
        \frac1{2\pi}\int_0^{2\pi}\frac{dq}{x-\cos q}\right]\\
  &=\frac1{2a}\left(1+\frac{\lambda+1-x}{s}\right).
 \end{align*}
+Here the last equality is \eqref{eq:green-circle-integral}.
 If $(\lambda-L_\infty)u=0$, then
 \[
  u=-\delta(\lambda-L_\infty^{(0)})^{-1}d\,(d^{\mathsf T}u).
@@ -1054,20 +1122,17 @@ $\operatorname{dist}(j,0)\le1$.
 \end{proposition}
 
 \begin{proof}
-The root-of-unity sum of the bulk Green kernel is the exact identity
+Equation \eqref{eq:green-root-unity} applied to the bulk Green kernel
+gives the exact identity
 \begin{equation}\label{eq:finite-green-z}
  G_n(\lambda)=\frac1{2a}\left[1+
   \frac{\lambda+1-x}{s}\frac{1+z^n}{1-z^n}\right].
 \end{equation}
-Indeed, Fourier expansion of $(x-\cos q)^{-1}$ gives
-\[
- \frac1n\sum_{k=0}^{n-1}\frac1{x-\cos q_k}
- =\frac1s\frac{1+z^n}{1-z^n}.
-\]
-Both sides of \eqref{eq:finite-green-z} are meromorphic functions of
-$\lambda$.  The identity therefore continues across the infinite-volume
-cut to every point away from a finite-ring homogeneous pole; the two
-boundary choices of $s$ give the same continued function.
+Lemma~\ref{lem:green-identities} also shows that both sides are the same
+meromorphic function of $\lambda$.  Thus the identity continues across
+the infinite-volume cut to every point away from a finite-ring
+homogeneous pole, and the two boundary choices of $s$ give the same
+continued function.
 Consequently
 \begin{equation}\label{eq:finite-green-error}
  G_n-g_\infty=
@@ -1631,6 +1696,8 @@ integer $\ell$, put
        {p_{\ell,n}^\pm-p_{\ell,n}^\mp}.
  \label{eq:critical-pole-fraction}
 \end{align}
+The square root is chosen nonnegative when its argument is nonnegative
+and with nonnegative imaginary part when its argument is negative.
 When the two poles are distinct and $1\le\ell<n/2$, the paired waves
 $q=\pm\ell k/n$ contribute
 $2R_{\ell,n}^\pm/
