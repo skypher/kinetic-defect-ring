@@ -822,8 +822,9 @@ of two $J_2$ blocks in the tuned case.
 For completeness, put
 $A_-^{(0)}=L^{(0)}|_{\mathcal H_-}$ and consider an affected eigenvalue
 $\lambda\ne-2$.
-If $\delta\ne0$, it cannot equal a nonflat homogeneous root: the
-corresponding residue in \eqref{eq:Gfinite} is nonzero, so
+If $\delta\ne0$, it cannot equal a nonflat eigenvalue of the homogeneous
+affected restriction $A_-^{(0)}$: the corresponding residue in
+\eqref{eq:Gfinite} is nonzero, so
 $Q_{n,-}$ does not vanish at that pole.  Hence
 $\lambda I-A_-^{(0)}$ is invertible.  The rank-one eigenvalue equation
 makes its eigenspace the one-dimensional span of
@@ -1090,8 +1091,19 @@ $d^{\mathsf T}$ therefore gives \eqref{eq:localization-secular}.
 Conversely, when that scalar equation holds, the displayed resolvent
 vector is a nonzero $\ell^2$ eigenvector.  Since
 $x=(z+z^{-1})/2$ and $s=(z^{-1}-z)/2$, elementary simplification gives
-the second expression in \eqref{eq:localization-green}, and the Green
-kernel decays as $z^{|j|}$.  Clearing the denominator in
+the second expression in \eqref{eq:localization-green}.  The Fourier
+coefficient of $(x-\cos q)^{-1}$ is $z^{|j|}/s$; consequently, on the
+half-line $j\ge0$, the second component of
+$(\lambda-L_\infty^{(0)})^{-1}d$ is
+\[
+ -\frac{\lambda+1-z}{2as}\,z^j.
+\]
+The secular equation and $\delta\ne0$ give
+$g_\infty(\lambda)=-1/(2\delta)\ne0$.  The second identity in
+\eqref{eq:localization-green}, together with $a\ne0$, $z\ne0$, and
+$|z|<1$, therefore gives $\lambda+1-z\ne0$.  This tail does not cancel,
+so its exact exponential rate is $|z|$ and the localization length is
+$-1/\log|z|$.  Clearing the denominator in
 \eqref{eq:localization-secular} gives
 \eqref{eq:loc-match}; the bulk dispersion relation gives
 \eqref{eq:loc-dispersion}.  After multiplication of the dispersion
@@ -3151,7 +3163,7 @@ fixed-rate or double-scaling regimes.
 The manuscript source and the formula-audit code are available at
 \url{https://github.com/skypher/kinetic-defect-ring}.  The archived
 submission revision is identified by the Git tag
-\texttt{paper-2026-08-28-reviewed-v5}.  From the repository root, the
+\texttt{paper-2026-08-28-reviewed-v6}.  From the repository root, the
 audit is run as
 \begin{center}
 \texttt{python3 -u scripts/verify\_formulas.py}.
