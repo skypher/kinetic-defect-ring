@@ -7,6 +7,7 @@
 \usepackage{array}
 \usepackage{tikz}
 \usetikzlibrary{patterns}
+\usepackage{float}
 \usepackage[
   letterpaper,
   total={5.5in,8in},
@@ -21,9 +22,9 @@
 ]{hyperref}
 \hypersetup{
   colorlinks=true,
-  linkcolor={purple},
-  urlcolor={purple},
-  citecolor={blue!80!black},
+  linkcolor={blue!55!black},
+  urlcolor={blue!60!black},
+  citecolor={blue!55!black},
   pdfauthor={Leslie P. Polzer},
   pdftitle={A Single Kinetic Defect in a Run-and-Tumble Ring:
     Exact Spectrum, Exceptional Points, and Relaxation Crossover},
@@ -165,9 +166,11 @@ in \cite{Schnitzer1993}, while lattice run-and-tumble models retain the
 individual hopping and reversal events and connect directly to
 nonequilibrium particle systems
 \cite{ThompsonTailleurCatesBlythe2011}.  For a homogeneous ring, the
-one-particle spectrum, its exceptional points, and the associated
-relaxation transition are known explicitly
-\cite{MallminBlytheEvans2019}.
+one-particle Fourier blocks used here coincide with the
+relative-coordinate blocks extracted in the two-particle analysis of
+\cite{MallminBlytheEvans2019}; that work gives their spectrum,
+exceptional points, and associated relaxation transition explicitly.
+Section~\ref{sec:model} records the precise convention used below.
 
 Spatial inhomogeneity has been studied through position-dependent speed
 \cite{AngelaniGarra2019}, quenched disorder in speed and tumbling
@@ -202,22 +205,34 @@ instead on the tumbling channel of a stochastic generator.
 Because that generator is non-normal, eigenvalue crossings, Jordan
 structure, localization, and long-wave relaxation must be tracked
 together.  The central observation is that the defect is rank one in the
-polarization channel.  From it we obtain the derivative identity and
-parity factorization, the finite algebraic exceptional-point
-classification including the tuned $J_3$ flat-band block, and the
-infinite-line localized-mode criterion including a compact mode.  For
-the spectral gap we distinguish the fixed-rate limit from the
-bulk-critical scaling $\omega=\alpha/n$, $\omega_0=\beta/n$.  The
-continuum comparison then identifies the componentwise Poisson-diffusion
-correction omitted by the standard telegraph model.  Its separately
-defined point interaction uses unit site spacing and is not presented as
-a vanishing-spacing operator limit.
+polarization channel.  It leads to four groups of results.
+\begin{enumerate}
+\item On a finite ring, the characteristic polynomial admits derivative,
+  resolvent, Chebyshev, transfer-matrix, and parity forms.  The parity
+  splitting separates a defect-protected sector from the affected sector
+  and gives the complete finite algebraic exceptional-point
+  classification, including the tuned $J_3$ flat-band block.
+\item On the infinite line, the polarization Green function gives the
+  localized-mode matching equations, their algebraic candidates, and the
+  compact three-site mode.  Simple noncompactly supported modes return to
+  finite rings with exponentially small eigenvalue error.
+\item The large-ring gap has two distinct asymptotic mechanisms.  At fixed
+  bulk rate, reflection protects the leading $n^{-2}$ decay rate from a
+  slower defect.  When $\omega=\alpha/n$ and $\omega_0=\beta/n$, the gap
+  is instead of order $n^{-1}$ and its controlling parity changes across
+  $\alpha=2\pi$.
+\item The continuum comparison identifies the componentwise
+  Poisson-diffusion term omitted by the standard telegraph model.  The
+  point-interaction model introduced in Section~\ref{sec:telegraph} uses
+  unit site spacing as a comparison model, not as a vanishing-spacing
+  operator limit.
+\end{enumerate}
 
 Table~\ref{tab:main-results} maps the principal conclusions to their
 statements.  The gap theorems use global right-edge root exhaustion in
 addition to local expansions at the first spatial pole.
 
-\begin{table}[ht]
+\begin{table}[H]
 \centering
 \small
 \begin{tabular}{L{0.22\textwidth}L{0.46\textwidth}L{0.21\textwidth}}
@@ -226,7 +241,8 @@ Object or regime & Main conclusion & Location\\
 \hline
 Finite ring
   & Characteristic equations and parity factorization
-  & Theorems~\ref{thm:characteristic}--\ref{thm:parity-factor}\\
+  & Theorems~\ref{thm:characteristic}, \ref{thm:transfer}, and
+    \ref{thm:parity-factor}\\
 Exceptional points
   & Jordan classification, including the flat band at $\omega=1$
   & Theorems~\ref{thm:jordan-regular}--\ref{thm:flat-band}\\
@@ -250,15 +266,18 @@ Continuum models
 \label{tab:main-results}
 \end{table}
 
-Section 2 defines the model.  Sections 3 and 4 develop the finite-ring
-characteristic equations, parity factorization, and Jordan structure.
-Section 5 passes to the infinite line and then back to large finite
-rings.  Section 6 treats the fixed-rate and bulk-critical gap regimes,
-with the principal formulas stated before the root-exhaustion arguments.
-Section 7 compares the lattice dispersion with two continuum models and
-constructs the point-defect telegraph analogue.
+Section~\ref{sec:model} defines the model.
+Sections~\ref{sec:characteristic} and \ref{sec:parity} develop the
+finite-ring characteristic equations, parity factorization, and Jordan
+structure.  Section~\ref{sec:localization} passes to the infinite line
+and then back to large finite rings.  Sections~\ref{sec:fixed-gap} and
+\ref{sec:critical-gap} treat the fixed-rate and bulk-critical gap
+regimes, respectively, with the principal formulas stated before the
+root-exhaustion arguments.  Section~\ref{sec:telegraph} compares the
+lattice dispersion with two continuum models and constructs the
+point-defect telegraph analogue.
 
-\section{Model and notation}
+\section{Model and notation}\label{sec:model}
 
 \begin{definition}[Defective run-and-tumble generator]\label{def:generator}
 Let $n\geq2$, let $\omega>0$, and let $\omega _0\geq0$.  Sites are
@@ -281,7 +300,7 @@ coordinate vector.  Put
 \]
 \end{definition}
 
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}[scale=0.92,font=\small]
   \draw[thick] (0,0) circle[radius=1.55];
@@ -336,7 +355,17 @@ At site zero, changing $\omega$ to $\omega_0$ adds
 Every other matrix entry is unchanged.
 \end{proof}
 
-\section{Equivalent characteristic formulations}
+\medskip
+\noindent\textbf{Notation guide.}
+The scalar $\delta$ is the defect contrast and $d$ is the polarization
+vector at the defect; distances are always written explicitly below.
+The unadorned $R$ denotes kinetic reflection, whereas decorated symbols
+such as $R_n$ and $R_{\ell,n}^{\pm}$ denote pole residues.  The finite and
+infinite polarization Green functions are $G_n$ and $g_\infty$,
+respectively.  In the gap sections, $q=2\pi/n$ is the first finite-ring
+wave number and $q_\star=2\pi$ is its scaled value.
+
+\section{Equivalent characteristic formulations}\label{sec:characteristic}
 
 \begin{definition}[Homogeneous factors]\label{def:homogeneous-factors}
 For $\lambda\in\C$, set
@@ -408,7 +437,7 @@ right-hand side again denotes its polynomial continuation.
 \end{theorem}
 
 \begin{proof}
-Let $B=\lambda I-L^{(0)}$.  Lemma \ref{lem:rank-one} and the matrix
+Let $B=\lambda I-L^{(0)}$.  Lemma~\ref{lem:rank-one} and the matrix
 determinant lemma give
 \[
  \det(\lambda I-L)=\det B\bigl(1+\delta d^{\mathsf T}B^{-1}d\bigr).
@@ -436,38 +465,38 @@ and differentiating \eqref{eq:P0-cheb} proves
 
 \begin{theorem}[Transfer-matrix quantization]\label{thm:transfer}
 For a local rate $r\geq0$, define
-\[
+\begin{equation}
  T_r(\lambda)=\frac1{\lambda+1+r}
  \begin{pmatrix}
   1&r\\
   -r&(\lambda+1+r)^2-r^2
  \end{pmatrix}.
  \label{eq:transfer}
-\]
+\end{equation}
 Then $\det T_r=1$, and, away from the displayed denominators,
-\[
+\begin{equation}
  P_n(\lambda;\omega,\omega_0)
  =a^{n-1}(\lambda+1+\omega_0)
    \left\{\operatorname{tr}
      \bigl[T_\omega(\lambda)^{n-1}T_{\omega_0}(\lambda)\bigr]-2\right\}.
  \label{eq:transfer-char}
-\]
+\end{equation}
 After multiplication by the denominators, this identity holds for every
 $\lambda$ by polynomial continuation.  When $a\ne0$ and
 $\lambda+1+\omega_0\ne0$, an eigenvalue is equivalently characterized by
-\[
+\begin{equation}
  \operatorname{tr}
      \bigl[T_\omega(\lambda)^{n-1}T_{\omega_0}(\lambda)\bigr]=2.
  \label{eq:trace-two}
-\]
+\end{equation}
 At a zero of either denominator, the cleared polynomial identity
 \eqref{eq:transfer-char}, rather than the undefined trace in
 \eqref{eq:trace-two}, is the eigenvalue criterion.
 Moreover, if $t=\operatorname{tr}T_\omega=2x$, then
-\[
+\begin{equation}
  T_\omega^{n-1}=U_{n-2}(x)T_\omega-U_{n-3}(x)I,
  \label{eq:transfer-cheb}
-\]
+\end{equation}
 with $U_{-1}=0$.
 \end{theorem}
 
@@ -539,6 +568,7 @@ unimodular $2\times2$ matrix.
 \end{proof}
 
 \section{Parity factorization and finite-ring exceptional points}
+\label{sec:parity}
 
 \subsection{Reflection and parity polynomials}
 
@@ -563,7 +593,7 @@ Thus the defect changes only the reflection-odd sector.
 Reflection reverses position and orientation simultaneously, leaving the
 directed hopping rules and the rate field $\omega_j$ invariant.  At the
 fixed site zero it exchanges the two entries of $d$, hence $Rd=-d$.
-Lemma \ref{lem:rank-one} then vanishes on $\mathcal H_+$.
+Lemma~\ref{lem:rank-one} then vanishes on $\mathcal H_+$.
 \end{proof}
 
 We call $\mathcal H_+$ the protected sector and $\mathcal H_-$ the
@@ -606,11 +636,11 @@ Q_{n,-}={}&H_{n,-}^{(0)}+\frac{2\delta}{n}\left[
 
 \begin{theorem}[Exact parity factorization]\label{thm:parity-factor}
 The characteristic polynomial factors as
-\[
+\begin{equation}
  P_n(\lambda;\omega,\omega_0)
    =H_{n,+}(\lambda)Q_{n,-}(\lambda).
  \label{eq:parity-factor}
-\]
+\end{equation}
 The first factor is the characteristic polynomial on $\mathcal H_+$;
 the second is the characteristic polynomial on $\mathcal H_-$.
 \end{theorem}
@@ -622,8 +652,8 @@ has characteristic polynomial $D_k$.  At $q=0$, the vectors $(1,1)$ and
 $(1,-1)$ have parities $+$ and $-$ and eigenvalues $0$ and $-2\omega$.
 When $n$ is even, the $q=\pi$ density and polarization vectors have
 parities $+$ and $-$ and eigenvalues $-2$ and $-2-2\omega$.  This gives
-\eqref{eq:Hplus}--\eqref{eq:Hminus0}.  Lemma
-\ref{lem:protected-sector} and the rank-one determinant lemma restricted
+\eqref{eq:Hplus}--\eqref{eq:Hminus0}.
+Lemma~\ref{lem:protected-sector} and the rank-one determinant lemma restricted
 to $\mathcal H_-$ give \eqref{eq:Qminus}.  Multiplication proves
 \eqref{eq:parity-factor}.
 \end{proof}
@@ -730,8 +760,8 @@ classifies exceptional points of arbitrary order.
 \begin{proof}
 The discriminant of $D_k$ is $4(\omega^2-s_k^2)$.  At a zero
 discriminant its Fourier block is not scalar and hence is a single
-$J_2$; otherwise each root is simple.  Lemma
-\ref{lem:no-coincidences} excludes coincidences between distinct
+$J_2$; otherwise each root is simple.
+Lemma~\ref{lem:no-coincidences} excludes coincidences between distinct
 $c_k$ values.
 
 It remains to show that the affected restriction is cyclic.  In each
@@ -749,8 +779,8 @@ Consequently no pole, including a repeated pole, cancels when the block
 fractions are put over their common denominator.  The scalar resolvent
 $d^{\mathsf T}(\lambda I-L^{(0)}|_{\mathcal H_-})^{-1}d=2G_n(\lambda)$
 therefore has reduced denominator $H_{n,-}^{(0)}$, the characteristic
-polynomial of the homogeneous odd restriction.  Lemma
-\ref{lem:scalar-resolvent-cyclicity} makes $d$ cyclic first for that
+polynomial of the homogeneous odd restriction.
+Lemma~\ref{lem:scalar-resolvent-cyclicity} makes $d$ cyclic first for that
 restriction and then for its update by $-\delta dd^{\mathsf T}$.  Hence
 the minimal and characteristic polynomials of the affected restriction
 both equal $Q_{n,-}$.  A cyclic matrix has one Jordan block for each
@@ -795,6 +825,7 @@ Jordan form is the direct sum of the protected and affected blocks.
 \end{theorem}
 
 \begin{proof}
+\emph{Algebraic multiplicity at the flat point.}
 Write $t=\lambda+2$.  At $\omega=1$,
 \[
  D_k=t(t-2c_k),\qquad
@@ -849,6 +880,8 @@ with the final value belonging to the tuned $n\equiv3\pmod4$ case.
 Since $P_n=t^{n-1}F_n$, this proves the stated algebraic
 multiplicities, including the tuned multiplicity $n+1$.
 
+\smallskip
+\noindent\emph{Geometric multiplicity.}
 The bulk equations at $t=0$ read
 \[
  u_j^-=-u_{j-1}^+\qquad(j\ne0).
@@ -878,6 +911,8 @@ $\delta=0$ are the two $q=\pm\pi/2$ blocks, each a $J_2$.  For
 $\delta\ne0$, the parity factorization places the $4\mid n$ excess in
 one protected $J_2$.
 
+\smallskip
+\noindent\emph{Size of the nontrivial defective block.}
 It remains to distinguish one $J_3$ from two $J_2$ blocks in the tuned
 $n\equiv3\pmod4$ case.  Put $N_0=L_n(1,1)+2I$ and
 $N=L_n(1,\omega_0)+2I=N_0-\delta dd^{\mathsf T}$.  Because
@@ -913,7 +948,9 @@ the additional algebraic order at $\delta=-2/(n+1)$ makes that same
 block a $J_3$.  This proves all six cases and excludes the alternative
 of two $J_2$ blocks in the tuned case.
 
-For completeness, put
+\smallskip
+\noindent\emph{Non-flat affected roots.}
+Put
 $A_-^{(0)}=L^{(0)}|_{\mathcal H_-}$ and consider an affected eigenvalue
 $\lambda\ne-2$.
 If $\delta\ne0$, it cannot equal a non-flat eigenvalue of the homogeneous
@@ -924,7 +961,7 @@ $\lambda I-A_-^{(0)}$ is invertible.  The rank-one eigenvalue equation
 makes its eigenspace the one-dimensional span of
 $(\lambda I-A_-^{(0)})^{-1}d$.  Its root order therefore gives the size
 of its unique Jordan block.  If $\delta=0$, all non-flat roots are simple
-by Lemma \ref{lem:no-coincidences}.  This proves the final classification
+by Lemma~\ref{lem:no-coincidences}.  This proves the final classification
 without asserting cyclicity at the removed flat primary component.
 \end{proof}
 
@@ -961,10 +998,10 @@ non-flat affected exceptional parameters are exactly those satisfying
                   \partial_\lambda\widehat Q_{n,-}\bigr)=0.
 \]
 The protected exceptional parameters \eqref{eq:protected-ep} and the
-flat-band cases of Theorem \ref{thm:flat-band} are supplied separately;
+flat-band cases of Theorem~\ref{thm:flat-band} are listed separately;
 they are not asserted to arise from these affected-sector resultants.
-Root orders and Theorems
-\ref{thm:jordan-regular}--\ref{thm:flat-band} distinguish exceptional
+Root orders and Theorems~\ref{thm:jordan-regular}--\ref{thm:flat-band}
+distinguish exceptional
 points from semisimple parity crossings without a numerical tolerance.
 For the general affected sector, this is an implicit algebraic
 classification: the resultant is an exact finite polynomial equation
@@ -977,9 +1014,9 @@ asserted.
 For a nonconstant polynomial $F$, the resultant
 $\Res_\lambda(F,F')$ vanishes exactly when $F$ has a repeated root.
 For $\omega\ne1$, the polynomial $Q_{n,-}$ is monic of degree $n$, so
-Theorem \ref{thm:jordan-regular} proves the first assertion.  At
+Theorem~\ref{thm:jordan-regular} proves the first assertion.  At
 $\omega=1$, it remains to verify the exponent in
-\eqref{eq:flat-affected-order}.  Definition \ref{def:parity-polynomials}
+\eqref{eq:flat-affected-order}.  Definition~\ref{def:parity-polynomials}
 gives
 \[
  \operatorname{ord}_{\lambda=-2}H_{n,+}=\begin{cases}
@@ -989,19 +1026,19 @@ gives
  \end{cases}
 \]
 Subtracting these protected orders from the total flat algebraic
-multiplicities in Theorem \ref{thm:flat-band} gives every line of
+multiplicities in Theorem~\ref{thm:flat-band} gives every line of
 \eqref{eq:flat-affected-order}.  Thus $\widehat Q_{n,-}$ removes the
 exact affected flat primary factor on each stratum.  At the tuned
 $n=3$ point, $Q_{3,-}$ is monic of degree three and its exact flat order
 is three, so $\widehat Q_{3,-}=1$ and the non-flat affected spectrum is
 empty.  On every other stratum, $\widehat Q_{n,-}$ is nonconstant, and
-the resultant criterion applies.  Theorems
-\ref{thm:jordan-regular}--\ref{thm:flat-band} then identify the Jordan
+the resultant criterion applies.
+Theorems~\ref{thm:jordan-regular}--\ref{thm:flat-band} then identify the Jordan
 block attached to every repeated non-flat root and separately account
 for the protected and flat contributions.
 \end{proof}
 
-\section{Defect-localized modes}
+\section{Defect-localized modes}\label{sec:localization}
 
 \subsection{Bulk spectrum and Green function}
 
@@ -1100,11 +1137,15 @@ $\C\setminus[-1,1]$ and hence everywhere away from their poles.
 
 \subsection{Infinite-line defect modes}
 
+A localized mode is called \emph{noncompactly supported} when its support
+is not finite.  In the decay-root parametrization below this is the range
+$0<|z|<1$; the compact case $z=0$ is treated separately.
+
 \begin{theorem}[Infinite-line localization criterion]
 \label{thm:localization}
 Let $\delta\ne0$, $\lambda\notin\Sigma_\omega$, and $a\ne0$.  Then
-$\lambda$ is an exponentially localized eigenvalue of
-the infinite chain with the same single tumbling defect if and only if
+$\lambda$ is an exponentially localized eigenvalue of $L_\infty$ if and
+only if
 \begin{equation}\label{eq:localization-secular}
  1+2\delta g_\infty(\lambda)=0,
 \end{equation}
@@ -1165,9 +1206,9 @@ $-1/\log|z|$.  Clearing the denominator in
 \eqref{eq:loc-dispersion}.
 \end{proof}
 
-\begin{corollary}[Algebraic parametrization of localized modes]
+\begin{corollary}[Algebraic candidates for noncompactly supported localized modes]
 \label{cor:localization-algebraic}
-Under the noncompact hypotheses of Theorem~\ref{thm:localization}, every
+Under the hypotheses of Theorem~\ref{thm:localization}, every
 admissible $z$ is a root of
 \begin{align}
 0={}&2\delta z^3+(2\delta\omega+1-\omega^2)z^2\notag\\
@@ -1191,7 +1232,8 @@ At these parameters there are two admissible values
        \pm\sqrt{5\omega^4-2\omega^2+1}}{2\omega},
  \qquad \lambda_\pm=a_\pm-1-\omega,
 \end{equation}
-and both give noncompact localized modes with decay root $z=-\omega$.
+and both give noncompactly supported localized modes with decay root
+$z=-\omega$.
 A root of \eqref{eq:localization-cubic} is accepted only when both
 \eqref{eq:loc-dispersion} and \eqref{eq:loc-match} hold; this removes
 roots introduced by elimination or by clearing denominators.
@@ -1289,6 +1331,7 @@ $\operatorname{dist}(j,0)\le1$.
 \end{proposition}
 
 \begin{proof}
+\emph{Eigenvalue convergence.}
 Equation \eqref{eq:green-root-unity} applied to the bulk Green kernel
 gives the exact identity
 \begin{equation}\label{eq:finite-green-z}
@@ -1313,7 +1356,7 @@ Choose a closed disk $B$ about $\lambda_\infty$ disjoint from
 $\Sigma_\omega$ and containing no other zero of
 $1+2\delta g_\infty$.  Shrinking it if necessary, choose
 \[
- \rho=\max_{\lambda\in B}|z(\lambda)|<r<1.
+ \rho_B=\max_{\lambda\in B}|z(\lambda)|<r<1.
 \]
 By Lemma~\ref{lem:homogeneous-polynomial}, every zero of
 $H_{n,-}^{(0)}$ is a finite-ring homogeneous Fourier eigenvalue and
@@ -1323,7 +1366,7 @@ the zeros of $Q_{n,-}$ there.
 Equation
 \eqref{eq:finite-green-error} and its $\lambda$-derivative are bounded
 on $B$ by $C_Br^n$: for the derivative, the only additional factor is
-$n\rho^{n-1}=O(r^n)$.  Rouch\'e's theorem on $\partial B$, followed by
+$n\rho_B^{n-1}=O(r^n)$.  Rouch\'e's theorem on $\partial B$, followed by
 the simple-zero estimate at $\lambda_\infty$, gives one zero
 $\lambda_n$ and first yields
 $\lambda_n-\lambda_\infty=O(r^n)$.  The root equation and
@@ -1337,10 +1380,12 @@ $z(\lambda_n)/z_\infty=1+O(r^n)$, one has
 $|z(\lambda_n)/z_\infty|^n=\exp(O(nr^n))=O(1)$.  Hence
 $\lambda_n-\lambda_\infty=O(|z_\infty|^n)$.
 
-Put $\rho=|z_\infty|$, $z_n=z(\lambda_n)$, and
+\smallskip
+\noindent\emph{Uniform localization.}
+Put $\rho_\infty=|z_\infty|$, $z_n=z(\lambda_n)$, and
 $s_n=s(\lambda_n)$.  Averaging the Poisson-kernel expansion in
 Lemma~\ref{lem:green-identities} against $e^{\ii jq_k}$ gives, for
-every integer representative $0\le j<n$,
+the representative $j\in\{0,\ldots,n-1\}$,
 \begin{equation}\label{eq:localized-aliased-coefficient}
  \frac1n\sum_{k=0}^{n-1}
    \frac{e^{\ii jq_k}}{x(\lambda_n)-\cos q_k}
@@ -1359,57 +1404,58 @@ indices congruent to $-j$ modulo $n$.  Moreover, in Fourier variables,
 Thus each component of the finite-ring resolvent vector is a bounded
 linear combination of the coefficients in
 \eqref{eq:localized-aliased-coefficient} at $j$ and $j\pm1$.  If
-$d=\operatorname{dist}(j,0)\le n/2$, then the geometric series gives
+$h_j=\operatorname{dist}(j,0)\le n/2$, then the geometric series gives
 the exact majorant
 \[
  \sum_{\ell\in\Z}|z_n|^{|j+\ell n|}
- =\frac{|z_n|^d+|z_n|^{n-d}}{1-|z_n|^n}.
+ =\frac{|z_n|^{h_j}+|z_n|^{n-h_j}}{1-|z_n|^n}.
 \]
-Since $s_n$ and $a_n$ stay away from zero and $|z_n|\ge\rho/2$ for
+Since $s_n$ and $a_n$ stay away from zero and
+$|z_n|\ge\rho_\infty/2$ for
 large $n$, the shifts by one only alter the constant.  Consequently
 the periodized resolvent components are bounded by
 \begin{equation}\label{eq:localized-periodization-bound}
- C\frac{|z_n|^d+|z_n|^{n-d}}{1-|z_n|^n},
- \qquad d=\operatorname{dist}(j,0)\le n/2,
+ C\frac{|z_n|^{h_j}+|z_n|^{n-h_j}}{1-|z_n|^n},
+ \qquad h_j=\operatorname{dist}(j,0)\le n/2,
 \end{equation}
 where $C$ is independent of $j$ and of all sufficiently large $n$.
 Analyticity of $z(\lambda)$ near the simple off-spectrum eigenvalue and
 the eigenvalue estimate already proved give
 \[
- z_n=z_\infty+O(\rho^n),\qquad
- \frac{|z_n|}{\rho}\le1+C\rho^{n-1}.
+ z_n=z_\infty+O(\rho_\infty^n),\qquad
+ \frac{|z_n|}{\rho_\infty}\le1+C\rho_\infty^{n-1}.
 \]
-It follows uniformly for $d\le n/2$ that
+It follows uniformly for $h_j\le n/2$ that
 \[
- \left(\frac{|z_n|}{\rho}\right)^d
- \le \exp(Cd\rho^{n-1})
- \le \exp(Cn\rho^{n-1}/2)=O(1).
+ \left(\frac{|z_n|}{\rho_\infty}\right)^{h_j}
+ \le \exp(Ch_j\rho_\infty^{n-1})
+ \le \exp(Cn\rho_\infty^{n-1}/2)=O(1).
 \]
-For large $n$, $|z_n|<1$ and $n-d\ge d$, so the wrapped term in
+For large $n$, $|z_n|<1$ and $n-h_j\ge h_j$, so the wrapped term in
 \eqref{eq:localized-periodization-bound} is no larger than its first
 term; also $1-|z_n|^n$ is bounded below.  Thus every component is
-bounded by $C\rho^d$.  The local coefficients converge to a nonzero
+bounded by $C\rho_\infty^{h_j}$.  The local coefficients converge to a nonzero
 infinite-volume eigenvector, so its unnormalized $\ell^2$ norm is
 bounded above and below by positive constants.  Normalization therefore
 changes the component bound only by a fixed factor, and squaring the two
-components proves the site-mass bound $C\rho^{2d}$.
+components proves the site-mass bound $C\rho_\infty^{2h_j}$.
 
+\smallskip
+\noindent\emph{Compact case.}
 In the compact case, the Laurent-polynomial Fourier vector displayed in
-the proof of Theorem \ref{thm:localization} is an exact finite-ring
+the proof of Proposition~\ref{prop:compact-localization} is an exact finite-ring
 eigenvector for every $n$ (with the two neighbors identified when
 $n=2$), proving the last assertion.
 \end{proof}
 
-\section{Large-ring spectral gap}
+\section{Fixed-rate spectral gap}\label{sec:fixed-gap}
 
-The gap has two distinct large-ring regimes.  At fixed $\omega>0$, the
-first spatial mode has decay of order $n^{-2}$ and reflection protects
-one of its parity components.  When $\omega=\alpha/n$ and
-$\omega_0=\beta/n$, the gap is instead of order $n^{-1}$ and the first
-homogeneous exceptional scale $\alpha=2\pi$ separates two parity-selection
-patterns.  In each regime, the local pole calculation identifies the
-candidate roots; the right-edge estimates below show that no other root
-has a larger real part.
+At fixed $\omega>0$, the first spatial mode has decay of order $n^{-2}$
+and reflection protects one of its parity components.  The local pole
+calculation identifies the protected and affected candidate roots; the
+right-edge estimates below show that no other root has a larger real
+part.  Section~\ref{sec:critical-gap} treats the distinct bulk-critical
+regime in which both tumbling rates scale as $n^{-1}$.
 
 \subsection{Gap definition}
 
@@ -1456,7 +1502,7 @@ asserted for small $n$, where the first-mode roots can be nonreal and
 the tumble mode can be slower.
 \end{definition}
 
-\subsection{Fixed bulk rate: statement of the result}
+\subsection{Fixed-rate asymptotics}
 
 \begin{theorem}[Fixed-rate gap asymptotics]\label{thm:fixed-gap}
 Fix $\omega>0$ and $\omega_0\ge0$.
@@ -1486,6 +1532,14 @@ The errors are uniform when $(\omega,\omega_0)$ ranges over a compact
 set with $\omega$ bounded away from zero.  The root selection is uniform
 through $\omega_0=\omega$, where the two parity roots coincide.
 \end{theorem}
+
+The selection mechanism is visible directly in the two parity sectors.
+Reflection fixes the protected first-mode root at its homogeneous value.
+The affected companion moves away from that value at order $n^{-3}$:
+a slower defect moves it to the left and leaves the protected root in
+control, whereas a faster defect moves it toward zero and selects the
+affected root.  Thus a local rate change alters the first correction but
+not the leading fixed-rate decay scale.
 
 The proof occupies the next two subsections.  The local Green estimate
 locates the affected companion of the protected first-mode root; the
@@ -1608,9 +1662,9 @@ with the same homogeneous pole is
 \end{lemma}
 
 \begin{proof}
-The sector assertion is Theorem \ref{thm:parity-factor}; the two
-equalities follow from Lemma \ref{lem:homogeneous-polynomial} and
-Definition \ref{def:gap}.  Near
+The sector assertion is Theorem~\ref{thm:parity-factor}; the two
+equalities follow from Lemma~\ref{lem:homogeneous-polynomial} and
+Definition~\ref{def:gap}.  Near
 $\lambda_1^+$, the two terms $k=1,n-1$ in the full Fourier Green
 function have residue
 \[
@@ -1629,7 +1683,7 @@ formula follows.  Suppose $\delta\ne0$ and put
  M(\lambda)=1+2\delta G_n^{\rm reg}(\lambda),
  \qquad M_0=\frac{1+\omega_0}{1+\omega}.
 \]
-Lemma \ref{lem:fixed-regular-green} gives, uniformly on every fixed
+Lemma~\ref{lem:fixed-regular-green} gives, uniformly on every fixed
 $O(n^{-3})$ disk about $\lambda_1^+$,
 \[
  M(\lambda)=M_0+O(|\delta|n^{-1}),
@@ -1674,7 +1728,7 @@ $(\omega,\omega_0)\in K$.
   $n\ge N(K,M,A)$, whenever $\lambda=\zeta/n^2$, $|\zeta|\le M$, and
   \[
     \Re\lambda\ge\Re p_n-\pi^2D n^{-2},
-    \qquad |\lambda-p_n|\ge A n^{-3},\qquad A\ge1,
+    \qquad |\lambda-p_n|\ge A n^{-3},
   \]
   \begin{equation}\label{eq:fixed-bounded-threshold-bound}
    |G_n(\lambda)-g_0|\le \frac{C_M}{A}+\frac{C_M}{n}.
@@ -1824,6 +1878,7 @@ over a compact set with $\omega$ bounded away from zero.
 \end{lemma}
 
 \begin{proof}
+\emph{Right-edge window.}
 For the uniform assertion, fix a compact
 $K\subset(0,\infty)\times[0,\infty)$ containing the given parameter
 pair; the pointwise assertion follows from the same argument.  All
@@ -1833,21 +1888,26 @@ $K$.  Put
  \Omega_n=\left\{\lambda:\Re\lambda\ge
  \Re\lambda_1^+-\pi^2D n^{-2}\right\}.
 \]
+\smallskip
+\noindent\emph{Protected-sector exclusion.}
 The protected roots are explicit.  Their slow branch satisfies, uniformly
 for small real $q$,
 \begin{equation}\label{eq:slow-dispersion-bound}
  \lambda^+(q)=-Dq^2+O(q^4).
 \end{equation}
-Choose $q_*>0$ so that the remainder is at most $Dq^2/4$ for
-$|q|\le q_*$.  The modes with $2\pi/n<|q|\le q_*$ are then to the left
+Choose $q_{\rm loc}>0$ so that the remainder is at most $Dq^2/4$ for
+$|q|\le q_{\rm loc}$.  The modes with
+$2\pi/n<|q|\le q_{\rm loc}$ are then to the left
 of $\Omega_n$, while continuity puts both branches with
-$q_*\le|q|\le\pi$ a fixed distance into the left half-plane.  The fast
+$q_{\rm loc}\le|q|\le\pi$ a fixed distance into the left half-plane.  The fast
 small-$q$ branch is also separated from zero by a fixed amount.  Thus,
 apart from zero, only the protected root associated with
 $q=\pm2\pi/n$ lies
 in $\Omega_n$ once $n$ is large.  We prove the same exclusion for the
 affected sector.
 
+\smallskip
+\noindent\emph{Affected secular equation.}
 If $\delta=0$, that sector is homogeneous and the conclusion follows from
 \eqref{eq:slow-dispersion-bound}.  Assume $\delta\ne0$ and set
  \begin{equation}\label{eq:threshold-secular-margin}
@@ -1862,6 +1922,8 @@ Indeed, the residue at every slow homogeneous pole is nonzero, so
 multiplication by $H_{n,-}^{(0)}$ cancels the pole of $f_n$ but does not
 leave a zero there.
 
+\smallskip
+\noindent\emph{Exclusion away from the origin.}
 We first exclude, uniformly on $K$, sequences of affected zeros that do
 not tend to zero.  Suppose otherwise.  After discarding homogeneous
 terms, for which the assertion was already proved, there would be
@@ -1922,6 +1984,8 @@ Equality in \eqref{eq:infinite-dissipation} forces an $\ell^2$ vector to
 vanish.  Consequently every sequence of affected zeros in $\Omega_n$
 tends to zero, uniformly for parameters in $K$.
 
+\smallskip
+\noindent\emph{Scaled exhaustion near the origin.}
 It remains to exhaust these affected zeros.  On the
 $\zeta=n^2\lambda$ scale, the limiting first pole is
 $-4\pi^2D(\omega)$, where $D(\omega)=(1+\omega)/(2\omega)$.  Its range
@@ -1962,6 +2026,8 @@ $G_n(\lambda_n)=g_0+o(1)$ and the same contradiction.  Hence, for all
 sufficiently large $n$, every affected zero in $\Omega_n$ lies in the
 first-pole disk, with a threshold uniform on $K$.
 
+\smallskip
+\noindent\emph{First-pole count.}
 Finally, on the circle $|\lambda-\lambda_1^+|=A n^{-3}$ write
 \[
  G_n(\lambda)=\frac{2R_1}{n(\lambda-\lambda_1^+)}
@@ -1980,8 +2046,8 @@ Here $R_1=O(n^{-2})$.  Enlarge $A$, if necessary, so that the zero of
 the first two terms lies strictly inside the circle.  On the circle the
 last term is $O(n^{-4})$, whereas the first two terms have modulus
 bounded below by $c_A n^{-3}$.  Rouch\'e's theorem therefore counts
-exactly one zero in the disk.  It is the affected root of Lemma
-\ref{lem:gap-pole}.  Thus no other affected root occurs in $\Omega_n$,
+exactly one zero in the disk.  It is the affected root of
+Lemma~\ref{lem:gap-pole}.  Thus no other affected root occurs in $\Omega_n$,
 which proves the assertion.
 
 All estimates above are uniform on the stated compact parameter sets:
@@ -1989,14 +2055,14 @@ $D$, $\delta$, and the generator norms are bounded there, while $M_0$
 has a positive minimum.
 \end{proof}
 
-\subsection{Proof and fixed-rate consequences}
+\subsection{Gap selection and fixed-rate consequences}
 
 \begin{proof}[Proof of Theorem~\ref{thm:fixed-gap}]
 Taylor expansion of \eqref{eq:hom-gap} gives
-\eqref{eq:hom-gap-expansion}.  Lemma \ref{lem:gap-pole} shows
+\eqref{eq:hom-gap-expansion}.  Lemma~\ref{lem:gap-pole} shows
 that, uniformly across $\delta=0$, the affected first root moves toward
-zero precisely when $\delta>0$.  Lemma
-\ref{lem:right-edge-separation} shows that no other
+zero precisely when $\delta>0$.
+Lemma~\ref{lem:right-edge-separation} shows that no other
 extended, band-edge, or localized root can compete with this first
 pair.  Therefore the protected root has maximal real part when
 $\delta\le0$, proving \eqref{eq:slow-defect-gap}, while the affected
@@ -2006,7 +2072,7 @@ $q^2=4\pi^2n^{-2}$ in
 \end{proof}
 
 \begin{corollary}[Fixed ratio, vanishing ratio, and a slow-site scaling]
-\label{cor:requested-regimes}
+\label{cor:fixed-rate-regimes}
 Let the bulk rate $\omega>0$ be fixed.
 \begin{enumerate}
 \item If $\omega_0/\omega\to\rho\in(0,\infty)$, equations
@@ -2028,15 +2094,23 @@ Let the bulk rate $\omega>0$ be fixed.
 
 \begin{proof}
 In items 2 and 3 one has $\omega_0<\omega$ for every sufficiently large
-$n$, so Theorem \ref{thm:fixed-gap} applies.  In item 1 the convergence
+$n$, so Theorem~\ref{thm:fixed-gap} applies.  In item 1 the convergence
 of $\omega_0/\omega$ places the $n$-dependent pairs
 $(\omega,\omega_0)$ in one compact parameter set.  The compact-uniform
-statement in Theorem \ref{thm:fixed-gap} therefore permits this
+statement in Theorem~\ref{thm:fixed-gap} therefore permits this
 $n$-dependence, and its sign test gives the asserted branch selection,
 including crossings through equality.
 \end{proof}
 
-\subsection{Bulk-critical scaling: statement of the result}
+\section{Bulk-critical spectral gap}\label{sec:critical-gap}
+
+When $\omega=\alpha/n$ and $\omega_0=\beta/n$, the gap is of order
+$n^{-1}$ and the first homogeneous exceptional scale $\alpha=2\pi$
+separates two parity-selection patterns.  Local pole calculations locate
+the candidate roots, while the right-edge estimates below exclude every
+other root from controlling the gap.
+
+\subsection{Asymptotic regimes and parity selection}
 
 For a real number $x$, write $x_+=\max\{x,0\}$.  The scaled first
 wave number is denoted by $q_\star=2\pi$.
@@ -2089,6 +2163,13 @@ $\beta<\alpha$ below $q_\star$ and for $\beta>\alpha$ above
 $q_\star$; at $\alpha=q_\star$, a faster defect produces the
 $n^{-3/2}$ square-root correction.
 \end{theorem}
+
+Below $q_\star$, the protected first pair is nonreal and the defect
+selects between equal leading real parts through an $n^{-2}$ correction.
+Above $q_\star$, the first pair is real and the direction of selection
+reverses.  At $\alpha=q_\star$ the two homogeneous roots coalesce on the
+leading scale, which accounts for the distinct $n^{-3/2}$ response to a
+faster defect.
 
 Table~\ref{tab:critical-summary} and
 Figure~\ref{fig:critical-selection} display this selection rule.  An
@@ -2149,7 +2230,7 @@ with $q_\star=2\pi$.}
     node[pos=0.80,below,sloped,fill=white,inner sep=1pt]
       {$\beta=\alpha$: tie};
   \draw[blue!75!black,very thick] (1,0)--(1,1);
-  \draw[purple!80!black,very thick] (1,1)--(1,2);
+  \draw[purple!80!black,very thick,densely dashed] (1,1)--(1,2);
   \filldraw[black] (1,1) circle[radius=0.025];
 
   \node[align=center,fill=white,inner sep=1pt] at (0.67,0.28)
@@ -2164,7 +2245,8 @@ with $q_\star=2\pi$.}
   \draw[blue!75!black,very thick] (0,-0.25)--(0.16,-0.25);
   \node[anchor=west,font=\footnotesize] at (0.22,-0.25)
     {$\alpha=2\pi$, $\beta<2\pi$: protected, $n^{-2}$};
-  \draw[purple!80!black,very thick] (0,-0.43)--(0.16,-0.43);
+  \draw[purple!80!black,very thick,densely dashed]
+    (0,-0.43)--(0.16,-0.43);
   \node[anchor=west,font=\footnotesize] at (0.22,-0.43)
     {$\alpha=2\pi$, $\beta>2\pi$: affected, $n^{-3/2}$};
   \filldraw[black] (0.08,-0.61) circle[radius=0.025];
@@ -2174,7 +2256,10 @@ with $q_\star=2\pi$.}
 \caption{Gap-controlling parity and first correction scale in the
 bulk-critical limit.  Region labels apply away from $\alpha=2\pi$; the
 colored segments give the separate boundary regime.  Opposite hatching
-distinguishes the two parities in monochrome.}
+distinguishes the two parities in monochrome, and the solid/dashed
+boundary styles distinguish the two critical segments.  The displayed
+window is schematic: all four regions continue throughout the positive
+$(\alpha,\beta)$ quadrant.}
 \label{fig:critical-selection}
 \end{figure}
 
@@ -2372,14 +2457,14 @@ The following estimates hold for $|\lambda|\le R$.
    d_1=\alpha-\sqrt{\alpha^2-q_\star^2},\qquad
    d_2=\alpha-\Re\sqrt{\alpha^2-4q_\star^2},
   \]
-  fix $d\in(d_1,d_2)$, and set
-  $\Omega_{d,n}=\{\Re\lambda\ge-d/n\}$.  After deleting the disk of
+  fix $d_{\rm cut}\in(d_1,d_2)$, and set
+  $\Omega_{{\rm cut},n}=\{\Re\lambda\ge-d_{\rm cut}/n\}$.  After deleting the disk of
   radius $An^{-2}$ about the slow first pole, there is
-  $C_d=C_d(\alpha,d,R)$ such that
+  $C_{\rm cut}=C_{\rm cut}(\alpha,d_{\rm cut},R)$ such that
   \begin{equation}\label{eq:critical-pole-distance-supercritical}
-   d_{*,n}(w)^{-1}\le C_d\left(1+\frac nA\right)
+   d_{*,n}(w)^{-1}\le C_{\rm cut}\left(1+\frac nA\right)
   \end{equation}
-  throughout the remaining part of $\Omega_{d,n}$, for every fixed
+  throughout the remaining part of $\Omega_{{\rm cut},n}$, for every fixed
   $A\ge1$ and all sufficiently large $n$.
 \end{enumerate}
 The thresholds for $n$ may depend on the displayed fixed parameters
@@ -2390,6 +2475,7 @@ $A$ or $n$.
 \end{lemma}
 
 \begin{proof}
+\emph{Branch reduction.}
 A branch change has the form
 $w\mapsto\pm w+2\pi\mathrm i n m$.  Both pole sets in the definition
 are invariant under this transformation, so both distances are
@@ -2416,6 +2502,8 @@ C_R$, and $|\theta|<1$ give
                   +\frac{|\theta|^2}{n^2}\right).
 \end{equation}
 
+\smallskip
+\noindent\emph{Subcritical and critical windows.}
 Suppose first that $\alpha\le q_\star$.  The poles with indices
 $1\le\ell\le L$ lie in $\Omega_{B,n}$ for all sufficiently large
 $n$.  Except for $(\alpha,\ell)=(q_\star,1)$, they are simple.  On the
@@ -2424,6 +2512,8 @@ $w^2=\nu(\nu+2\alpha)$, and at a simple limiting pole
 \[
  \frac{dw}{d\nu}=\frac{\nu+\alpha}{w}\ne0.
 \]
+\smallskip
+\noindent\emph{Fixed-index simple poles.}
 For each of these fixed indices,
 \eqref{eq:critical-cosh-local-bound} first gives
 $|D_\ell(\lambda)|\le C_Bn^{-2}$.  The factorization in
@@ -2458,7 +2548,7 @@ After shrinking these finitely many neighborhoods, choose positive
 constants $c_B$, $C_B$, and $r_B$, independent of $n$, with the
 following property.  For each corresponding finite pole, set
 \[
- \nu_{\ell,n}^{\pm}=np_{\ell,n}^{\pm},
+ \nu_{\ell,n}^{\pm}=np_{\ell,n}^{\pm}.
 \]
 One may choose the local branch so that
 $w_n(\nu_{\ell,n}^{\pm})=2\pi\mathrm i\ell$ and
@@ -2486,6 +2576,8 @@ the finite-$n$ distance.  The
 reciprocal contribution of all these finitely many indices is thus at
 most $C_B(1+n/A)$.
 
+\smallskip
+\noindent\emph{Coalescing first pair.}
 At $\alpha=q_\star$ and $\ell=1$, write
 $\Delta=\lambda-\lambda_c$.  The two first poles are
 $\lambda_c\pm r_n$, with $r_n=O(n^{-2})$.  Outside the grouped disk,
@@ -2498,6 +2590,8 @@ Since $|\sin(q_\star/n)|\asymp n^{-1}$,
 $|\theta|\ge cA^2/n\ge cA/n$.  This supplies the same reciprocal
 bound as a simple pole without separating the coalescing pair.
 
+\smallskip
+\noindent\emph{Remaining wave numbers.}
 It remains to treat $\ell\ge L+1$.  Choose
 $q_0\in(0,\pi/2)$.  When $q\le q_0$, the two poles are conjugate for
 large $n$; write them as
@@ -2531,8 +2625,11 @@ Thus $|D_\ell(\lambda)|\ge c(q_0)^2$, which is incompatible with
 \eqref{eq:critical-cosh-local-bound} and $|\theta|<1$ for large $n$.
 This proves \eqref{eq:critical-pole-distance-subcritical}.
 
-Now suppose $\alpha>q_\star$.  The choice $d_1<d<d_2$ places only the slow
-first pole in $\Omega_{d,n}$.  The simple-pole inverse-function
+\smallskip
+\noindent\emph{Supercritical window.}
+Now suppose $\alpha>q_\star$.  The choice
+$d_1<d_{\rm cut}<d_2$ places only the slow first pole in
+$\Omega_{{\rm cut},n}$.  The simple-pole inverse-function
 argument gives $|\theta|\ge cA/n$ near that pole after its disk is
 deleted.  The fast first pole and the complement of a fixed scaled
 neighborhood of the slow pole have a positive scaled separation from
@@ -2540,7 +2637,7 @@ the window, so they give $|\theta|\ge c$.
 
 Choose $L_0$ with $L_0q_\star>2\alpha$.  For each fixed
 $2\le\ell\le L_0$, both pole factors have horizontal distance at
-least $c/n$ from $\Omega_{d,n}$; hence
+least $c/n$ from $\Omega_{{\rm cut},n}$; hence
 $|D_\ell(\lambda)|\ge cn^{-2}$.  Equation
 \eqref{eq:critical-cosh-local-bound} gives
 $|D_\ell(\lambda)|\le C|\theta|n^{-2}$ when $|\theta|<1$, so
@@ -2551,12 +2648,12 @@ For $\ell>L_0$ and $q\le q_0$, the poles are conjugate,
 $t_{\ell,n}\ge cq$, and their horizontal separation from the window
 is at least
 \[
- u_{\ell,n}=\frac{\alpha-d}{n}+1-\cos q.
+ u_{\ell,n}=\frac{\alpha-d_{\rm cut}}{n}+1-\cos q.
 \]
 Equations \eqref{eq:critical-conjugate-product-bound} and
 \eqref{eq:critical-cosh-local-bound} give
 \[
- |\theta|\ge c n u_{\ell,n}\ge c(\alpha-d).
+ |\theta|\ge c n u_{\ell,n}\ge c(\alpha-d_{\rm cut}).
 \]
 The fixed separation for $q\in[q_0,\pi]$ again rules out
 $|\theta|<1$.  Combining the slow-pole estimate with these fixed
@@ -2590,16 +2687,17 @@ restrict $\lambda$ to $|\lambda|\le R$.  The following estimates hold.
    d_1=\alpha-\sqrt{\alpha^2-q_\star^2},\qquad
    d_2=\alpha-\Re\sqrt{\alpha^2-4q_\star^2},
   \]
-  choose $d\in(d_1,d_2)$, and put
-  $\Omega_{d,n}=\{\Re\lambda\ge-d/n\}$.  After deleting the disk of
-  radius $A n^{-2}$ about the slow first pole, one has
+  choose $d_{\rm cut}\in(d_1,d_2)$, and put
+  $\Omega_{{\rm cut},n}=\{\Re\lambda\ge-d_{\rm cut}/n\}$.  After
+  deleting the disk of radius $A n^{-2}$ about the slow first pole, one has
   \begin{equation}\label{eq:critical-green-exclusion-bound-super}
-    |G_n(\lambda)|\le C_d\left(1+\frac nA\right)
+    |G_n(\lambda)|\le C_{\rm cut}\left(1+\frac nA\right)
   \end{equation}
-  throughout $\Omega_{d,n}\cap\{|\lambda|\le R\}$.  Here
-  $C_d=C_d(\alpha,d,R)$ is independent of $A$ and $n$, and, for every
+  throughout $\Omega_{{\rm cut},n}\cap\{|\lambda|\le R\}$.  Here
+  $C_{\rm cut}=C_{\rm cut}(\alpha,d_{\rm cut},R)$ is independent of
+  $A$ and $n$, and, for every
   fixed $A\ge1$, the estimate holds for
-  $n\ge N(\alpha,d,R,A)$.
+  $n\ge N(\alpha,d_{\rm cut},R,A)$.
 \end{enumerate}
 \end{lemma}
 
@@ -2645,9 +2743,10 @@ In the subcritical window,
 \]
 for all sufficiently large $n$.  In the supercritical window,
 \[
- \Re(\lambda+2\omega)\ge\frac{2\alpha-d}{n},
+ \Re(\lambda+2\omega)\ge\frac{2\alpha-d_{\rm cut}}{n},
 \]
-where $2\alpha-d>0$ because $d<d_2\le\alpha$.  Since also
+where $2\alpha-d_{\rm cut}>0$ because
+$d_{\rm cut}<d_2\le\alpha$.  Since also
 $|\lambda+2\omega|\ge|\Im\lambda|$, the two cases give
 \begin{equation}\label{eq:critical-tumble-distance}
  |\lambda+2\omega|\ge c(n^{-1}+|\Im\lambda|).
@@ -2719,8 +2818,8 @@ $\alpha>0$ and $\beta\ge0$ are fixed, put $q_\star=2\pi$, and write
 $b=\beta-\alpha$.
 \begin{enumerate}
 \item Fix $\ell\ge1$ with $\alpha\ne\ell q_\star$.  There is
-  $A_{\ell}>0$ such that, for each sign, every fixed
-  $A\ge A_{\ell}$, and all sufficiently large $n$, the disk
+  $A_{\ell}>0$ such that, for each sign and every fixed
+  $A\ge A_{\ell}$, all sufficiently large $n$ have the property that the disk
   $|\lambda-p_{\ell,n}^{\pm}|<An^{-2}$ contains exactly one zero
   $\widehat p_{\ell,n}^{\pm}$ of $Q_{n,-}$, counted with algebraic
   multiplicity, and
@@ -2918,6 +3017,7 @@ for a constant $c=c(\alpha,\beta)>0$.
 \end{lemma}
 
 \begin{proof}
+\emph{Right-edge secular exclusion.}
 The protected roots are the homogeneous roots from
 Definition~\ref{def:critical-poles}.
 Put $b=\beta-\alpha$.  The argument below includes $b=0$; in that case
@@ -2927,25 +3027,25 @@ counterparts, and Lemmas~\ref{lem:critical-pole-counts} and
 shift.
 
 Gershgorin's theorem confines all eigenvalues to a fixed disk; choose
-$R$ so that this disk lies in $|\lambda|\le R$ and use Lemma
-\ref{lem:critical-green-off-pole} with that $R$.  The constants are
+$R$ so that this disk lies in $|\lambda|\le R$ and use
+Lemma~\ref{lem:critical-green-off-pole} with that $R$.  The constants are
 chosen in the following order.
 \begin{enumerate}
 \item If $\alpha\le q_\star$, choose a midpoint value $B$ first so that the
   protected first root lies inside $\Omega_{B,n}$ with an
   $n^{-2}$-scale margin and then so that
-  $2|b|C/\sqrt B<1/8$.  If $\alpha>q_\star$, fix once and for all a
-  $d\in(d_1,d_2)$ and use $\Omega_{d,n}$.
+  $2|b|C/\sqrt B<1/8$.  If $\alpha>q_\star$, fix once and for all
+  $d_{\rm cut}\in(d_1,d_2)$ and use $\Omega_{{\rm cut},n}$.
 \item Choose $A_0$ so that
   $2|b|C_B/A_0<1/8$ in the first case or
-  $2|b|C_d/A_0<1/4$ in the second.  Increase $A_0$, if necessary, so
+  $2|b|C_{\rm cut}/A_0<1/4$ in the second.  Increase $A_0$, if necessary, so
   that it exceeds the finitely many simple-pole thresholds and, when
   $\alpha=q_\star$, the grouped threshold in
   Lemma~\ref{lem:critical-pole-counts}.  When $\alpha>q_\star$, include the
   threshold for the fast first pole as well.
 \item Fix any $A\ge A_0$.  Only now choose $n$ large enough for the
   estimates with this $A$ and, additionally, for
-  $2|b|C_B/n<1/4$ or $2|b|C_d/n<1/4$, respectively.
+  $2|b|C_B/n<1/4$ or $2|b|C_{\rm cut}/n<1/4$, respectively.
 \end{enumerate}
 Since $2\delta=2b/n$, item 1 of the off-pole estimate gives explicitly
 \[
@@ -2956,7 +3056,7 @@ Since $2\delta=2b/n$, item 1 of the off-pole estimate gives explicitly
 when $\alpha\le q_\star$.  Item 2 gives
 \[
  |2\delta G_n|
- \le \frac{2|b|C_d}{n}+\frac{2|b|C_d}{A}<\frac12
+ \le \frac{2|b|C_{\rm cut}}{n}+\frac{2|b|C_{\rm cut}}{A}<\frac12
 \]
 when $\alpha>q_\star$.  Thus in either case
 \begin{equation}\label{eq:critical-secular-exclusion}
@@ -2965,6 +3065,8 @@ when $\alpha>q_\star$.  Thus in either case
 Thus every affected zero in the chosen right-edge window lies in one of
 the pole neighborhoods specified in that lemma.
 
+\smallskip
+\noindent\emph{Local counts and candidate stabilization.}
 Apply Lemma~\ref{lem:critical-pole-counts} to the finitely many simple
 pole neighborhoods in the chosen window.  Each contains exactly one
 affected root, with expansion
@@ -2985,6 +3087,8 @@ depend on $A$, and hence
 $\mathcal C_{1,n}(A)=\mathcal C_{1,n}(A_0)$ with algebraic
 multiplicity.  This proves the asserted stabilization.
 
+\smallskip
+\noindent\emph{Subcritical case.}
 Whenever $\ell\ge1$ is fixed and $\alpha<\ell q_\star$, the two poles are
 nonreal conjugates and
 \begin{equation}\label{eq:critical-residue-real-half}
@@ -3007,12 +3111,12 @@ each of their simple poles, while \eqref{eq:critical-secular-exclusion}
 leaves
 no affected root on the complement of those disks.  Among the finitely
 many clusters with $2\le\ell\le L$, the preceding comparison puts every
-selected root at least $c_1n^{-2}$ to the left of the selected first
+selected root at least $c_1n^{-2}$ to the left of the selected $\ell=1$
 cluster.  Every remaining nonzero-wave root is outside $\Omega_{B,n}$;
 because the protected first root lies inside that window with the margin
 fixed in item 1 of the constant choice, such a root is at least
-$c_2n^{-2}$ to the left of the largest real part in the first cluster.
-Thus the nonzero-wave roots outside the first cluster satisfy
+$c_2n^{-2}$ to the left of the largest real part in the $\ell=1$
+cluster.  Thus the nonzero-wave roots outside the $\ell=1$ cluster satisfy
 \eqref{eq:critical-exhaustion-separation} with
 $c=\min(c_1,c_2)$.
 
@@ -3021,10 +3125,12 @@ affected pole on the $O(n^{-1})$ scale; the $q=\pi$ endpoint, when
 present, stays a fixed distance into the left half-plane.
 Lemma~\ref{lem:critical-endpoint-root} gives its unique affected root and
 places its real part at $-2\alpha/n+O(n^{-2})$.  For $\alpha<q_\star$ this is
-a distance of order $n^{-1}$ to the left of the first cluster.  Combined
+a distance of order $n^{-1}$ to the left of the $\ell=1$ cluster.  Combined
 with the nonzero-wave partition above, this proves
 \eqref{eq:critical-exhaustion-separation} for $\alpha<q_\star$.
 
+\smallskip
+\noindent\emph{Critical case.}
 At $\alpha=q_\star$, the first protected cluster contains
 \begin{equation}\label{eq:critical-protected-reference}
  -\frac{q_\star}{n}
@@ -3048,19 +3154,23 @@ all remaining affected roots.  The endpoint formula
 \eqref{eq:critical-endpoint-root} from
 Lemma~\ref{lem:critical-endpoint-root} puts the zero-wave affected root
 at $-2q_\star/n+O(n^{-2})$ and
-hence a distance of order $n^{-1}$ to the left of the first cluster.
+hence a distance of order $n^{-1}$ to the left of the $\ell=1$ cluster.
 This proves the assertion at $\alpha=q_\star$.
 
+\smallskip
+\noindent\emph{Supercritical case.}
 Finally, if $\alpha>q_\star$, the first slow pole has decay coefficient
-$d_1=\alpha-\sqrt{\alpha^2-q_\star^2}$.  By the choice of $d$, the only
-protected pole in $\Omega_{d,n}$ is the first slow pole, and
+$d_1=\alpha-\sqrt{\alpha^2-q_\star^2}$.  By the choice of
+$d_{\rm cut}$, the only protected pole in $\Omega_{{\rm cut},n}$ is the
+first slow pole, and
 \eqref{eq:critical-secular-exclusion}--
 \eqref{eq:critical-uniform-simple-shift} show that its affected partner
 is the only affected root there.  Both have real part
-$-d_1/n+O(n^{-2})$, whereas every nonzero root outside the window has real part
-at most $-d/n$.  In particular, the endpoint root
+$-d_1/n+O(n^{-2})$, whereas every nonzero root outside the window has
+real part at most $-d_{\rm cut}/n$.  In particular, the endpoint root
 \eqref{eq:critical-endpoint-root} is at $-2\alpha/n+O(n^{-2})$ and lies
-outside the window because $d<2\alpha$.  This gives a separation of order
+outside the window because $d_{\rm cut}<2\alpha$.  This gives a
+separation of order
 $n^{-1}$ and completes the proof.
 \end{proof}
 
@@ -3087,14 +3197,17 @@ $-2(\beta-\alpha)n^{-2}+O(n^{-3})$ by
 \eqref{eq:critical-uniform-simple-shift}.  Taking the larger real part
 gives \eqref{eq:critical-below}.
 
-For $\alpha>q_\star$, put $s=\sqrt{\alpha^2-q_\star^2}$.  The protected rate is
-$(\alpha-s)n^{-1}+q_\star^2(2n^2)^{-1}+O(n^{-3})$, while
-$R_1\to-(\alpha-s)/(2s)$.  The same pole equation shifts the affected
-eigenvalue by
-$2(\beta-\alpha)(\alpha-s)/(sn^2)+O(n^{-3})$.  Selection of the larger
-real part gives \eqref{eq:critical-above}.  Lemma
-\ref{lem:critical-exhaustion} shows in both cases that no root outside
-the first cluster can compete with the selected root.
+For $\alpha>q_\star$, put
+$\sigma_\star=\sqrt{\alpha^2-q_\star^2}$.  The protected rate is
+$(\alpha-\sigma_\star)n^{-1}+q_\star^2(2n^2)^{-1}+O(n^{-3})$, while
+$R_1\to-(\alpha-\sigma_\star)/(2\sigma_\star)$.  The same pole equation
+shifts the affected eigenvalue by
+$2(\beta-\alpha)(\alpha-\sigma_\star)/(\sigma_\star n^2)+O(n^{-3})$.
+Selection of the larger real part gives \eqref{eq:critical-above}.
+Lemma~\ref{lem:critical-exhaustion} shows in both cases that no root
+outside the critical first cluster of
+Definition~\ref{def:critical-first-cluster} can compete with the selected
+root.
 
 At $\alpha=q_\star$, the exact lattice splitting of the homogeneous first
 block is
@@ -3119,22 +3232,22 @@ Lemma~\ref{lem:critical-green-local} gives the uniform identity
 throughout a fixed $n\Delta$-neighborhood of zero.  In particular this
 bound is uniform on every contour used below.
 
-For $\beta>q_\star$, put $b=\beta-q_\star$, $\epsilon=n^{-1/2}$, and
-$\Delta=n^{-3/2}Y$.  Since
+Put $\tau=n^{-1/2}$ and scale $\Delta=n^{-3/2}Y$.
+For $\beta>q_\star$, put $b=\beta-q_\star$.  Since
 \[
  n^4r_n^2=\frac{q_\star^4}{3}+O(n^{-2}),
 \]
 the secular equation, uniformly for $Y$ in a compact set bounded away
 from zero, is
 \begin{equation}\label{eq:critical-fast-scaled-secular}
- F_n(Y)=1-\frac{4q_\star b}{Y^2}+\frac{4b\epsilon}{Y}
-             +O(\epsilon^2)=0.
+ F_n(Y)=1-\frac{4q_\star b}{Y^2}+\frac{4b\tau}{Y}
+             +O(\tau^2)=0.
 \end{equation}
 The limiting function has simple zeros
 $Y_\pm=\pm2\sqrt{q_\star b}$.  On
-$|Y-Y_\pm|=C\epsilon$, its modulus is bounded below by
-$cC\epsilon$, while the difference in
-\eqref{eq:critical-fast-scaled-secular} is at most $C_1\epsilon$.
+$|Y-Y_\pm|=C\tau$, its modulus is bounded below by
+$cC\tau$, while the difference in
+\eqref{eq:critical-fast-scaled-secular} is at most $C_1\tau$.
 Choosing $C>C_1/c$, Rouch\'e's theorem gives one zero in each disk and
 hence two affected roots
 \[
@@ -3146,13 +3259,13 @@ For $\beta<q_\star$, put $h=q_\star-\beta>0$.  With the same scaling, the secula
 equation is
 \begin{equation}\label{eq:critical-slow-scaled-secular}
  \widetilde F_n(Y)=1+\frac{4q_\star h}{Y^2}
-                    -\frac{4h\epsilon}{Y}+O(\epsilon^2)=0.
+                    -\frac{4h\tau}{Y}+O(\tau^2)=0.
 \end{equation}
 Its two leading zeros are $Y_\pm=\pm2\ii\sqrt{q_\star h}$.  Substitution shows
-that $Y_\pm+2h\epsilon$ has residual $O(\epsilon^2)$.  On the circles
-$|Y-(Y_\pm+2h\epsilon)|=C\epsilon^2$, the affine part has modulus at
-least $cC\epsilon^2$ and the remaining error is at most
-$C_1\epsilon^2$.  A second application of Rouch\'e's theorem therefore
+that $Y_\pm+2h\tau$ has residual $O(\tau^2)$.  On the circles
+$|Y-(Y_\pm+2h\tau)|=C\tau^2$, the affine part has modulus at
+least $cC\tau^2$ and the remaining error is at most
+$C_1\tau^2$.  A second application of Rouch\'e's theorem therefore
 gives the affected pair
 \begin{equation}\label{eq:critical-slow-affected-pair}
  \Delta=\mathord\pm2\ii\sqrt{q_\star h}\,n^{-3/2}
@@ -3167,12 +3280,12 @@ $q_\star=2\pi>2\sqrt3$.  The protected root therefore has maximal real
 part for every $\beta<q_\star$; at $\beta=q_\star$ the two parity roots
 coincide.  This proves
 \eqref{eq:critical-at-slow}; the case $\beta>q_\star$ was obtained from the
-positive displacement above.  Lemma
-\ref{lem:critical-exhaustion} supplies the required exclusion of every
+positive displacement above.
+Lemma~\ref{lem:critical-exhaustion} supplies the required exclusion of every
 higher, endpoint, and off-pole affected root in both cases.
 \end{proof}
 
-\section{Telegraph comparison}
+\section{Telegraph comparison}\label{sec:telegraph}
 
 \subsection{Homogeneous continuum approximations}
 
@@ -3260,7 +3373,7 @@ derivative.  Substitution gives
 \eqref{eq:lattice-taylor-system}--\eqref{eq:lattice-taylor-remainder}.
 \end{proof}
 
-\begin{theorem}[Exact relaxation rate versus telegraph rates]
+\begin{theorem}[Homogeneous lattice versus telegraph relaxation rates]
 \label{thm:telegraph-comparison}
 Fix $\omega>0$, let $q=2\pi/n$, and define
 $\gamma_{\rm tel}=-\Re\lambda_{\rm tel}^+(q)$ and
@@ -3364,13 +3477,13 @@ For the involution
 the reflection-even telegraph modes are unchanged.  Formula
 \eqref{eq:telegraph-defect} is the
 continuum analogue of \eqref{eq:resolvent-form} at unit site spacing;
-it is not an operator-limit statement.  The exact lattice formula
-retains $1-\cos q$ and $\sin q$, and
+the exact lattice formula retains $1-\cos q$ and $\sin q$, and
 \eqref{eq:telegraph-error}--\eqref{eq:corrected-telegraph-error} quantify
 the resulting relaxation-rate error.
 \end{proposition}
 
 \begin{proof}
+\emph{Domain and closedness.}
 The jump in \eqref{eq:telegraph-jump-domain} cancels the delta
 distribution in $-\rho'-2\eta\delta_0m(0)$, while continuity of $m$
 prevents a delta distribution in $-m'$.  Thus the stated domain gives
@@ -3383,6 +3496,8 @@ $\|\rho'\|_2\le\|(\mathcal A_\eta(\rho,m))_2\|_2+
 2\omega\|m\|_2$; the trace theorem then preserves
 \eqref{eq:telegraph-jump-domain} under graph-norm limits.
 
+\smallskip
+\noindent\emph{Homogeneous spectrum.}
 For $\eta=0$, substitution of the periodic Fourier mode
 $e^{2\pi\mathrm i\ell x/n}$ gives
 $\lambda(\lambda+2\omega)+(2\pi\ell/n)^2=0$.  Hence its two roots,
@@ -3418,6 +3533,8 @@ maps $L^2$ boundedly into the weighted Fourier domain corresponding to
 periodic $H^1$, and is the resolvent of the homogeneous operator.
 Thus the displayed roots exhaust its spectrum.
 
+\smallskip
+\noindent\emph{Defect eigenfunctions.}
 Let $\lambda\notin\Sigma_{\rm tel}(n,\omega)$.  The
 eigenvalue equations away from zero are
 \[
@@ -3452,6 +3569,8 @@ is a nonzero eigenfunction.  Moreover
 $m(n-x)=m(x)$ and $\rho(n-x)=-\rho(x)$, hence
 $\mathcal R(\rho,m)=-(\rho,m)$ and the eigenfunction has affected parity.
 
+\smallskip
+\noindent\emph{Resolvent form and protected parity.}
 Equivalently, the polarization entry of the homogeneous telegraph
 resolvent is
 \[
@@ -3464,11 +3583,11 @@ the last expression supplies its meromorphic continuation when
 $\kappa$ is purely imaginary, in agreement with the direct jump
 calculation.  Finally, a reflection-even vector satisfies
 $m(0+)=-m(n-)$; continuity of $m$ therefore gives $m(0)=0$.  The jump
-vanishes, so these modes are protected exactly as in Lemma
-\ref{lem:protected-sector}.
+vanishes, so these modes are protected exactly as in
+Lemma~\ref{lem:protected-sector}.
 \end{proof}
 
-\section{Conclusions}
+\section{Conclusions}\label{sec:conclusions}
 
 The rank-one polarization defect organizes the finite-ring problem into
 two complementary parts.  The protected parity sector retains the
@@ -3480,11 +3599,12 @@ root orders.  The flat band at $\omega=1$ is the singular exception, with
 its tuned $J_3$ block recorded separately.
 
 On the infinite line, the same Green function distinguishes extended
-bulk spectrum from defect-localized modes.  The noncompact modes are
-described by the matching equations and their cubic elimination, while
-the singular transfer value supports a compact mode on three sites.
-Simple noncompact roots return to the finite ring with exponentially
-small eigenvalue error and uniformly localized mass.
+bulk spectrum from defect-localized modes.  The noncompactly supported
+modes are described by the matching equations and their cubic
+elimination, while the singular transfer value supports a compact mode
+on three sites.  Simple roots of noncompactly supported modes return to
+the finite ring with exponentially small eigenvalue error and uniformly
+localized mass.
 
 The gap results separate two physical mechanisms.  At fixed
 $\omega>0$, reflection leaves one first-mode decay rate unchanged, so a
@@ -3500,14 +3620,12 @@ does not reproduce the fixed-rate lattice decay: unit-rate Poisson
 hopping contributes a componentwise half-Laplacian.  Adding this term
 recovers the leading lattice rate, while the separately defined
 point-defect telegraph operator reproduces the parity protection and
-scalar secular structure at unit site spacing.
+scalar secular structure at unit site spacing.  Together, the finite,
+infinite, asymptotic, and continuum formulations expose the same
+protected/affected decomposition across every regime considered here.
 
-These conclusions retain the hypotheses of their cited statements.
-Localization is asserted off the bulk spectrum, with the compact mode
-treated separately; finite-ring convergence assumes a simple noncompact
-root; and the gap formulas apply in their stated fixed-rate or
-double-scaling regimes.  No vanishing-spacing operator limit is used.
-
+\phantomsection
+\addcontentsline{toc}{section}{Code availability}
 \section*{Code availability}
 
 The manuscript source and the formula-audit code are available at
@@ -3523,17 +3641,23 @@ or defining-equation calculations.  Its scope and execution environment
 are documented in the repository; the computations are independent
 checks rather than replacements for the arguments in the manuscript.
 
+\enlargethispage{2\baselineskip}
+\phantomsection
+\addcontentsline{toc}{section}{AI-use disclosure}
 \section*{AI-use disclosure}
 
-The proof architecture and manuscript were developed with assistance
-from OpenAI GPT-5.6 Sol (\texttt{gpt-5.6-sol}).  The model served as an
-interactive research assistant for deriving and testing arguments,
-checking citations and calculations, writing verification code, and
-editing the exposition.  The author set the research direction,
-evaluated the final arguments, and assumes responsibility for the
-mathematical claims, references, computations, and text.
+OpenAI GPT-5.6 Sol (\texttt{gpt-5.6-sol}) assisted with developing and
+testing arguments, checking citations and calculations, writing
+verification code, and editing the exposition.  The author directed the
+research, evaluated the final arguments, and assumes responsibility for
+the mathematical claims, references, computations, and text.
 
+\phantomsection
+\addcontentsline{toc}{section}{References}
+\begingroup
+\small
 \bibliographystyle{alpha}
 \bibliography{refs}
+\endgroup
 
 \end{document}
