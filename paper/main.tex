@@ -132,9 +132,11 @@ polynomial is the homogeneous polynomial plus
 $(\omega _0-\omega)/n$ times its $\omega$-derivative.  This identity gives
 Chebyshev and transfer-matrix
 quantization formulas, a parity factorization, and finite polynomial
-tests for every Jordan block.  We separately resolve the singular
-flat-band point $\omega=1$, where the eigenvalue $-2$ can carry Jordan
-blocks of sizes two or three.  Off the bulk spectral set, the
+tests for every Jordan block.  In the general affected sector, the
+exceptional locus is specified implicitly by a finite resultant equation,
+with root orders determining its Jordan blocks.  We separately resolve
+the singular flat-band point $\omega=1$, where the eigenvalue $-2$ can
+carry Jordan blocks of sizes two or three.  Off the bulk spectral set, the
 infinite-line Green function gives an exact criterion for exponentially
 localized defect modes, including a separately evaluated compact mode
 at the singular transfer point.  For fixed
@@ -775,10 +777,26 @@ The bulk equations at $t=0$ read
 \[
  u_j^-=-u_{j-1}^+\qquad(j\ne0).
 \]
-Together they impose this relation for every $j$.  The defect equation
-adds no constraint when $\omega_0=1$ and otherwise adds the single
-constraint $u_0^++u_{n-1}^+=0$.  Thus the geometric multiplicity is $n$
-in the homogeneous case and $n-1$ otherwise.  Fourier decomposition
+They determine every minus component except $u_0^-$ from the plus
+components.  Put $\delta=\omega_0-1$.  The two defect equations are
+\[
+ \delta u_0^+-\omega_0u_0^-=u_{n-1}^+,
+ \qquad
+ \delta u_0^--\omega_0u_0^+=u_1^-=-u_0^+.
+\]
+The second equation is therefore
+\[
+ \delta(u_0^--u_0^+)=0.
+\]
+If $\omega_0=1$, the first equation supplies
+$u_0^-=-u_{n-1}^+$ and leaves the $n$ plus components free.  If
+$\omega_0\ne1$, the second equation gives $u_0^-=u_0^+$, and the first
+then gives
+\[
+ u_{n-1}^+=(\delta-\omega_0)u_0^+=-u_0^+.
+\]
+Thus the geometric multiplicity is $n$ in the homogeneous case and
+$n-1$ otherwise.  Fourier decomposition
 shows that the two excess algebraic dimensions when $4\mid n$ and
 $\delta=0$ are the two $q=\pm\pi/2$ blocks, each a $J_2$.  For
 $\delta\ne0$, the parity factorization places the $4\mid n$ excess in
@@ -2152,20 +2170,32 @@ then gives, uniformly on each of these fixed scaled neighborhoods,
  \frac{\partial w_n}{\partial\nu}
  =\frac{\nu+\alpha}{w_n}+O_B(n^{-1}).
 \]
-After shrinking the finitely many neighborhoods if necessary, there
-are constants $c_B,C_B>0$, independent of $n$, such that
+After shrinking these finitely many neighborhoods, choose positive
+constants $c_B$, $C_B$, and $r_B$, independent of $n$, with the
+following property.  For each corresponding finite pole, set
 \[
- c_B\le
- \left|\frac{\partial w_n}{\partial\nu}\right|
- \le C_B
+ \nu_{\ell,n}^{\pm}=np_{\ell,n}^{\pm},
 \]
-throughout them for all sufficiently large $n$.  The analytic
-inverse-function theorem with these uniform constants gives
+One may choose the local branch so that
+$w_n(\nu_{\ell,n}^{\pm})=2\pi\mathrm i\ell$ and
 \[
- |w-2\pi\mathrm i\ell|\ge c_B A/n
+ \left|w_n'(\nu_{\ell,n}^{\pm})\right|\ge 2c_B,
+ \qquad
+ \sup_{|\nu-\nu_{\ell,n}^{\pm}|\le r_B}|w_n''(\nu)|\le C_B.
 \]
-outside the deleted $An^{-2}$ disk.  On the complement of those fixed
-scaled neighborhoods, compactness gives a positive lower bound.  The
+The first bound follows from the displayed derivative and the simple
+limiting pole.  The second follows from Cauchy's estimate on slightly
+larger fixed neighborhoods, using uniform analytic convergence there.
+Decrease $r_B$ so that $C_Br_B/2\le c_B$.  Taylor's formula then gives
+\[
+ |w_n(\nu)-2\pi\mathrm i\ell|
+ \ge c_B|\nu-\nu_{\ell,n}^{\pm}|
+ \qquad
+ (|\nu-\nu_{\ell,n}^{\pm}|\le r_B).
+\]
+Outside the deleted $An^{-2}$ disk this is at least $c_BA/n$.  On the
+complement of those fixed scaled neighborhoods, uniform convergence
+and compactness give a positive lower bound.  The
 reciprocal contribution of all these finitely many indices is thus at
 most $C_B(1+n/A)$.
 
@@ -2675,7 +2705,9 @@ Set
  \omega_0=\frac{\beta}{n},\qquad
  k=2\pi,
 \]
-where $\alpha>0$ and $\beta\ge0$ are fixed.  Away from $\alpha=k$,
+where $\alpha>0$ and $\beta\ge0$ are fixed.
+Write $\gamma_n=\gamma_n(\alpha/n,\beta/n)$ for the gap in
+Definition~\ref{def:gap}.  Away from $\alpha=k$,
 \begin{align}
 \alpha<k:\quad
  \gamma_n
@@ -3163,7 +3195,7 @@ fixed-rate or double-scaling regimes.
 The manuscript source and the formula-audit code are available at
 \url{https://github.com/skypher/kinetic-defect-ring}.  The archived
 submission revision is identified by the Git tag
-\texttt{paper-2026-08-28-reviewed-v6}.  From the repository root, the
+\texttt{paper-2026-08-28-reviewed-v7}.  From the repository root, the
 audit is run as
 \begin{center}
 \texttt{python3 -u scripts/verify\_formulas.py}.
