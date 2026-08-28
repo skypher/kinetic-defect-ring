@@ -2280,7 +2280,10 @@ $|\lambda+2\omega|\ge c(n^{-1}+|\Im\lambda|)$.  Since $|w|\le\eta$,
 the first identity in \eqref{eq:fixed-exact-x-identities} and the upper
 bound on $|a|$ imply
 $|\lambda(\lambda+2\omega)|\le Cn^{-2}$, and hence
-$|\lambda|\le Cn^{-1}$.  The lower bound on $|a|$ and the same identity
+$|\lambda|\le Cn^{-1}$.  Indeed, if
+$|\lambda|\le4\omega=4\alpha/n$, this is immediate; otherwise
+$|\lambda+2\omega|\ge|\lambda|-2\omega\ge|\lambda|/2$, and therefore
+$|\lambda|^2\le2Cn^{-2}$.  The lower bound on $|a|$ and the same identity
 then give
 \[
  |w|^2\le Cn^2|\lambda|\,|\lambda+2\omega|
@@ -2562,6 +2565,23 @@ applying Rouch\'e's theorem gives the unique affected endpoint root
 \begin{equation}\label{eq:critical-endpoint-root}
  \lambda_{0,-}=-\frac{2\alpha}{n}-\frac{2b}{n^2}+O(n^{-3}).
 \end{equation}
+This is a zero of the pole-cleared polynomial rather than a remnant of
+the homogeneous endpoint pole.  Indeed, on the endpoint disk write
+$H_{n,-}^{(0)}(\lambda)=\varepsilon J_n(\lambda)$, where $J_n$ is
+holomorphic and nonvanishing.  Since
+$G_n(\lambda)=1/(n\varepsilon)+K_n(\lambda)$ and $\delta=b/n$,
+\[
+ Q_{n,-}(\lambda)
+ =J_n(\lambda)
+  \left[
+   \varepsilon\left(1+\frac{2b}{n}K_n(\lambda)\right)
+   +\frac{2b}{n^2}
+  \right].
+\]
+At $\varepsilon=0$ the bracket equals $2b/n^2\ne0$ because $b\ne0$.
+Thus the homogeneous pole is cancelled, and the Rouch\'e zero is exactly
+the unique zero of $Q_{n,-}$ in the endpoint disk, counted with
+algebraic multiplicity.
 In particular, its real part is $-2\alpha/n+O(n^{-2})$.  This proves
 \eqref{eq:critical-exhaustion-separation} for $\alpha<k$.
 
@@ -2939,6 +2959,35 @@ $e^{2\pi\mathrm i\ell x/n}$ gives
 $\lambda(\lambda+2\omega)+(2\pi\ell/n)^2=0$.  Hence its two roots,
 as $\ell$ ranges over $\mathbb Z$, are exactly
 $\Sigma_{\rm tel}(n,\omega)$.
+Indeed, the periodic Fourier transform identifies the homogeneous
+operator, with its periodic $H^1$ domain, with the orthogonal direct sum
+over $\ell\in\mathbb Z$ of the matrices
+\[
+ M_\ell:=\begin{pmatrix}
+  0&-\mathrm i q_\ell\\
+  -\mathrm i q_\ell&-2\omega
+ \end{pmatrix},
+ \qquad q_\ell=\frac{2\pi\ell}{n}.
+\]
+Their characteristic polynomials are
+$\lambda(\lambda+2\omega)+q_\ell^2$.  To see that the direct sum adds
+no further spectrum, fix $\zeta$ outside this root set.  Its inverse
+block is
+\[
+ (\zeta I-M_\ell)^{-1}
+ =\frac{1}{\zeta(\zeta+2\omega)+q_\ell^2}
+  \begin{pmatrix}
+   \zeta+2\omega&-\mathrm i q_\ell\\
+   -\mathrm i q_\ell&\zeta
+  \end{pmatrix}.
+\]
+For all sufficiently large $|\ell|$, the denominator has modulus at
+least $q_\ell^2/2$, so
+$\|(\zeta I-M_\ell)^{-1}\|\le C_\zeta/(1+|q_\ell|)$; the finitely many
+remaining inverse blocks are bounded as well.  Hence their direct sum
+maps $L^2$ boundedly into the weighted Fourier domain corresponding to
+periodic $H^1$, and is the resolvent of the homogeneous operator.
+Thus the displayed roots exhaust its spectrum.
 
 Let $\lambda\notin\Sigma_{\rm tel}(n,\omega)$.  The
 eigenvalue equations away from zero are
