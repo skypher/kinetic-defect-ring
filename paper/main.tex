@@ -298,7 +298,7 @@ Equations \eqref{eq:generator-plus}--\eqref{eq:generator-minus} use the
 same one-particle convention as equations (6)--(10) of
 \cite{MallminBlytheEvans2019}.  That paper records the homogeneous
 eigenvalues in its equation (10), the homogeneous exceptional points in
-equation (13), and the first-mode relaxation rate in equations
+equation (13), and the first spatial-mode relaxation rate in equations
 (20)--(21).
 
 \begin{lemma}[Rank-one defect]\label{lem:rank-one}
@@ -1393,12 +1393,14 @@ simple eigenvalue.  Define
 Put $q=2\pi/n$ and define the protected first-mode decay rate
 \begin{equation}\label{eq:hom-gap}
  \gamma_n^{\rm hom}(\omega)
- =1-\cos q+\omega-\sqrt{\omega^2-\sin^2q},
+ =-\Re\lambda_1^+
+ =1-\cos q+\omega-\Re\sqrt{\omega^2-\sin^2q},
 \end{equation}
-where the square root is positive once $n$ is sufficiently large for
-fixed $\omega>0$.  For each fixed $\omega$, this rate equals the
-homogeneous spectral gap for all sufficiently large $n$; no such
-identity is asserted for small $n$, where the tumble mode can be slower.
+where the principal square root is used.  For each fixed $\omega>0$,
+the radicand is nonnegative for all sufficiently large $n$, and this
+rate then equals the homogeneous spectral gap.  No such identity is
+asserted for small $n$, where the first-mode roots can be nonreal and
+the tumble mode can be slower.
 \end{definition}
 
 \begin{lemma}[Fixed-rate regular Green estimate]
@@ -1500,7 +1502,9 @@ the segment from zero to the displayed disk proves the first bound in
 
 \begin{lemma}[Protected first mode and affected pole]
 \label{lem:gap-pole}
-For every $n$, the protected sector contains
+For every $n$, the protected sector contains $\lambda_1^+$ and
+$\Re\lambda_1^+=-\gamma_n^{\rm hom}$.  Whenever
+$|\sin(2\pi/n)|\le\omega$, this root is real and
 $\lambda_1^+=-\gamma_n^{\rm hom}$.  Let
 $K\subset(0,\infty)\times[0,\infty)$ be compact.  Uniformly for
 $(\omega,\omega_0)\in K$ as $n\to\infty$, the affected root born from
@@ -1513,7 +1517,9 @@ the same homogeneous pole is
 \end{lemma}
 
 \begin{proof}
-The first assertion is Theorem \ref{thm:parity-factor}.  Near
+The sector assertion is Theorem \ref{thm:parity-factor}; the two
+equalities follow from Lemma \ref{lem:homogeneous-polynomial} and
+Definition \ref{def:gap}.  Near
 $\lambda_1^+$, the two terms $k=1,n-1$ in the full Fourier Green
 function have residue
 \[
@@ -1727,7 +1733,11 @@ over a compact set with $\omega$ bounded away from zero.
 \end{lemma}
 
 \begin{proof}
-Put
+For the uniform assertion, fix a compact
+$K\subset(0,\infty)\times[0,\infty)$ containing the given parameter
+pair; the pointwise assertion follows from the same argument.  All
+parameter-dependent objects below are evaluated at the current pair in
+$K$.  Put
 \[
  \Omega_n=\left\{\lambda:\Re\lambda\ge
  \Re\lambda_1^+-\pi^2D n^{-2}\right\}.
@@ -2201,9 +2211,16 @@ $w^2=\nu(\nu+2\alpha)$, and at a simple limiting pole
 \]
 For each of these fixed indices,
 \eqref{eq:critical-cosh-local-bound} first gives
-$|D_\ell(\lambda)|\le C_Bn^{-2}$; since both poles are
-$O(n^{-1})$, the factorization confines $\nu=n\lambda$ to a fixed
-compact set.
+$|D_\ell(\lambda)|\le C_Bn^{-2}$.  The factorization in
+\eqref{eq:critical-w-pole-factorization} therefore gives
+\[
+ \min_{\sigma\in\{+,-\}}
+ |\lambda-p_{\ell,n}^{\sigma}|^2
+ \le |(\lambda-p_{\ell,n}^+)(\lambda-p_{\ell,n}^-)|
+ \le C_Bn^{-2}.
+\]
+Both poles are $O(n^{-1})$, so $|\lambda|\le C_B'n^{-1}$ and hence
+$\nu=n\lambda$ lies in a fixed compact set.
 To make the finite-$n$ uniformity explicit, write the local branch as
 $w=w_n(\nu)$.  Differentiating the exact relation
 $\cosh(w_n/n)=x(\nu/n)$ gives
@@ -2246,8 +2263,11 @@ Decrease $r_B$ so that $C_Br_B/2\le c_B$.  Taylor's formula then gives
  (|\nu-\nu_{\ell,n}^{\pm}|\le r_B).
 \]
 Outside the deleted $An^{-2}$ disk this is at least $c_BA/n$.  On the
-complement of those fixed scaled neighborhoods, uniform convergence
-and compactness give a positive lower bound.  The
+complement of those fixed scaled neighborhoods inside the compact
+$\nu$-set just obtained, the limiting branch has positive distance from
+the corresponding representative $2\pi\mathrm i\ell$.  Uniform
+convergence and compactness therefore give a positive lower bound for
+the finite-$n$ distance.  The
 reciprocal contribution of all these finitely many indices is thus at
 most $C_B(1+n/A)$.
 
@@ -2402,8 +2422,22 @@ $(\cosh t-1)/\sinh t=\tanh(t/2)$ gives the exact factorization
  =\frac{\lambda+2}{\lambda+2\omega}
    \tanh\!\left(\frac{w}{2n}\right)\coth(w/2).
 \end{equation}
-The defining half-planes give
-$|\lambda+2\omega|\ge c(n^{-1}+|\Im\lambda|)$.  Since $|w|\le\eta$,
+In the subcritical window,
+\[
+ \Re(\lambda+2\omega)
+ \ge \frac{\alpha}{n}-\frac{B}{n^2}
+ \ge \frac{\alpha}{2n}
+\]
+for all sufficiently large $n$.  In the supercritical window,
+\[
+ \Re(\lambda+2\omega)\ge\frac{2\alpha-d}{n},
+\]
+where $2\alpha-d>0$ because $d<d_2\le\alpha$.  Since also
+$|\lambda+2\omega|\ge|\Im\lambda|$, the two cases give
+\begin{equation}\label{eq:critical-tumble-distance}
+ |\lambda+2\omega|\ge c(n^{-1}+|\Im\lambda|).
+\end{equation}
+Since $|w|\le\eta$,
 the first identity in \eqref{eq:fixed-exact-x-identities} and the upper
 bound on $|a|$ imply
 $|\lambda(\lambda+2\omega)|\le Cn^{-2}$, and hence
@@ -2420,7 +2454,16 @@ Finally, Taylor's theorem gives, uniformly for $n\ge1$ and
 $|w|\le\eta$,
 \[
  n\tanh\!\left(\frac{w}{2n}\right)\coth(w/2)
- =1+O(w^2).
+ =1+\mathcal E_n(w),
+ \qquad |\mathcal E_n(w)|\le C|w|^2.
+\]
+Moreover, the preceding bound on $|w|^2$ gives
+\[
+ \left|
+  \frac{\lambda+2}{n(\lambda+2\omega)}\mathcal E_n(w)
+ \right|
+ \le \frac{C_R|w|^2}{n|\lambda+2\omega|}
+ \le C_R.
 \]
 Substitution in \eqref{eq:critical-zero-exact-factorization} therefore
 gives
@@ -2428,8 +2471,9 @@ gives
  \Theta\coth(w/2)=
    \frac{\lambda+2}{n(\lambda+2\omega)}+O(1),
 \end{equation}
-uniformly in either window.  The displayed lower bound for
-$|\lambda+2\omega|$ shows that this expression is bounded.
+uniformly in either window.  Equation
+\eqref{eq:critical-tumble-distance} shows that the leading term, and
+hence the entire expression, is bounded.
 
 If $d_{0,n}(w)>\eta$, then
 \[
