@@ -230,8 +230,10 @@ problem yields the rank-one derivative identity and parity factorization,
 the exact finite algebraic exceptional-point classification including the
 tuned $J_3$ flat-band block, the localized-mode criterion and compact
 tuning, and the uniform fixed-rate and bulk-critical gap selection.
-The continuum comparison additionally derives the point-defect telegraph
-domain and isolates the lattice Poisson-diffusion correction.
+The continuum comparison additionally constructs a point-defect
+telegraph analogue at unit site spacing and isolates the lattice
+Poisson-diffusion correction.  The point interaction is not asserted as
+an operator limit under a vanishing lattice spacing.
 
 The main logical dependencies are summarized in
 Table~\ref{tab:dependency-spine}.  In particular, the gap conclusions use
@@ -268,7 +270,8 @@ characteristic equations; Theorems \ref{thm:jordan-regular} and
 \ref{prop:localized-convergence} treat localized modes; Theorems
 \ref{thm:fixed-gap} and \ref{thm:critical-gap} determine the two
 large-ring gap regimes; and Proposition \ref{prop:telegraph-defect}
-gives the continuum point-defect equation.
+gives the independently defined continuum-analogue point-defect
+equation.
 
 \section{Model and notation}
 
@@ -623,6 +626,50 @@ $2a(c_k-c_\ell)=0$, hence $a=0$.  Substitution into
 $\omega=1$ and then $\mu=-1-\omega=-2$.
 \end{proof}
 
+\begin{lemma}[Scalar resolvent criterion for cyclicity]
+\label{lem:scalar-resolvent-cyclicity}
+Let $A\in\mathbb C^{N\times N}$ and $v\in\mathbb C^N$.  Suppose the
+reduced denominator of the scalar rational function
+\[
+ v^{\mathsf T}(\lambda I-A)^{-1}v
+\]
+is the characteristic polynomial $\chi_A(\lambda)$.  Then $v$ is a
+cyclic vector for $A$.  Moreover, for every $\eta\in\mathbb C$, the
+same vector is cyclic for $A-\eta vv^{\mathsf T}$.
+\end{lemma}
+
+\begin{proof}
+Let $m_{A,v}$ be the monic polynomial of least degree satisfying
+$m_{A,v}(A)v=0$.  For $\lambda\notin\spec A$,
+\begin{equation}\label{eq:vector-minimal-resolvent}
+ m_{A,v}(\lambda)(\lambda I-A)^{-1}v
+ =\frac{m_{A,v}(\lambda)I-m_{A,v}(A)}{\lambda I-A}\,v.
+\end{equation}
+The matrix quotient on the right is a matrix polynomial in $\lambda$:
+for each monomial it is the finite divided-difference identity
+\[
+ \frac{\lambda^jI-A^j}{\lambda I-A}
+   =\sum_{r=0}^{j-1}\lambda^{j-1-r}A^r.
+\]
+Thus the reduced denominator of every scalar component of
+$(\lambda I-A)^{-1}v$, and in particular of the displayed scalar
+resolvent, divides $m_{A,v}$.  By hypothesis, $\chi_A$ therefore
+divides $m_{A,v}$.  Conversely, Cayley--Hamilton gives
+$\chi_A(A)v=0$.  Write $\chi_A=q\,m_{A,v}+r$ with
+$\deg r<\deg m_{A,v}$.  Then $r(A)v=0$, so the defining minimality of
+$m_{A,v}$ forces $r=0$.  Hence $m_{A,v}$ divides $\chi_A$, and therefore
+$m_{A,v}=\chi_A$ and has degree $N$, which is equivalent to
+$v,Av,\ldots,A^{N-1}v$ spanning $\mathbb C^N$.
+
+Put $B=A-\eta vv^{\mathsf T}$.  Induction on $j$ gives
+\[
+ B^jv=A^jv+\sum_{r=0}^{j-1}c_{j,r}A^rv
+\]
+for suitable scalars $c_{j,r}$.  The change from the $A$-Krylov list
+to the $B$-Krylov list is therefore triangular with diagonal entries
+one.  The two lists have the same span, so $v$ is cyclic for $B$.
+\end{proof}
+
 \begin{theorem}[Jordan classification for $\omega\ne1$]
 \label{thm:jordan-regular}
 Assume $\omega\ne1$.
@@ -666,22 +713,23 @@ two-dimensional homogeneous parity block, the spectral weight of the
 defect vector has numerator $2(\lambda+1-c_k)$.  This numerator and
 $D_k$ have no common root for an interior wave number: a common root
 would give $\lambda+1=c_k$, after which $D_k=s_k^2\ne0$.  The endpoint
-weights in \eqref{eq:Gfinite} are also nonzero.  Lemma
-\ref{lem:no-coincidences} makes the block minimal polynomials coprime.
-Consequently, when the block fractions are put over their common
-denominator, the scalar resolvent
+weights in \eqref{eq:Gfinite} are also nonzero.  At a double root of
+an interior $D_k$, the numerator remains nonzero, so the scalar
+resolvent retains a pole of order two.  Regard the endpoint factors as
+the odd-parity roots of $D_0$ and, when $n$ is even, $D_{n/2}$.
+Lemma~\ref{lem:no-coincidences} then makes their root sets disjoint from
+those of every interior factor and from one another when $\omega\ne1$.
+Consequently no pole, including a repeated pole, cancels when the block
+fractions are put over their common denominator.  The scalar resolvent
 $d^{\mathsf T}(\lambda I-L^{(0)}|_{\mathcal H_-})^{-1}d=2G_n(\lambda)$
-has unreduced denominator $H_{n,-}^{(0)}$.  That denominator divides the
-$d$-minimal polynomial, while the $d$-minimal polynomial divides the
-characteristic polynomial $H_{n,-}^{(0)}$.  All three polynomials are
-therefore equal, so $d$ is cyclic for the homogeneous odd restriction.
-If $A$ has cyclic vector $d$, then $d$ is also cyclic for
-$A-\delta dd^{\mathsf T}$, because each
-$(A-\delta dd^{\mathsf T})^jd$ equals $A^jd$ plus a linear combination
-of lower powers.  Hence the minimal and characteristic polynomials of
-the affected restriction both equal $Q_{n,-}$.  A cyclic matrix has one
-Jordan block for each eigenvalue, of size equal to the root order.
-The direct-sum assertion follows from the invariant parity splitting.
+therefore has reduced denominator $H_{n,-}^{(0)}$, the characteristic
+polynomial of the homogeneous odd restriction.  Lemma
+\ref{lem:scalar-resolvent-cyclicity} makes $d$ cyclic first for that
+restriction and then for its update by $-\delta dd^{\mathsf T}$.  Hence
+the minimal and characteristic polynomials of the affected restriction
+both equal $Q_{n,-}$.  A cyclic matrix has one Jordan block for each
+eigenvalue, of size equal to the root order.  The direct-sum assertion
+follows from the invariant parity splitting.
 \end{proof}
 
 \begin{theorem}[The complete flat-band classification at $\omega=1$]
@@ -1205,12 +1253,16 @@ gives the exact identity
  G_n(\lambda)=\frac1{2a}\left[1+
   \frac{\lambda+1-x}{s}\frac{1+z^n}{1-z^n}\right].
 \end{equation}
-Lemma~\ref{lem:green-identities} also shows that both sides are the same
-meromorphic function of $\lambda$.  Thus the identity continues across
-the infinite-volume cut to every point away from a finite-ring
-homogeneous pole, and the two boundary choices of $s$ give the same
-continued function.
-Consequently
+Under the simultaneous branch change $(s,z)\mapsto(-s,z^{-1})$, the
+last two factors in the second term both change sign.  The right-hand
+side is therefore branch invariant and continues meromorphically as
+the finite rational function $G_n$ to every point away from a
+finite-ring homogeneous pole.  This continuation statement concerns
+$G_n$ only; the infinite-volume resolvent entry $g_\infty$ remains
+defined on $\mathbb C\setminus\Sigma_\omega$.  On the closed disk chosen
+below, which is disjoint from $\Sigma_\omega$, use the common branch of
+$s$ and $z$.  Subtracting \eqref{eq:localization-green} from
+\eqref{eq:finite-green-z} then gives
 \begin{equation}\label{eq:finite-green-error}
  G_n-g_\infty=
  \frac{\lambda+1-x}{as}\frac{z^n}{1-z^n}.
@@ -2399,6 +2451,176 @@ Lemma~\ref{lem:critical-pole-distance}.  This gives respectively
 stated dependence of the constants.
 \end{proof}
 
+\begin{lemma}[Critical pole-neighborhood root counts]
+\label{lem:critical-pole-counts}
+Set $\omega=\alpha/n$ and $\omega_0=\beta/n$, where
+$\alpha>0$ and $\beta\ge0$ are fixed, put $k=2\pi$, and write
+$b=\beta-\alpha$.
+\begin{enumerate}
+\item Fix $\ell\ge1$ with $\alpha\ne\ell k$.  There is
+  $A_{\ell}>0$ such that, for each sign, every fixed
+  $A\ge A_{\ell}$, and all sufficiently large $n$, the disk
+  $|\lambda-p_{\ell,n}^{\pm}|<An^{-2}$ contains exactly one zero
+  $\widehat p_{\ell,n}^{\pm}$ of $Q_{n,-}$, counted with algebraic
+  multiplicity, and
+  \begin{equation}\label{eq:critical-uniform-simple-shift}
+   \widehat p_{\ell,n}^\pm
+   =p_{\ell,n}^\pm
+    -4bR_{\ell,n}^\pm n^{-2}+O(n^{-3}).
+  \end{equation}
+  The threshold in $n$ may depend on $A$.
+\item If $\alpha=k$, put
+  \[
+   \lambda_c=\cos(k/n)-1-k/n,
+   \qquad
+   r_n=\sqrt{(k/n)^2-\sin^2(k/n)}.
+  \]
+  There is $A_*>0$ such that, for every fixed $A\ge A_*$ and all
+  sufficiently large $n$, the disk
+  $|\lambda-\lambda_c|<An^{-3/2}$ contains exactly two zeros of
+  $Q_{n,-}$, counted with algebraic multiplicity.  The same two zeros
+  occur for every such fixed enlargement $A$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+If $b=0$, then $Q_{n,-}=H_{n,-}^{(0)}$.  A simple-pole disk contains
+exactly its homogeneous root, so item 1 holds with zero shift.  At
+$\alpha=k$, the two first homogeneous roots are
+$\lambda_c\pm r_n$, where $r_n=O(n^{-2})$; both lie in every fixed
+$An^{-3/2}$ disk for all sufficiently large $n$, while all other
+homogeneous roots are separated on the $n^{-1}$ scale.  Thus item 2
+also holds.  Assume below that $b\ne0$, so $\delta=b/n$.
+
+At a simple pole, Lemma~\ref{lem:critical-green-local} gives
+\[
+ G_n(\lambda)=\frac{2R_{\ell,n}^\pm}
+  {n(\lambda-p_{\ell,n}^\pm)}+G_{\ell,n}^{\rm reg}(\lambda),
+ \qquad G_{\ell,n}^{\rm reg}=O(1)
+\]
+on a fixed scaled neighborhood.  Multiplication of the secular
+equation by $\lambda-p_{\ell,n}^\pm$ gives
+\begin{equation}\label{eq:critical-simple-rouche}
+ (\lambda-p_{\ell,n}^\pm)(1+2\delta G_n)
+ =(\lambda-p_{\ell,n}^\pm)
+   \left(1+\frac{2b}{n}G_{\ell,n}^{\rm reg}\right)
+   +\frac{4bR_{\ell,n}^\pm}{n^2}.
+\end{equation}
+Compare this expression with
+\[
+ h_0(\lambda)=\lambda-p_{\ell,n}^\pm
+                  +4bR_{\ell,n}^\pm n^{-2}.
+\]
+If $\sigma_\ell=\sqrt{\alpha^2-\ell^2k^2}$ with the branch inherited
+from Definition~\ref{def:critical-poles}, then
+\[
+ R_{\ell,n}^\pm\longrightarrow
+   \frac12\mp\frac{\alpha}{2\sigma_\ell}\ne0;
+\]
+the inequality follows from $\ell\ge1$.  Thus the residues remain
+bounded and bounded away from zero.  Choose $A_\ell$ so that the zero
+of $h_0$ lies a fixed relative
+distance inside the disk.  On its boundary, the difference from $h_0$
+is $O(n^{-3})$, whereas $|h_0|\ge c_A n^{-2}$.  Rouch\'e's theorem
+gives exactly one pole-cleared zero.  At that zero,
+\eqref{eq:critical-simple-rouche} first gives
+$\lambda-p_{\ell,n}^\pm=O(n^{-2})$ and then, after substitution in its
+regular-part term, gives the expansion
+\eqref{eq:critical-uniform-simple-shift}.
+
+On this disk write
+$H_{n,-}^{(0)}=(\lambda-p_{\ell,n}^\pm)J_{\ell,n}$, where
+$J_{\ell,n}$ is nonvanishing.  The residue
+$R_{\ell,n}^\pm$ is nonzero, and the right side of
+\eqref{eq:critical-simple-rouche} is nonzero at the homogeneous pole.
+Thus that pole is canceled rather than retained, and the Rouch\'e zero
+is exactly one zero of $Q_{n,-}$ with its algebraic multiplicity.  This
+proves item 1.
+
+Now let $\alpha=k$ and put $\Delta=\lambda-\lambda_c$.  By
+Lemma~\ref{lem:critical-green-local},
+\begin{equation}\label{eq:critical-grouped-pole-cleared}
+ (\Delta^2-r_n^2)(1+2\delta G_n)
+ = (\Delta^2-r_n^2)\left(1+\frac{2b}{n}H_n\right)
+   +\frac{4b}{n^2}(\Delta-k/n),
+\end{equation}
+where $H_n=O(1)$ throughout the grouped disk.  Compare this with
+\[
+ P_{0,n}(\Delta)=\Delta^2-r_n^2
+                 +\frac{4b}{n^2}(\Delta-k/n).
+\]
+With $\Delta=n^{-3/2}Y$, one has locally uniformly in $Y$
+\[
+ n^3P_{0,n}(n^{-3/2}Y)=Y^2-4bk+O(n^{-1/2}).
+\]
+Choose $A_*>2\sqrt{|b|k}$.  Rouch\'e's theorem applied to this scaled
+quadratic shows that both zeros of $P_{0,n}$ lie a fixed relative
+distance inside $|\Delta|<A_*n^{-3/2}$.  On the boundary of every fixed
+enlargement, the difference in
+\eqref{eq:critical-grouped-pole-cleared} is $O(A^2n^{-4})$, whereas
+$|P_{0,n}|\ge c_A n^{-3}$.  Rouch\'e's theorem gives exactly two
+pole-cleared zeros.  At the homogeneous poles $\Delta=\pm r_n$, the
+right side of \eqref{eq:critical-grouped-pole-cleared} equals
+\[
+ \frac{4b}{n^2}(\pm r_n-k/n),
+\]
+which is nonzero for all sufficiently large $n$, because
+$r_n=k^2/(\sqrt3\,n^2)+O(n^{-4})$.  The factor
+$\Delta^2-r_n^2$ is the complete homogeneous factor on the disk and
+the remaining factor of $H_{n,-}^{(0)}$ is nonvanishing.  Hence the two
+Rouch\'e zeros are exactly the two zeros of $Q_{n,-}$ there.  Applying
+the count once at $A_*$ and once at any fixed $A\ge A_*$ shows that the
+annular difference contains no zero, proving item 2.
+\end{proof}
+
+\begin{lemma}[Critical zero-wave affected root]
+\label{lem:critical-endpoint-root}
+Set $\omega=\alpha/n$ and $\omega_0=\beta/n$, where
+$\alpha>0$ and $\beta\ge0$ are fixed, and put $b=\beta-\alpha$.
+For all sufficiently large $n$, the affected polynomial $Q_{n,-}$ has
+exactly one zero in a fixed $O(n^{-3})$ neighborhood of
+$-2\alpha/n-2b/n^2$.  Counted with algebraic multiplicity, it is
+\begin{equation}\label{eq:critical-endpoint-root}
+ \lambda_{0,-}=-\frac{2\alpha}{n}-\frac{2b}{n^2}+O(n^{-3}).
+\end{equation}
+If $b\ne0$, the homogeneous pole $-2\alpha/n$ is canceled; if $b=0$,
+the displayed zero is that homogeneous endpoint root.
+\end{lemma}
+
+\begin{proof}
+Write $\varepsilon=\lambda+2\alpha/n$.  Equation
+\eqref{eq:critical-endpoint-green} turns the pole-cleared secular
+equation into
+\begin{equation}\label{eq:critical-endpoint-root-equation}
+ \varepsilon\left(1+\frac{2b}{n}K_n(\lambda)\right)
+       +\frac{2b}{n^2}=0.
+\end{equation}
+Let $C_0$ be the bound for $K_n$.  On
+$|\varepsilon+2b/n^2|=Rn^{-3}$, the difference between the left side
+and $\varepsilon+2b/n^2$ is at most
+\[
+ \frac{2|b|C_0}{n}\left(\frac{2|b|}{n^2}+\frac{R}{n^3}\right)
+ \le C_1n^{-3}
+\]
+for $n\ge R$, where $C_1$ is independent of $R$.  Choose $R>C_1$ and
+apply Rouch\'e's theorem to obtain the unique zero and
+\eqref{eq:critical-endpoint-root}.
+
+On the endpoint disk write
+$H_{n,-}^{(0)}(\lambda)=\varepsilon J_n(\lambda)$, with $J_n$
+holomorphic and nonvanishing.  Since
+$G_n=1/(n\varepsilon)+K_n$ and $\delta=b/n$,
+\[
+ Q_{n,-}(\lambda)=J_n(\lambda)
+ \left[\varepsilon\left(1+\frac{2b}{n}K_n(\lambda)\right)
+       +\frac{2b}{n^2}\right].
+\]
+For $b\ne0$ the bracket is nonzero at $\varepsilon=0$, so the
+homogeneous pole is canceled.  For $b=0$ the bracket is
+$\varepsilon$, so the endpoint root is retained.  In either case the
+counted zero is the unique zero of $Q_{n,-}$ in the disk.
+\end{proof}
+
 \begin{definition}[Critical first cluster]\label{def:critical-first-cluster}
 Fix $\alpha>0$ and $\beta\ge0$, set $\omega=\alpha/n$,
 $\omega_0=\beta/n$, and put $k=2\pi$.  For a fixed $A>0$, let
@@ -2441,12 +2663,11 @@ for a constant $c=c(\alpha,\beta)>0$.
 \begin{proof}
 The protected roots are the homogeneous roots from
 Definition~\ref{def:critical-poles}.
-Put $b=\beta-\alpha$.  If $b=0$, the affected polynomial is the
-homogeneous odd factor, so the assertion follows directly from the
-displayed dispersion; the shift formula
-\eqref{eq:critical-uniform-simple-shift} below then holds with zero
-shift, and the cluster is independent of every fixed $A>0$ once $n$ is
-large.  Assume $b\ne0$.
+Put $b=\beta-\alpha$.  The argument below includes $b=0$; in that case
+the affected roots coincide with their homogeneous odd-sector
+counterparts, and Lemmas~\ref{lem:critical-pole-counts} and
+\ref{lem:critical-endpoint-root} give the same local counts with zero
+shift.
 
 Gershgorin's theorem confines all eigenvalues to a fixed disk; choose
 $R$ so that this disk lies in $|\lambda|\le R$ and use Lemma
@@ -2461,9 +2682,10 @@ chosen in the following order.
 \item Choose $A_0$ so that
   $2|b|C_B/A_0<1/8$ in the first case or
   $2|b|C_d/A_0<1/4$ in the second.  Increase $A_0$, if necessary, so
-  that every zero of the affine simple-pole comparisons and both zeros
-  of the grouped comparison lie a fixed relative distance inside the
-  corresponding $A_0$-disk.
+  that it exceeds the finitely many simple-pole thresholds and, when
+  $\alpha=k$, the grouped threshold in
+  Lemma~\ref{lem:critical-pole-counts}.  When $\alpha>k$, include the
+  threshold for the fast first pole as well.
 \item Fix any $A\ge A_0$.  Only now choose $n$ large enough for the
   estimates with this $A$ and, additionally, for
   $2|b|C_B/n<1/4$ or $2|b|C_d/n<1/4$, respectively.
@@ -2486,124 +2708,46 @@ when $\alpha>k$.  Thus in either case
 Thus every affected zero in the chosen right-edge window lies in one of
 the pole neighborhoods specified in that lemma.
 
-For a simple pole in one of these neighborhoods,
-Lemma~\ref{lem:critical-green-local} gives
-\[
- G_n(\lambda)=\frac{2R_{\ell,n}^\pm}
-  {n(\lambda-p_{\ell,n}^\pm)}+G_{\ell,n}^{\rm reg}(\lambda),
- \qquad G_{\ell,n}^{\rm reg}=O(1).
-\]
-Multiplication of the secular equation by
-$\lambda-p_{\ell,n}^\pm$ gives
-\begin{equation}\label{eq:critical-simple-rouche}
- (\lambda-p_{\ell,n}^\pm)(1+2\delta G_n)
- =(\lambda-p_{\ell,n}^\pm)
-   \left(1+\frac{2b}{n}G_{\ell,n}^{\rm reg}\right)
-   +\frac{4bR_{\ell,n}^\pm}{n^2}.
-\end{equation}
-Compare the right-hand side with
-\[
- h_0(\lambda)=\lambda-p_{\ell,n}^\pm
-                  +4bR_{\ell,n}^\pm n^{-2}.
-\]
-By the choice of $A_0$, the zero of $h_0$ is strictly inside the disk.
-On its boundary, the difference from $h_0$ is $O(n^{-3})$,
-whereas $|h_0|\ge c_A n^{-2}$.  Rouch\'e's theorem gives exactly one
-affected zero and
-\begin{equation}\label{eq:critical-uniform-simple-shift}
- \widehat p_{\ell,n}^\pm
- =p_{\ell,n}^\pm
-  -4bR_{\ell,n}^\pm n^{-2}+O(n^{-3}).
-\end{equation}
-To relate this pole-cleared count to the polynomial count, write
-$H_{n,-}^{(0)}=(\lambda-p_{\ell,n}^\pm)J_{\ell,n}$ on the disk.
-The factor $J_{\ell,n}$ is nonvanishing there, and
-$R_{\ell,n}^\pm\ne0$ at every simple interior pole considered in these
-neighborhoods.  Since
-$b\ne0$, the right side of \eqref{eq:critical-simple-rouche} is
-nonzero at $\lambda=p_{\ell,n}^\pm$.  Hence the homogeneous pole is
-canceled rather than retained, and the single Rouch\'e zero is exactly
-one zero of $Q_{n,-}$, counted with algebraic multiplicity.
-Together with \eqref{eq:critical-secular-exclusion}, this accounts for
-every affected root in either right-edge window except the grouped
-first neighborhood at $\alpha=k$, which belongs to the first cluster
-by Definition~\ref{def:critical-first-cluster}.
+Apply Lemma~\ref{lem:critical-pole-counts} to the finitely many simple
+pole neighborhoods in the chosen window.  Each contains exactly one
+affected root, with expansion
+\eqref{eq:critical-uniform-simple-shift}.  When $\alpha=k$, apply its
+grouped assertion to the first neighborhood; together with
+\eqref{eq:critical-secular-exclusion}, these counts account for every
+affected root in the window.  When $\alpha>k$, the window contains only
+the slow first pole, whereas Definition~\ref{def:critical-first-cluster}
+also contains the fast first disk.  The simple-pole assertion of the
+same lemma supplies its unique affected root.
 
-When $\alpha>k$, the right-edge window contains only the slow first
-pole, whereas Definition~\ref{def:critical-first-cluster} also includes
-the disk about the fast first pole.  Choose a fixed disk about the
-limiting fast pole
-$-\alpha-\sqrt{\alpha^2-k^2}$ on the $n\lambda$ scale.  Lemma
-\ref{lem:critical-green-local} gives the same bounded regular part there,
-and the Rouch\'e comparison in
-\eqref{eq:critical-simple-rouche} applies without change.  Thus that
-disk also contains exactly one affected root, with the expansion
-\eqref{eq:critical-uniform-simple-shift}.  This supplies the root count
-for both disks in Definition~\ref{def:critical-first-cluster}.
-Because the affected shifts are $O(n^{-2})$ while distinct fixed-index
-pole clusters are separated on the $n^{-1}$ scale, the same root counts
-hold for every fixed enlargement $A\ge A_0$ once $n$ is sufficiently
-large.  This proves the asserted stabilization when $\alpha\ne k$.
-
-At $\alpha=k$, Lemma~\ref{lem:critical-green-local} gives, with
-$\Delta=\lambda-\lambda_c$,
-\begin{equation}\label{eq:critical-grouped-pole-cleared}
- (\Delta^2-r_n^2)(1+2\delta G_n)
- = (\Delta^2-r_n^2)\left(1+\frac{2b}{n}H_n\right)
-   +\frac{4b}{n^2}(\Delta-k/n).
-\end{equation}
-On $|\Delta|=A n^{-3/2}$, compare this with
-\[
- P_{0,n}(\Delta)=\Delta^2-r_n^2
-                 +\frac{4b}{n^2}(\Delta-k/n).
-\]
-By the choice of $A_0$, both zeros of $P_{0,n}$ lie strictly inside the
-circle.  The difference between the
-two sides is $O(A^2n^{-4})$, whereas
-$|P_{0,n}|\ge c_A n^{-3}$ on the circle.  Rouch\'e's theorem therefore
-gives exactly two zeros of the pole-cleared function in the grouped
-disk.  At the two homogeneous poles $\Delta=\pm r_n$, the right-hand
-side of \eqref{eq:critical-grouped-pole-cleared} equals
-\[
- \frac{4b}{n^2}(\pm r_n-k/n),
-\]
-which is nonzero for all sufficiently large $n$, since $b\ne0$ and
-Taylor's theorem gives
-$r_n=k^2/(\sqrt{3}\,n^2)+O(n^{-4})$.  Thus neither homogeneous pole is
-retained.  Moreover,
-$\Delta^2-r_n^2$ is the full homogeneous factor on this disk and the
-remaining factor of $H_{n,-}^{(0)}$ is nonvanishing.  Consequently the
-two Rouch\'e zeros are exactly the two zeros of $Q_{n,-}$ there, counted
-with algebraic multiplicity.
-
-At $\alpha=k$, this completes the affected-root accounting in the
-right-edge window: every simple disk contains its one counted root, the
-grouped disk contains the two just counted, and
-\eqref{eq:critical-secular-exclusion} leaves none on the complement.
-Applying the grouped comparison once with $A_0$ and once with $A$ shows
-that the annular difference contains no affected root.  The protected
-first roots are independent of $A$, so
-$\mathcal C_{1,n}(A)=\mathcal C_{1,n}(A_0)$ with multiplicity.  This
-proves the stabilization asserted in
+For $\alpha\ne k$, applying the simple-pole count once with $A_0$ and
+once with $A$ shows that the annular difference between the two first
+disks contains no affected root.  For $\alpha=k$, the corresponding
+statement is part of the grouped count.  The protected roots do not
+depend on $A$, and hence
+$\mathcal C_{1,n}(A)=\mathcal C_{1,n}(A_0)$ with algebraic
+multiplicity.  This proves the stabilization asserted in
 Definition~\ref{def:critical-first-cluster}.
 
-Suppose first that $\alpha<k$.  For every fixed $\ell\ge1$, the two
-poles are nonreal conjugates and
+Whenever $\ell\ge1$ is fixed and $\alpha<\ell k$, the two poles are
+nonreal conjugates and
 \begin{equation}\label{eq:critical-residue-real-half}
  \Re R_{\ell,n}^\pm=\frac12,
  \qquad
  \Re p_{\ell,n}^\pm
  =-\frac\alpha n-\frac{\ell^2k^2}{2n^2}+O(n^{-4}).
 \end{equation}
-Equations \eqref{eq:critical-uniform-simple-shift}--
-\eqref{eq:critical-residue-real-half} show that the same parity is
-selected for every fixed $\ell$, and that the $\ell=2$ cluster is to the
-left of the first by $3k^2/(2n^2)+O(n^{-3})$.  We now make the global
+Suppose first that $\alpha<k$.  Then equations
+\eqref{eq:critical-uniform-simple-shift}--
+\eqref{eq:critical-residue-real-half} show that the
+protected-versus-affected real-part comparison is the same for every fixed $\ell$, and
+that the $\ell=2$ cluster is to the left of the first by
+$3k^2/(2n^2)+O(n^{-3})$.  We now make the global
 partition explicit.  The midpoint definition of $B$ in
 Lemma~\ref{lem:critical-pole-distance} puts precisely the fixed-index
 nonzero-wave poles with $1\le\ell\le L$ in $\Omega_{B,n}$ for all large
-$n$.  The pole-disk Rouch\'e counts above give one affected root at each
-of their simple poles, while \eqref{eq:critical-secular-exclusion} leaves
+$n$.  Lemma~\ref{lem:critical-pole-counts} gives one affected root at
+each of their simple poles, while \eqref{eq:critical-secular-exclusion}
+leaves
 no affected root on the complement of those disks.  Among the finitely
 many clusters with $2\le\ell\le L$, the preceding comparison puts every
 selected root at least $c_1n^{-2}$ to the left of the selected first
@@ -2615,49 +2759,13 @@ Thus the nonzero-wave roots outside the first cluster satisfy
 \eqref{eq:critical-exhaustion-separation} with
 $c=\min(c_1,c_2)$.
 
-For completeness, for every fixed $\alpha>0$ the zero-wave endpoint is
-the only unpaired affected pole on the $O(n^{-1})$ scale; the $q=\pi$
-endpoint, when present, stays a fixed distance into the left half-plane.
-The following computation does not use the present assumption
-$\alpha<k$.  To locate the zero-wave root,
-write $\varepsilon=\lambda+2\alpha/n$.  Equation
-\eqref{eq:critical-endpoint-green} turns the pole-cleared secular equation
-into
-\begin{equation}\label{eq:critical-endpoint-root-equation}
- \varepsilon\left(1+\frac{2b}{n}K_n(\lambda)\right)
-       +\frac{2b}{n^2}=0.
-\end{equation}
-Let $C_0$ be the bound for $K_n$ in
-\eqref{eq:critical-endpoint-green}.  On
-$|\varepsilon+2b/n^2|=R n^{-3}$, the difference between the left-hand
-side and $\varepsilon+2b/n^2$ is at most
-\[
- \frac{2|b|C_0}{n}\left(\frac{2|b|}{n^2}+\frac{R}{n^3}\right)
- \le C_1n^{-3}
-\]
-for $n\ge R$, where $C_1$ is independent of $R$.  Choosing $R>C_1$ and
-applying Rouch\'e's theorem gives the unique affected endpoint root
-\begin{equation}\label{eq:critical-endpoint-root}
- \lambda_{0,-}=-\frac{2\alpha}{n}-\frac{2b}{n^2}+O(n^{-3}).
-\end{equation}
-This is a zero of the pole-cleared polynomial rather than a remnant of
-the homogeneous endpoint pole.  Indeed, on the endpoint disk write
-$H_{n,-}^{(0)}(\lambda)=\varepsilon J_n(\lambda)$, where $J_n$ is
-holomorphic and nonvanishing.  Since
-$G_n(\lambda)=1/(n\varepsilon)+K_n(\lambda)$ and $\delta=b/n$,
-\[
- Q_{n,-}(\lambda)
- =J_n(\lambda)
-  \left[
-   \varepsilon\left(1+\frac{2b}{n}K_n(\lambda)\right)
-   +\frac{2b}{n^2}
-  \right].
-\]
-At $\varepsilon=0$ the bracket equals $2b/n^2\ne0$ because $b\ne0$.
-Thus the homogeneous pole is cancelled, and the Rouch\'e zero is exactly
-the unique zero of $Q_{n,-}$ in the endpoint disk, counted with
-algebraic multiplicity.
-In particular, its real part is $-2\alpha/n+O(n^{-2})$.  This proves
+For every fixed $\alpha>0$, the zero-wave endpoint is the only unpaired
+affected pole on the $O(n^{-1})$ scale; the $q=\pi$ endpoint, when
+present, stays a fixed distance into the left half-plane.
+Lemma~\ref{lem:critical-endpoint-root} gives its unique affected root and
+places its real part at $-2\alpha/n+O(n^{-2})$.  For $\alpha<k$ this is
+a distance of order $n^{-1}$ to the left of the first cluster.  Combined
+with the nonzero-wave partition above, this proves
 \eqref{eq:critical-exhaustion-separation} for $\alpha<k$.
 
 At $\alpha=k$, the first protected cluster contains
@@ -2680,8 +2788,9 @@ which is positive because $k>2\sqrt3$.  If $\beta>k$, the affected
 higher modes move to the left and the protected comparison is even
 stronger.  Estimate \eqref{eq:critical-secular-exclusion} accounts for
 all remaining affected roots.  The endpoint formula
-\eqref{eq:critical-endpoint-root}, which was derived for every fixed
-$\alpha>0$, puts the zero-wave affected root at $-2k/n+O(n^{-2})$ and
+\eqref{eq:critical-endpoint-root} from
+Lemma~\ref{lem:critical-endpoint-root} puts the zero-wave affected root
+at $-2k/n+O(n^{-2})$ and
 hence a distance of order $n^{-1}$ to the left of the first cluster.
 This proves the assertion at $\alpha=k$.
 
@@ -2888,7 +2997,9 @@ right- and left-moving continuum equations in
 particle reverses direction at one half of the collision rate.  Setting
 the speed to one and identifying that collision rate with $2\omega$
 gives the normalization below.  We compare it with the next lattice
-correction before introducing a point defect.
+correction before introducing an independently defined continuum point
+interaction at the same unit site spacing.  No convergence of lattice
+operators under a vanishing-spacing limit is claimed.
 
 \begin{definition}[Two continuum approximations]\label{def:telegraph}
 For a homogeneous ring of circumference $n$, the standard telegraph
@@ -3006,7 +3117,7 @@ $q=2\pi/n$ into \eqref{eq:telegraph-eigenvalue}, followed by taking
 the negative real part, gives \eqref{eq:telegraph-critical}.
 \end{proof}
 
-\begin{proposition}[Point-defect telegraph secular equation]
+\begin{proposition}[Point-defect telegraph analogue and secular equation]
 \label{prop:telegraph-defect}
 Let $\delta\in\mathbb R$.  For the kinetic defect in
 Definition~\ref{def:generator}, one has
@@ -3055,8 +3166,9 @@ For the involution
 \]
 the reflection-even telegraph modes are unchanged.  Formula
 \eqref{eq:telegraph-defect} is the
-continuum counterpart of \eqref{eq:resolvent-form}; the exact lattice
-formula retains $1-\cos q$ and $\sin q$, and
+continuum analogue of \eqref{eq:resolvent-form} at unit site spacing;
+it is not an operator-limit statement.  The exact lattice formula
+retains $1-\cos q$ and $\sin q$, and
 \eqref{eq:telegraph-error}--\eqref{eq:corrected-telegraph-error} quantify
 the resulting relaxation-rate error.
 \end{proposition}
@@ -3179,9 +3291,11 @@ fixed-rate, vanishing-defect, and bulk-critical large-$n$ gap
 asymptotics.
 \item Lemma \ref{lem:telegraph-taylor}, Theorem
 \ref{thm:telegraph-comparison}, and Proposition
-\ref{prop:telegraph-defect} derive the corrected continuum system and
+\ref{prop:telegraph-defect} derive the corrected continuum system,
 compare the exact relaxation rate with the standard and
-diffusion-corrected telegraph approximations.
+diffusion-corrected telegraph approximations, and construct the
+unit-spacing point-defect analogue without asserting an operator
+scaling limit.
 \end{enumerate}
 Each item retains the hypotheses stated in its cited theorem: in
 particular, localization is asserted off the bulk spectrum (with the
@@ -3195,15 +3309,22 @@ fixed-rate or double-scaling regimes.
 The manuscript source and the formula-audit code are available at
 \url{https://github.com/skypher/kinetic-defect-ring}.  The archived
 submission revision is identified by the Git tag
-\texttt{paper-2026-08-28-reviewed-v7}.  From the repository root, the
+\texttt{paper-2026-08-28-reviewed-v8}.  From the repository root, the
 audit is run as
 \begin{center}
 \texttt{python3 -u scripts/verify\_formulas.py}.
 \end{center}
 It compares the characteristic, transfer, flat-band Jordan, localization,
 and gap formulas with direct finite-matrix or defining-equation
-calculations.  These computations are independent checks of the displayed
-formulas and are not used in place of the proofs in the manuscript.
+calculations.  In particular, it checks finite characteristic and
+transfer identities, flat-band nullities through the largest possible
+block size, selected compact and noncompact localization identities,
+and representative fixed-rate and critical gap expansions.  It does
+not test the analytic off-pole root exclusions, every resultant
+stratum, the uniform finite-ring eigenvector bound, or the closedness
+and spectrum of the continuum point-interaction operator.  These
+computations are independent checks of the displayed formulas and are
+not used in place of the proofs in the manuscript.
 
 \section*{AI-use disclosure}
 
