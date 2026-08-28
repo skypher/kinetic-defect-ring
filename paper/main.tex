@@ -176,7 +176,15 @@ on the line \cite[Sec.~II, Eqs.~(3)--(4)]{JainChatterjee2024}.  Direction-
 and position-dependent reversal rates on the line are treated in
 \cite[Secs.~2--4]{SinghSabhapanditKundu2020}.  Those
 works emphasize probability laws, steady states, or relaxation in
-extended media.  Persistent lattice walks with site disorder have also
+extended media.  Impurity-activated reversals on a periodic exclusion
+lattice have also been used to obtain exact interacting-particle phase
+behavior and, in a special parameter regime, a mapping to many
+run-and-tumble particles \cite[Secs.~V--VII]{ChatterjeeHayakawa2023}.
+A moving site at which tumbling is certain provides a time-periodic drive
+in a persistent exclusion process \cite[Secs.~II--IV]{DasChatterjee2025}.
+Those models concern interacting-particle steady states and driven
+clustering rather than the full spectrum of a fixed one-particle
+tumbling-rate defect.  Persistent lattice walks with site disorder have also
 been studied through random asymmetric transmittances
 \cite{SadjadiMiri2008}.  For nonpersistent confined lattice walks,
 exact propagators admit Chebyshev representations; the same framework
@@ -2114,9 +2122,33 @@ For each of these fixed indices,
 $|D_\ell(\lambda)|\le C_Bn^{-2}$; since both poles are
 $O(n^{-1})$, the factorization confines $\nu=n\lambda$ to a fixed
 compact set.
-The finite-$n$ derivative therefore stays bounded above and below in
-a fixed scaled neighborhood.  The analytic inverse-function theorem
-gives
+To make the finite-$n$ uniformity explicit, write the local branch as
+$w=w_n(\nu)$.  Differentiating the exact relation
+$\cosh(w_n/n)=x(\nu/n)$ gives
+\[
+ \frac{\partial w_n}{\partial\nu}
+ =\frac{x'(\nu/n)}{\sinh(w_n/n)}.
+\]
+The identity
+\[
+ x(\lambda)-1
+ =\frac{\lambda(\lambda+2\omega)}
+        {2(1+\omega+\lambda)}
+\]
+then gives, uniformly on each of these fixed scaled neighborhoods,
+\[
+ \frac{\partial w_n}{\partial\nu}
+ =\frac{\nu+\alpha}{w_n}+O_B(n^{-1}).
+\]
+After shrinking the finitely many neighborhoods if necessary, there
+are constants $c_B,C_B>0$, independent of $n$, such that
+\[
+ c_B\le
+ \left|\frac{\partial w_n}{\partial\nu}\right|
+ \le C_B
+\]
+throughout them for all sufficiently large $n$.  The analytic
+inverse-function theorem with these uniform constants gives
 \[
  |w-2\pi\mathrm i\ell|\ge c_B A/n
 \]
@@ -2935,6 +2967,11 @@ the negative real part, gives \eqref{eq:telegraph-critical}.
 Let $\delta\in\mathbb R$.  For the kinetic defect in
 Definition~\ref{def:generator}, one has
 $\delta=\omega_0-\omega\ge-\omega$.
+Here the continuum coordinate uses the same unit site spacing as the
+lattice, so the circle has circumference $n$.  The Dirac coupling has
+coefficient $2\delta$ and enters the polarization equation as
+$-2\delta\,\delta_0(x)m$; no further lattice-spacing limit or rescaling
+of $\delta$ is imposed.
 On the circle cut at zero, define the point-defect telegraph operator by
 \[
  {\cal A}_\delta(\rho,m)=(-m',-\rho'-2\omega m)
