@@ -29,12 +29,13 @@ in the manuscript.
 ## Build the manuscript
 
 A TeX installation providing `pdflatex`, BibTeX, AMS-LaTeX, `mathtools`,
-`geometry`, `hyperref`, and Latin Modern is required.
+`geometry`, `hyperref`, TikZ, and Latin Modern is required.
 
 ```sh
 cd paper
 pdflatex main.tex
 bibtex main
+pdflatex main.tex
 pdflatex main.tex
 pdflatex main.tex
 ```

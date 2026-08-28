@@ -4,6 +4,7 @@
 \usepackage{lmodern}
 \usepackage{amsmath,amsthm,amssymb,amsfonts}
 \usepackage{mathtools}
+\usepackage{tikz}
 \usepackage[
   letterpaper,
   total={5.5in,8in},
@@ -3033,6 +3034,51 @@ with $k=2\pi$.}
 \label{tab:critical-summary}
 \end{table}
 
+Figure~\ref{fig:critical-selection} displays the branch selection in the
+$(\alpha,\beta)$ plane.  The diagonal is the equal-rate locus, whereas the
+vertical line is the first homogeneous exceptional scaling.  Their different
+roles account for the reversal of the affected side across $\alpha=2\pi$.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[x=2.25cm,y=2.25cm,font=\small]
+  \fill[blue!12]   (0,0)--(1,1)--(1,2)--(0,2)--cycle;
+  \fill[purple!14] (0,0)--(1,1)--(1,0)--cycle;
+  \fill[blue!12]   (1,0)--(2,0)--(2,2)--(1,1)--cycle;
+  \fill[purple!14] (1,1)--(1,2)--(2,2)--cycle;
+
+  \draw[->] (0,0)--(2.14,0) node[right] {$\alpha/(2\pi)$};
+  \draw[->] (0,0)--(0,2.14) node[above] {$\beta/(2\pi)$};
+  \draw (1,0.035)--(1,-0.035) node[below] {$1$};
+  \draw (0.035,1)--(-0.035,1) node[left] {$1$};
+
+  \draw[dashed,thick] (0,0)--(2,2)
+    node[pos=0.82,below,sloped] {$\beta=\alpha$: tie};
+  \draw[blue!75!black,very thick] (1,0)--(1,1);
+  \draw[purple!80!black,very thick] (1,1)--(1,2);
+  \filldraw[black] (1,1) circle[radius=0.025];
+
+  \node[align=center] at (0.67,0.28) {affected\\$n^{-2}$};
+  \node[align=center] at (0.36,1.47) {protected\\$n^{-2}$};
+  \node[align=center] at (1.63,0.48) {protected\\$n^{-2}$};
+  \node[align=center] at (1.48,1.75) {affected\\$n^{-2}$};
+
+  \draw[blue!75!black,very thick] (0,-0.28)--(0.16,-0.28);
+  \node[anchor=west,font=\footnotesize] at (0.22,-0.28)
+    {$\alpha=2\pi$, $\beta<2\pi$: protected, $n^{-2}$};
+  \draw[purple!80!black,very thick] (0,-0.48)--(0.16,-0.48);
+  \node[anchor=west,font=\footnotesize] at (0.22,-0.48)
+    {$\alpha=2\pi$, $\beta>2\pi$: affected, $n^{-3/2}$};
+  \filldraw[black] (0.08,-0.68) circle[radius=0.025];
+  \node[anchor=west,font=\footnotesize] at (0.22,-0.68)
+    {$\alpha=\beta=2\pi$: tie};
+\end{tikzpicture}
+\caption{Gap-controlling parity and first correction scale in the
+bulk-critical limit.  Region labels apply away from $\alpha=2\pi$; the
+colored segments on that line give its separate boundary regime.}
+\label{fig:critical-selection}
+\end{figure}
+
 \section{Telegraph comparison}
 
 The standard one-dimensional telegraph system follows from the
@@ -3353,7 +3399,7 @@ fixed-rate or double-scaling regimes.
 The manuscript source and the formula-audit code are available at
 \url{https://github.com/skypher/kinetic-defect-ring}.  The archived
 submission revision is identified by the Git tag
-\texttt{paper-2026-08-28-reviewed-v8}.  From the repository root, the
+\texttt{paper-2026-08-28-reviewed-v9}.  From the repository root, the
 audit is run as
 \begin{center}
 \texttt{python3 -u scripts/verify\_formulas.py}.
