@@ -216,11 +216,11 @@ steady states, and first-passage or extended-medium relaxation results;
 and the confined-walk reference supplies nonpersistent propagators and
 defective trapping formulas.  Beyond those results, the present defect
 problem yields the rank-one derivative identity and parity factorization,
-the complete exceptional-point classification including the tuned $J_3$
-flat-band block, the localized-mode criterion and compact tuning, and the
-uniform fixed-rate and bulk-critical gap selection.  The continuum
-comparison additionally derives the point-defect telegraph domain and
-isolates the lattice Poisson-diffusion correction.
+the exact finite algebraic exceptional-point classification including the
+tuned $J_3$ flat-band block, the localized-mode criterion and compact
+tuning, and the uniform fixed-rate and bulk-critical gap selection.
+The continuum comparison additionally derives the point-defect telegraph
+domain and isolates the lattice Poisson-diffusion correction.
 
 The main logical dependencies are summarized in
 Table~\ref{tab:dependency-spine}.  In particular, the gap conclusions use
@@ -719,22 +719,48 @@ where, for $\delta=\omega_0-1$,
  +\delta\left[2\bigl(T_n(t/2)-1\bigr)
  +(t-2)U_{n-1}(t/2)\right].
 \end{equation}
-The values
+Put $C_n=\cos(n\pi/2)$ and $S_n=\sin(n\pi/2)$.  The values
+$T_n(0)=C_n$, $U_{n-1}(0)=S_n$, together with
 \[
- T_n(0)=\cos(n\pi/2),\qquad U_{n-1}(0)=\sin(n\pi/2)
+ T_n'(0)=nS_n,\qquad U_{n-1}'(0)=-nC_n,
 \]
-give the following algebraic multiplicities.  For $\delta=0$ they are
-$n$, except that $4\mid n$ gives $n+2$.  For $\delta\ne0$ they are
-$n-1$ when $n\equiv1,2\pmod4$, and $n$ when
-$n\equiv0,3\pmod4$.  In the last congruence class,
-$F_n'(0)=-2-\delta(n+1)$; it vanishes exactly at
-$\delta=-2/(n+1)$.  For $n\equiv3\pmod4$ one has
-$U_{n-1}''(0)=n^2-1$, and direct differentiation of
-\eqref{eq:flat-F} at the tuned value gives
+give directly from \eqref{eq:flat-F}
+\begin{align}
+ F_n(0)&=2\delta(C_n-1-S_n),\label{eq:flat-value}\\
+ F_n'(0)&=2(C_n-1)
+   +\delta\bigl((n+1)S_n+nC_n\bigr).
+   \label{eq:flat-first-derivative}
+\end{align}
+If $\delta=0$ and $4\nmid n$, the derivative in
+\eqref{eq:flat-first-derivative} is nonzero.  If $\delta=0$ and
+$4\mid n$, the Chebyshev differential equation at zero gives
+$T_n''(0)=-n^2$, and hence
+\[
+ F_n(t)=-\frac{n^2}{4}t^3+O(t^5).
+\]
+For $\delta\ne0$, equations
+\eqref{eq:flat-value}--\eqref{eq:flat-first-derivative} give
+\[
+\begin{array}{c|c|c}
+ n\pmod4 & \text{first nonzero datum} & \operatorname{ord}_{t=0}F_n\\
+\hline
+1,2 & F_n(0)=-4\delta &0\\
+0   & F_n'(0)=n\delta &1\\
+3   & F_n'(0)=-2-(n+1)\delta &1
+\end{array}
+\]
+in the last row unless $\delta=-2/(n+1)$.  For
+$n\equiv3\pmod4$ one has $U_{n-1}''(0)=n^2-1$, and direct
+differentiation of \eqref{eq:flat-F} at that tuned value gives
 \begin{equation}\label{eq:flat-second-derivative}
  F_n''(0)=-2n+\frac{U_{n-1}''(0)}{n+1}=-(n+1)\ne0.
 \end{equation}
-Thus the tuned multiplicity is $n+1$.
+Thus $\operatorname{ord}_{0}F_n$ is respectively $1$ or $3$ when
+$\delta=0$ according as $4\nmid n$ or $4\mid n$, and is respectively
+$0$, $1$, $1$, or $2$ in the four defective cases displayed above,
+with the final value belonging to the tuned $n\equiv3\pmod4$ case.
+Since $P_n=t^{n-1}F_n$, this proves the stated algebraic
+multiplicities, including the tuned multiplicity $n+1$.
 
 The bulk equations at $t=0$ read
 \[
@@ -836,6 +862,11 @@ they are not asserted to arise from these affected-sector resultants.
 Root orders and Theorems
 \ref{thm:jordan-regular}--\ref{thm:flat-band} distinguish exceptional
 points from semisimple parity crossings without a numerical tolerance.
+For the general affected sector, this is an implicit algebraic
+classification: the resultant is an exact finite polynomial equation
+for the exceptional locus, and the root-order tests determine the
+Jordan block, but no parametric solution of that resultant equation is
+asserted.
 \end{corollary}
 
 \begin{proof}
@@ -1173,16 +1204,44 @@ $z(\lambda_n)/z_\infty=1+O(r^n)$, one has
 $|z(\lambda_n)/z_\infty|^n=\exp(O(nr^n))=O(1)$.  Hence
 $\lambda_n-\lambda_\infty=O(|z_\infty|^n)$.
 
-Put $\rho=|z_\infty|$ and $z_n=z(\lambda_n)$.  The Fourier coefficients
-of the two bulk resolvent entries are linear combinations of
-$z_n^{|j|}$ and $z_n^{|j\pm1|}$, and their periodizations are bounded by
+Put $\rho=|z_\infty|$, $z_n=z(\lambda_n)$, and
+$s_n=s(\lambda_n)$.  Averaging the Poisson-kernel expansion in
+Lemma~\ref{lem:green-identities} against $e^{\ii jq_k}$ gives, for
+every integer representative $0\le j<n$,
+\begin{equation}\label{eq:localized-aliased-coefficient}
+ \frac1n\sum_{k=0}^{n-1}
+   \frac{e^{\ii jq_k}}{x(\lambda_n)-\cos q_k}
+ =\frac1{s_n}\sum_{\ell\in\Z}z_n^{|j+\ell n|}.
+\end{equation}
+Indeed, the Fourier coefficient on the infinite circle is
+$z_n^{|j|}/s_n$, and root-of-unity averaging retains exactly the
+indices congruent to $-j$ modulo $n$.  Moreover, in Fourier variables,
+\[
+ (\lambda_n-W(q))^{-1}d
+ =\frac1{2a_n(x(\lambda_n)-\cos q)}
+   \binom{\lambda_n+1-e^{-\ii q}}
+         {-\lambda_n-1+e^{\ii q}},
+ \qquad a_n=\lambda_n+1+\omega.
+\]
+Thus each component of the finite-ring resolvent vector is a bounded
+linear combination of the coefficients in
+\eqref{eq:localized-aliased-coefficient} at $j$ and $j\pm1$.  If
+$d=\operatorname{dist}(j,0)\le n/2$, then the geometric series gives
+the exact majorant
+\[
+ \sum_{\ell\in\Z}|z_n|^{|j+\ell n|}
+ =\frac{|z_n|^d+|z_n|^{n-d}}{1-|z_n|^n}.
+\]
+Since $s_n$ and $a_n$ stay away from zero and $|z_n|\ge\rho/2$ for
+large $n$, the shifts by one only alter the constant.  Consequently
+the periodized resolvent components are bounded by
 \begin{equation}\label{eq:localized-periodization-bound}
  C\frac{|z_n|^d+|z_n|^{n-d}}{1-|z_n|^n},
  \qquad d=\operatorname{dist}(j,0)\le n/2,
 \end{equation}
-where the shifts by one only alter $C$ because $\rho>0$.  Analyticity of
-$z(\lambda)$ near the simple off-spectrum eigenvalue and the eigenvalue
-estimate already proved give
+where $C$ is independent of $j$ and of all sufficiently large $n$.
+Analyticity of $z(\lambda)$ near the simple off-spectrum eigenvalue and
+the eigenvalue estimate already proved give
 \[
  z_n=z_\infty+O(\rho^n),\qquad
  \frac{|z_n|}{\rho}\le1+C\rho^{n-1}.
@@ -1486,6 +1545,25 @@ where
  |E_n|\le C_{K,M}n^{-2}
        +C_{K,M}n^{-3}|w_n\coth(w_n/2)|.
 \]
+Let $q_\ell=2\pi\ell/n$ for $1\le\ell\le n/2$.  Uniform Taylor
+expansion on the compact $\omega$-projection of $K$ gives
+\[
+ p^+(q_\ell)=-Dq_\ell^2+O_K(n^{-4})\qquad(\ell=1,2).
+\]
+In particular,
+\begin{align*}
+ p^+(q_2)-p_n&=-12\pi^2D n^{-2}+O_K(n^{-4}),\\
+ \Re p_n-\pi^2D n^{-2}&=-5\pi^2D n^{-2}+O_K(n^{-4}).
+\end{align*}
+Hence $p^+(q_2)$ lies strictly to the left of the stated half-plane for
+all sufficiently large $n$, uniformly on $K$.  As in the proof of
+Lemma~\ref{lem:fixed-regular-green}, $p^+(q)$ is a strictly decreasing
+function of $q^2$ on a fixed interval $0\le q\le\eta$, while the fast
+branch there and both branches for $\eta\le q\le\pi$ stay a fixed
+distance to the left of zero.  These facts exclude every remaining
+homogeneous pole from the half-plane.  The zero density eigenvalue is
+removable in $G_n$, since its $q=0$ summand reduces to
+$1/[n(\lambda+2\omega)]$.
 The only nonzero pole in the stated scaled half-plane has
 $w_n=2\pi\mathrm i$ up to sign and is exactly $\lambda=p_n$.
 The derivative of the analytic map $\zeta\mapsto w_n$ at this pole is
@@ -2948,7 +3026,7 @@ fixed-rate or double-scaling regimes.
 The manuscript source and the formula-audit code are available at
 \url{https://github.com/skypher/kinetic-defect-ring}.  The archived
 submission revision is identified by the Git tag
-\texttt{paper-2026-08-28-reviewed-v3}.  From the repository root, the
+\texttt{paper-2026-08-28-reviewed-v4}.  From the repository root, the
 audit is run as
 \begin{center}
 \texttt{python3 -u scripts/verify\_formulas.py}.

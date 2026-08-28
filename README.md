@@ -41,7 +41,8 @@ pdflatex main.tex
 
 ## Replay the formula audit
 
-The audit requires Python 3 and NumPy.
+The audit requires Python 3 and NumPy.  The reviewed formula audit was
+tested with Python 3.12.3 and NumPy 1.26.4.
 
 ```sh
 python3 -u scripts/verify_formulas.py
