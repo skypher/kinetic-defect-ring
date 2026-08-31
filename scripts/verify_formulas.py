@@ -285,6 +285,30 @@ def flat_band_audit() -> None:
             raise AssertionError("flat-band Jordan audit failed")
 
 
+def embedded_flat_band_eigenspace_audit() -> None:
+    n = 11
+    base = np.arange(1.0, n + 1.0)
+    for omega0 in [0.0, 0.4, 1.0, 1.8]:
+        p = base.astype(complex)
+        if omega0 != 1.0:
+            p[0] = -p[-1]
+        vector = np.empty(2 * n, dtype=complex)
+        vector[0::2] = p
+        vector[1::2] = -np.roll(p, 1)
+        residual = np.linalg.norm(
+            (generator(n, 1.0, omega0) + 2.0 * np.eye(2 * n)) @ vector
+        )
+        constraint = abs((omega0 - 1.0) * (p[0] + p[-1]))
+        print(
+            "embedded_flat_band"
+            f" n={n} omega0={omega0}"
+            f" constraint={constraint:.3e} residual={residual:.3e}",
+            flush=True,
+        )
+        if max(constraint, residual) > 2.0e-10:
+            raise AssertionError("embedded flat-band eigenspace audit failed")
+
+
 def compact_localization_audit() -> None:
     omega = 2.0
     omega0 = (omega * omega + 1.0) / (2.0 * omega)
@@ -526,6 +550,7 @@ def main() -> None:
     fixed_gap_asymptotic_audit()
     localization_audit(args.omega, args.omega0)
     flat_band_audit()
+    embedded_flat_band_eigenspace_audit()
     compact_localization_audit()
     zero_denominator_localization_audit()
     critical_boundary_audit()

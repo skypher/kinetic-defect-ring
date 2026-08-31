@@ -140,8 +140,11 @@ defect-free polynomial plus $(\omega_0-\omega)/n$ times its
 $\omega$-derivative.  This identity leads to resolvent, Chebyshev,
 transfer-matrix, and parity formulations that classify the finite-ring
 Jordan structure, including the singular flat band at $\omega=1$.  On
-the infinite line, the polarization Green function characterizes the
-localized defect modes and isolates a compactly supported singular mode.  For
+the infinite line, the polarization Green function characterizes all
+localized modes outside the bulk spectrum and isolates a compactly supported
+singular mode.  A transfer argument excludes embedded $\ell^2$ modes away
+from the singular flat band at $\omega=1$, whose eigenspace is determined
+explicitly.  For
 fixed $\omega>0$, a reflection-protected long-wave mode prevents a slow
 defect---even one with $\omega_0\asymp n^{-1}$---from changing the leading
 $n^{-2}$ spectral-gap scaling.  A different regime appears when
@@ -218,12 +221,15 @@ polarization channel.  It leads to four groups of results.
 \item On a finite ring, the characteristic polynomial admits derivative,
   resolvent, Chebyshev, transfer-matrix, and parity forms.  The parity
   splitting separates a defect-protected sector from the affected sector
-  and gives the complete algebraic classification of finite-ring
-  exceptional points, including the tuned $J_3$ flat-band block.
+  and gives an exact resultant criterion for finite-ring exceptional
+  points together with their Jordan structure, including the tuned $J_3$
+  flat-band block.
 \item On the infinite line, the polarization Green function gives the
   localized-mode matching equations, their algebraic candidates, and the
-  compact three-site mode.  Each simple noncompact localized eigenvalue
-  produces a finite-ring eigenvalue with exponentially small error.
+  compact three-site mode.  A transfer argument excludes dispersive
+  embedded $\ell^2$ modes and determines the remaining singular flat-band
+  eigenspace.  Each simple noncompact localized eigenvalue produces a
+  finite-ring eigenvalue with exponentially small error.
 \item The large-ring gap has two distinct asymptotic mechanisms.  At fixed
   bulk rate, reflection protects the leading $n^{-2}$ decay rate from a
   slower defect.  When $\omega=\alpha/n$ and $\omega_0=\beta/n$, the gap
@@ -255,9 +261,10 @@ Exceptional points
   & Jordan classification, including the flat band at $\omega=1$
   & Theorems~\ref{thm:jordan-regular}--\ref{thm:flat-band}\\
 Infinite line
-  & Localized modes, decay length, and the compact singular mode
+  & Off-bulk localized modes, embedded-spectrum exclusion, and compact modes
   & Theorem~\ref{thm:localization} and
-    Proposition~\ref{prop:compact-localization}\\
+    Propositions~\ref{prop:embedded-spectrum} and
+    \ref{prop:compact-localization}\\
 Fixed $\omega>0$
   & Protected/affected gap selection and fixed-rate expansion
   & Theorem~\ref{thm:fixed-gap}\\
@@ -301,7 +308,8 @@ The forward generator $L=L_n(\omega,\omega_0)$ is
 Thus hopping in the current orientation has rate one and tumbling has
 rate $\omega_j$.  We regard $u=(u_j^+,u_j^-)_{j\in\Z/n\Z}$ as a column
 vector in $\C^{2n}$ and write $e_{j,\sigma}$ for the corresponding
-coordinate vector.  Put
+coordinate vector.  With this convention, the columns of $L$ sum to zero,
+so $\partial_tu=Lu$ preserves the total mass of a probability vector.  Put
 \[
  \delta=\omega_0-\omega,\qquad
  q_k=\frac{2\pi k}{n},\qquad c_k=\cos q_k,\qquad s_k=\sin q_k.
@@ -419,7 +427,7 @@ $D_k=2a(x-c_k)$ and
 equation \eqref{eq:P0-cheb} follows.
 \end{proof}
 
-\begin{theorem}[Exact finite characteristic polynomial]\label{thm:characteristic}
+\begin{theorem}[Exact finite-ring characteristic polynomial]\label{thm:characteristic}
 For every $n\geq2$, $\omega>0$, and $\omega_0\geq0$,
 \begin{align}
  P_n(\lambda;\omega,\omega_0)
@@ -1058,6 +1066,12 @@ For the infinite translation-invariant chain, define
  \left\{c-1-\omega\pm\sqrt{\omega^2-(1-c^2)}:
               c\in[-1,1]\right\}.
 \]
+When $a\ne0$, the identity $D_k=2a(x-c_k)$, with $c_k$ replaced by a
+continuous parameter $c\in[-1,1]$, shows that
+\begin{equation}\label{eq:bulk-x-equivalence}
+ \lambda\in\Sigma_\omega\quad\Longleftrightarrow\quad
+ x(\lambda)\in[-1,1].
+\end{equation}
 For $\lambda\notin\Sigma_\omega$ with $a\ne0$, retain $a$ and $x$ from
 \eqref{eq:a-def}--\eqref{eq:x-def}, and choose
 \[
@@ -1144,13 +1158,96 @@ meromorphic function, which agrees with the finite rational sum on
 $\C\setminus[-1,1]$ and hence everywhere away from their poles.
 \end{proof}
 
+\begin{proposition}[Embedded point spectrum and singular flat band]
+\label{prop:embedded-spectrum}
+Let $\lambda\in\Sigma_\omega$.
+\begin{enumerate}
+\item If $a=\lambda+1+\omega\ne0$, then
+  $\ker_{\ell^2}(L_\infty-\lambda I)=\{0\}$.
+\item If $a=0$, then necessarily $\omega=1$ and $\lambda=-2$.  For every
+  $\omega_0\ge0$, the embedded flat-band eigenspace is exactly
+  \begin{equation}\label{eq:infinite-flat-eigenspace}
+  \ker_{\ell^2}(L_\infty+2I)
+  =\left\{u:\
+    \begin{array}{l}
+    u_j^+=p_j,\quad u_j^-=-p_{j-1},\quad p\in\ell^2(\Z),\\
+    (\omega_0-1)(p_0+p_{-1})=0
+    \end{array}\right\}.
+  \end{equation}
+  This eigenspace is infinite dimensional.  Its compactly supported
+  vectors are precisely those obtained from finitely supported $p$.
+\end{enumerate}
+Thus the singular flat band is the only embedded $\ell^2$ point spectrum;
+all other infinite-line localized eigenvalues lie outside
+$\Sigma_\omega$.
+\end{proposition}
+
+\begin{proof}
+Suppose first that $a\ne0$.  By
+\eqref{eq:bulk-x-equivalence}, $x\in[-1,1]$.  For an eigenvector $u$, put
+\[
+ y_j=\binom{u_j^+}{u_{j+1}^-}.
+\]
+Away from the defect, the transfer relation in the proof of
+Theorem~\ref{thm:transfer} gives
+\begin{equation}\label{eq:infinite-bulk-transfer}
+ y_j=T_\omega(\lambda)y_{j-1},\qquad j\ne0.
+\end{equation}
+The matrix $T_\omega$ is unimodular and has trace $2x$.  If
+$x\in(-1,1)$, its two eigenvalues are distinct and lie on the unit
+circle, so the families $T_\omega^m$ and $T_\omega^{-m}$ are uniformly
+bounded.  Consequently, neither a forward nor a backward orbit can tend
+to zero unless its initial vector is zero.  At
+$x=\varepsilon\in\{-1,1\}$, Cayley--Hamilton gives
+\[
+ T_\omega=\varepsilon I+N,\qquad N^2=0,
+ \qquad
+ T_\omega^m=\varepsilon^m
+   \bigl(I+m\varepsilon^{-1}N\bigr).
+\]
+If $Nv=0$, then $\|T_\omega^mv\|=\|v\|$; if $Nv\ne0$, then
+\[
+ \|T_\omega^mv\|\ge m\|Nv\|-\|v\|\longrightarrow\infty.
+\]
+The identity
+$T_\omega^{-m}=\varepsilon^{-m}(I-m\varepsilon^{-1}N)$ gives the same
+alternatives for negative powers.  Hence an orbit in either direction
+tends to zero only when $v=0$.
+
+Because $u\in\ell^2$, one has $y_j\to0$ as $j\to\pm\infty$.
+Applying the preceding orbit alternatives to the right half-line in
+\eqref{eq:infinite-bulk-transfer} gives $y_0=0$, and applying them to the
+left half-line gives $y_{-1}=0$.  These two identities and the recurrence
+force every component of $u$ to vanish.  This proves the first item.
+
+Now suppose $a=0$.  Then $\lambda=-1-\omega$ and the bulk determinant is
+$D(q)=1-\omega^2$, independent of $q$.  Membership in
+$\Sigma_\omega$ therefore forces $\omega=1$ and $\lambda=-2$.
+Set $p_j=u_j^+$.  At every bulk site the eigenvalue equations reduce to
+\[
+ u_j^-=-p_{j-1},\qquad u_{j+1}^-=-p_j.
+\]
+The equations adjacent to the defect supply the same relation across both
+interfaces, so $u_j^-=-p_{j-1}$ for every $j\in\Z$.  After this
+substitution, the two equations at the defect are both equivalent to
+\[
+ (\omega_0-1)(p_0+p_{-1})=0.
+\]
+Conversely, any $p\in\ell^2(\Z)$ satisfying this scalar condition gives
+an $\ell^2$ eigenvector by direct substitution.  This proves
+\eqref{eq:infinite-flat-eigenspace}.  The condition cuts out either all of
+$\ell^2(\Z)$ or one codimension-one subspace, so the eigenspace is infinite
+dimensional; the support assertion follows from the displayed shift
+relation.
+\end{proof}
+
 \subsection{Infinite-line defect modes}
 
 A localized mode whose support is not finite is called a
 \emph{noncompact localized mode}.  In the decay-root parametrization below
 this is the range $0<|z|<1$; the compact case $z=0$ is treated separately.
 
-\begin{theorem}[Infinite-line localization criterion]
+\begin{theorem}[Infinite-line off-bulk localization criterion]
 \label{thm:localization}
 Let $\delta\ne0$, $\lambda\notin\Sigma_\omega$, and $a\ne0$.  Then
 $\lambda$ is an eigenvalue of $L_\infty$ admitting an exponentially
@@ -1324,9 +1421,11 @@ it is the limiting root $z=0$.
 \label{prop:localized-convergence}
 Suppose \eqref{eq:localization-secular} has a simple root
 $\lambda_\infty$ with decay root
-$z_\infty$, $0<|z_\infty|<1$.  Then, for all sufficiently large $n$, the
-finite polynomial $Q_{n,-}$ has a unique root $\lambda_n$ near
-$\lambda_\infty$, and
+$z_\infty$, $0<|z_\infty|<1$.  There is a closed disk $B$ centered at
+$\lambda_\infty$, disjoint from $\Sigma_\omega$, such that, for all
+sufficiently large $n$, the finite polynomial $Q_{n,-}$ has exactly one
+zero $\lambda_n$ in the interior of $B$, counted with algebraic
+multiplicity, and
 \[
  \lambda_n-\lambda_\infty=O(|z_\infty|^n).
 \]
@@ -3621,12 +3720,13 @@ root orders.  The flat band at $\omega=1$ is the singular exception, with
 its tuned $J_3$ block recorded separately.
 
 On the infinite line, the same Green function distinguishes extended
-bulk spectrum from defect-localized modes.  The noncompact localized
-modes are described by the matching equations and their cubic
-elimination, while the singular transfer value supports a compact mode
-on three sites.  Each simple noncompact localized eigenvalue produces a
-finite-ring eigenvalue with exponentially small error and uniformly
-localized mass.
+bulk spectrum from defect-localized modes.  The noncompact off-bulk modes
+are described by the matching equations and their cubic elimination, and
+the singular transfer value supports a compact mode on three sites.  The
+transfer alternatives exclude embedded $\ell^2$ modes except at the
+singular flat band, whose eigenspace is given explicitly.  Each simple
+noncompact localized eigenvalue produces a finite-ring eigenvalue with
+exponentially small error and uniformly localized mass.
 
 The gap results separate two physical mechanisms.  At fixed
 $\omega>0$, reflection leaves one first-mode decay rate unchanged, so a
