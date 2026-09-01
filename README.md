@@ -24,13 +24,16 @@ gap, and localization formulas can be replayed against direct matrices
 and their defining equations with
 [`scripts/verify_formulas.py`](scripts/verify_formulas.py).  The script is a
 short assertion-based audit, including all ring sizes from 2 through 12
-for the flat-band nullity profiles.  It is not a substitute for the proofs
-in the manuscript.
+for the flat-band nullity profiles.  The data in the manuscript's numerical
+summary figure are reproduced by
+[`scripts/generate_figure_data.py`](scripts/generate_figure_data.py).  These
+computations are cross-checks rather than substitutes for the proofs in the
+manuscript.
 
 ## Build the manuscript
 
 A TeX installation providing `pdflatex`, BibTeX, AMS-LaTeX, `mathtools`,
-`geometry`, `hyperref`, TikZ, and Latin Modern is required.
+`geometry`, `hyperref`, TikZ, PGFPlots, and Latin Modern is required.
 
 ```sh
 cd paper
@@ -48,4 +51,13 @@ tested with Python 3.12.3 and NumPy 1.26.4.
 
 ```sh
 python3 -u scripts/verify_formulas.py
+```
+
+## Regenerate the figure data
+
+The figure-data script uses the same Python and NumPy environment as the
+formula audit.
+
+```sh
+python3 -u scripts/generate_figure_data.py
 ```

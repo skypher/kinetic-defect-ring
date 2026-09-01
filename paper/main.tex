@@ -7,6 +7,8 @@
 \usepackage{array}
 \usepackage{tikz}
 \usetikzlibrary{patterns}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
 \usepackage{float}
 \usepackage[
   letterpaper,
@@ -132,25 +134,23 @@ exact spectrum, exceptional points, and spectral-decay crossover}
 \maketitle
 
 \begin{abstract}
-We derive exact characteristic equations for the spectrum of a
-continuous-time run-and-tumble particle
-on an $n$-site ring whose tumbling rate is $\omega_0$ at one site and
-$\omega$ elsewhere.  The defect is a rank-one perturbation in the
-polarization channel.  The resulting derivative identity and parity
-factorization separate a protected sector from an affected scalar Green
-equation and determine the finite-ring Jordan structure, including the
-singular flat band at $\omega=1$.  On the infinite line, the same Green
-function characterizes every off-bulk localized mode, while a transfer
-argument excludes embedded $\ell^2$ modes away from the explicitly resolved
-flat band.  For fixed $\omega>0$, reflection protection prevents a slow
-defect---even one with $\omega_0\asymp n^{-1}$---from changing the leading
-$n^{-2}$ gap.  When $\omega=\alpha/n$ and $\omega_0=\beta/n$, the gap is
-instead of order $n^{-1}$, and its controlling parity changes across the
-limiting first-mode exceptional scale $\alpha=2\pi$.  The leading telegraph
-truncation does not contain the componentwise lattice-diffusion term generated
-by Poisson hopping; the second-order long-wave truncation restores it and
-recovers the leading fixed-rate lattice decay, with a dispersion discrepancy
-of order $n^{-4}$.
+We determine how changing the tumbling rate at one site changes the spectrum
+and relaxation of a continuous-time run-and-tumble particle on an $n$-site
+ring.  Reflection splits the state space into a protected sector and a
+defect-sensitive sector; a rank-one reduction then gives explicit finite
+polynomials and a scalar Green equation for the complete spectrum and Jordan
+structure, including the singular flat band at $\omega=1$.  On the infinite
+line, the same equation characterizes every off-bulk localized mode, while a
+transfer argument excludes embedded $\ell^2$ modes away from the resolved
+flat band.  For fixed bulk rate $\omega>0$, a slower defect---even one with
+$\omega_0\asymp n^{-1}$---does not change the leading $n^{-2}$ gap, whereas a
+faster defect changes its $n^{-3}$ correction.  When
+$\omega=\alpha/n$ and $\omega_0=\beta/n$, the gap is instead of order
+$n^{-1}$; the controlling parity changes across $\alpha=2\pi$, with an
+$n^{-3/2}$ correction at that scale for a faster defect.  Finally, a
+second-order long-wave truncation restores the componentwise lattice-diffusion
+term absent from the leading telegraph model and reproduces the leading
+fixed-rate lattice decay.
 \end{abstract}
 
 \vskip5pt
@@ -165,7 +165,8 @@ spectral gap; telegraph equation.
 
 Persistent random walks describe motion with finite directional memory.
 The connection between correlated directional motion and the telegraph
-equation goes back to \cite[abstract]{Goldstein1951}.  Continuum formulations
+equation goes back to the analysis of Goldstein \cite{Goldstein1951}.
+Continuum formulations
 of biased chemotactic motion arise, for example, in \cite{Schnitzer1993},
 while lattice run-and-tumble models retain the
 individual hopping and reversal events and connect directly to
@@ -180,6 +181,14 @@ For a continuum relative-coordinate model with thermal diffusion,
 symmetry sectors, and the low-lying spectrum on a ring.
 Section~\ref{sec:model} records the precise convention used below.
 
+This paper isolates the spectral effect of one fixed tumbling-rate defect.
+The fixed-site geometry preserves a reflection symmetry, and that symmetry
+leaves one parity sector unchanged while reducing the other to a scalar
+rank-one equation.  The resulting analysis determines the finite-ring
+spectrum and Jordan structure, classifies infinite-line localized states,
+and identifies which parity controls the large-ring decay rate in two
+scaling regimes.
+
 Spatial inhomogeneity has been studied through position-dependent speed
 \cite{AngelaniGarra2019}, quenched disorder in speed and tumbling
 \cite[Secs.~II.A.2--II.A.3 and II.B.2--II.B.3]
@@ -190,7 +199,12 @@ position-dependent reversal rates
 signal-modulated tumbling and its relaxation dynamics is developed in
 \cite{VillaTorrealbaNaviaSoto2023}.  These works emphasize
 probability laws, steady states, first-passage behavior, or relaxation in
-extended media.  Impurity-activated reversals and moving tumble sites
+extended media.  A continuum particle with tumbling localized at the two
+boundaries of an interval is solved in
+\cite[Sec.~III, Eqs.~(16) and (29)--(30)]{RobertsPruessner2022}; its local
+reaction terms yield time-dependent densities rather than the complete
+spectrum of one fixed lattice-site defect.  Impurity-activated reversals and
+moving tumble sites
 also occur in interacting periodic exclusion processes
 \cite[Secs.~V--VII]{ChatterjeeHayakawa2023},
 \cite[Secs.~II--IV]{DasChatterjee2025}; their focus is driven clustering
@@ -201,8 +215,8 @@ Related lattice-impurity methods include persistent walks with random
 asymmetric transmittances \cite{SadjadiMiri2008}, Chebyshev propagators
 and partially absorbing defects for confined nonpersistent walks
 \cite[Secs.~VI--VII and Apps.~C and E]{Giuggioli2020}, and the
-difference-equation construction of isolated impurity levels
-\cite[abstract]{KosterSlater1954}.  Green-function reduction of a point
+classical difference-equation construction of isolated impurity levels
+\cite{KosterSlater1954}.  Green-function reduction of a point
 perturbation has also been used for non-Hermitian lattices
 \cite[Secs.~II--III and Eqs.~(11)--(15)]{Roccati2021}.  Finite-size
 impurity spectra and impurity-induced size-dependent localization have
@@ -1227,9 +1241,10 @@ relation.
 
 \subsection{Infinite-line defect modes}
 
-A localized mode whose support is not finite is called a
-\emph{noncompact localized mode}.  In the decay-root parametrization below
-this is the range $0<|z|<1$; the compact case $z=0$ is treated separately.
+A localized mode whose support is infinite is called an
+\emph{infinite-support localized mode}.  In the decay-root parametrization
+below this is the range $0<|z|<1$; the compact case $z=0$ is treated
+separately.
 
 \begin{theorem}[Infinite-line off-bulk localization criterion]
 \label{thm:localization}
@@ -1296,7 +1311,7 @@ $-1/\log|z|$.  Clearing the denominator in
 \eqref{eq:loc-dispersion}.
 \end{proof}
 
-\begin{corollary}[Algebraic candidates for noncompact localized modes]
+\begin{corollary}[Algebraic candidates for infinite-support localized modes]
 \label{cor:localization-algebraic}
 Under the hypotheses of Theorem~\ref{thm:localization}, every
 admissible $z$ is a root of
@@ -1322,7 +1337,7 @@ At these parameters there are two admissible values
        \pm\sqrt{5\omega^4-2\omega^2+1}}{2\omega},
  \qquad \lambda_\pm=a_\pm-1-\omega,
 \end{equation}
-and both give noncompact localized modes with decay root
+and both give infinite-support localized modes with decay root
 $z=-\omega$.
 A root of \eqref{eq:localization-cubic} is accepted only when both
 \eqref{eq:loc-dispersion} and \eqref{eq:loc-match} hold; this removes
@@ -1340,7 +1355,7 @@ factorization is
  =z(z^2-1)\mathcal C_{\omega,\delta}(z),
 \]
 where $\mathcal C_{\omega,\delta}$ is the cubic polynomial displayed in
-\eqref{eq:localization-cubic}.  The admissible noncompact range
+\eqref{eq:localization-cubic}.  The admissible infinite-support range
 $0<|z|<1$ excludes the three prefactors: $z=\pm1$ are bulk-edge
 points, while $z=0$ is evaluated separately below.  Thus eliminating
 $a$ gives \eqref{eq:localization-cubic} on the stated range.  Solving
@@ -1364,7 +1379,7 @@ $a=0$.  Since $z=-\omega$ and $0<\omega<1$,
 \]
 Thus the corresponding $\lambda$ lies outside $\Sigma_\omega$, and every
 hypothesis of Theorem~\ref{thm:localization} is satisfied.  Both roots
-therefore give the asserted noncompact localized modes.
+therefore give the asserted infinite-support localized modes.
 At this tuning the cubic itself factors as
 \[
  \frac{1-\omega^2}{\omega}\,z(z+\omega)^2,
@@ -1375,7 +1390,7 @@ than for a repeated eigenvalue.
 
 \begin{proposition}[Compact singular-transfer mode]
 \label{prop:compact-localization}
-Let $\omega\ne1$.  The value $z=0$, excluded from the noncompact
+Let $\omega\ne1$.  The value $z=0$, excluded from the infinite-support
 parametrization, gives
 \begin{equation}\label{eq:compact-localization}
  \lambda=-1-\omega
@@ -1877,7 +1892,13 @@ in this circle.  Therefore
     \frac{1}{1+\delta/(1+\omega)}+O(|\delta|n^{-4}),
 \]
 where the constant is uniform on the compact parameter sets of the
-lemma.  Finally
+lemma.  The pole-cleared equation has real coefficients, and both
+$\lambda_1^+$ and $\lambda_*$ are real.  The disk used above is invariant
+under complex conjugation, so uniqueness makes $\lambda_{1,-}$ real.  For
+$\delta\ne0$, the displayed leading coefficient of $\delta$ is positive
+and of order $n^{-3}$, whereas the remainder is $O(|\delta|n^{-4})$.
+Consequently the displacement has the sign of $\delta$ for all sufficiently
+large $n$.  Finally
 $(\omega-r_1)/r_1=q^2/(2\omega^2)+O(q^4)$, which proves
 \eqref{eq:affected-gap-shift}.
 \end{proof}
@@ -2268,13 +2289,123 @@ $n$-dependence, and its sign test gives the asserted branch selection,
 including crossings through equality.
 \end{proof}
 
+Figure~\ref{fig:numerical-summary} illustrates three parts of the exact
+analysis with direct finite matrices: the protected/affected parity split,
+the infinite-support localized tail, and the fixed-rate gap correction.
+
+\begin{figure}[H]
+\centering
+\begin{minipage}[t]{0.49\textwidth}
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  width=0.94\linewidth,
+  height=0.76\linewidth,
+  xmin=-4.2,
+  xmax=0.2,
+  ymin=-0.82,
+  ymax=0.82,
+  xlabel={$\Re\lambda$},
+  ylabel={$\Im\lambda$},
+  tick label style={font=\scriptsize},
+  label style={font=\footnotesize},
+  legend style={font=\scriptsize,draw=none,fill=none,at={(0.03,0.97)},anchor=north west},
+  axis lines=box,
+]
+\addplot[only marks,mark=o,mark size=1.45pt,blue!70!black]
+  table[x index=0,y index=1]{figures/spectrum_protected.dat};
+\addlegendentry{protected}
+\addplot[only marks,mark=x,mark size=1.8pt,purple!80!black]
+  table[x index=0,y index=1]{figures/spectrum_affected.dat};
+\addlegendentry{affected}
+\end{axis}
+\end{tikzpicture}
+
+\vspace{-1.5ex}
+\centerline{\footnotesize(a) Parity-resolved spectrum}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.49\textwidth}
+\centering
+\begin{tikzpicture}
+\begin{semilogyaxis}[
+  width=0.94\linewidth,
+  height=0.76\linewidth,
+  xmin=0,
+  xmax=30,
+  ymin=1e-13,
+  ymax=1,
+  xlabel={distance $h$ from the defect},
+  ylabel={squared site amplitude},
+  tick label style={font=\scriptsize},
+  label style={font=\footnotesize},
+  legend style={font=\scriptsize,draw=none,fill=none,at={(0.97,0.97)},anchor=north east},
+  axis lines=box,
+]
+\addplot[only marks,mark=*,mark size=1.2pt,blue!70!black]
+  table[x index=0,y index=1]{figures/localization_profile.dat};
+\addlegendentry{finite ring}
+\addplot[densely dashed,purple!80!black,restrict x to domain=1:30]
+  table[x index=0,y index=2]{figures/localization_profile.dat};
+\addlegendentry{$|z|^{2h}$ slope}
+\end{semilogyaxis}
+\end{tikzpicture}
+
+\vspace{-1.5ex}
+\centerline{\footnotesize(b) Localized right-eigenvector profile}
+\end{minipage}
+
+\vspace{1.2ex}
+\begin{minipage}[t]{0.72\textwidth}
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  width=\linewidth,
+  height=0.43\linewidth,
+  xmin=17,
+  xmax=103,
+  ymin=12.34,
+  ymax=12.56,
+  xlabel={$n$},
+  ylabel={$n^3(\gamma_n^{\rm hom}-\gamma_n)$},
+  tick label style={font=\scriptsize},
+  label style={font=\footnotesize},
+  legend style={font=\scriptsize,draw=none,fill=none,at={(0.97,0.05)},anchor=south east},
+  axis lines=box,
+]
+\addplot[only marks,mark=*,mark size=1.45pt,blue!70!black]
+  table[x index=0,y index=1]{figures/fixed_gap_scaling.dat};
+\addlegendentry{direct matrix}
+\addplot[densely dashed,purple!80!black]
+  table[x index=0,y index=2]{figures/fixed_gap_scaling.dat};
+\addlegendentry{Theorem~\ref{thm:fixed-gap}}
+\end{axis}
+\end{tikzpicture}
+
+\vspace{-1.5ex}
+\centerline{\footnotesize(c) Faster-defect gap correction}
+\end{minipage}
+\caption{Representative finite-ring diagnostics.  (a) The spectrum at
+$n=24$, $\omega=0.7$, and $\omega_0=1.4$, computed separately in the two
+reflection sectors.  (b) The normalized squared right-eigenvector amplitude
+at $n=60$, $\omega=0.5$, and $\omega_0=0.8$ for the eigenvalue converging to
+$\lambda=-1.093854643\ldots$; the reference slope uses
+$z=0.607977704\ldots$ from Corollary~\ref{cor:localization-algebraic}.  This
+panel concerns a right eigenvector, not stationary probability mass.  (c) For
+$\omega=1.3$ and $\omega_0=2$, direct gaps approach the $n^{-3}$ coefficient
+in Theorem~\ref{thm:fixed-gap}.  The plotted data are generated by
+\texttt{scripts/generate\_figure\_data.py}.}
+\label{fig:numerical-summary}
+\end{figure}
+
 \section{Bulk-critical spectral gap}\label{sec:critical-gap}
 
 When $\omega=\alpha/n$ and $\omega_0=\beta/n$, the gap is of order
 $n^{-1}$ and the limiting first-mode exceptional scale $\alpha=2\pi$
 separates two parity-selection patterns.  Local pole calculations locate
 the candidate roots, while the right-edge estimates below exclude every
-other root from controlling the gap.
+other root from controlling the gap.  We call this regime bulk-critical
+because the bulk tumbling time $\omega^{-1}$ and the ballistic traversal
+time of the ring are both of order $n$.
 
 \subsection{Asymptotic regimes and parity selection}
 
@@ -2352,33 +2483,32 @@ Figure~\ref{fig:critical-selection} display this selection rule.  An
 equality case in the table means that the protected and affected parity
 roots coincide.
 
-\begin{table}[ht]
+\begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.12}
-\begin{tabular}{L{0.16\textwidth}L{0.34\textwidth}
-                L{0.20\textwidth}L{0.17\textwidth}}
+\begin{tabular}{L{0.18\textwidth}L{0.38\textwidth}L{0.31\textwidth}}
 \hline
-Regime & Gap-controlling parity & Leading gap & First correction\\
+Regime & Gap-controlling parity & Gap and first correction\\
 \hline
 $\alpha<q_\star$
-  & affected: $\beta<\alpha$; protected: $\beta>\alpha$;
-    tie: $\beta=\alpha$
-  & $\alpha n^{-1}$
-  & $n^{-2}$, \eqref{eq:critical-below}\\
+  & affected if $\beta<\alpha$; protected if $\beta>\alpha$;
+    tie if $\beta=\alpha$
+  & $\alpha n^{-1}$ with an $n^{-2}$ correction;
+    \eqref{eq:critical-below}\\
 $\alpha=q_\star$, $\beta\le q_\star$
-  & protected: $\beta<q_\star$; tie: $\beta=q_\star$
-  & $q_\star n^{-1}$
-  & $n^{-2}$, \eqref{eq:critical-at-slow}\\
+  & protected if $\beta<q_\star$; tie if $\beta=q_\star$
+  & $q_\star n^{-1}$ with an $n^{-2}$ correction;
+    \eqref{eq:critical-at-slow}\\
 $\alpha=q_\star$, $\beta>q_\star$
   & affected
-  & $q_\star n^{-1}$
-  & $n^{-3/2}$, \eqref{eq:critical-at-fast}\\
+  & $q_\star n^{-1}$ with an $n^{-3/2}$ correction;
+    \eqref{eq:critical-at-fast}\\
 $\alpha>q_\star$
-  & protected: $\beta<\alpha$; affected: $\beta>\alpha$;
-    tie: $\beta=\alpha$
-  & $(\alpha-\sqrt{\alpha^2-q_\star^2})n^{-1}$
-  & $n^{-2}$, \eqref{eq:critical-above}\\
+  & protected if $\beta<\alpha$; affected if $\beta>\alpha$;
+    tie if $\beta=\alpha$
+  & $(\alpha-\sqrt{\alpha^2-q_\star^2})n^{-1}$ with an
+    $n^{-2}$ correction; \eqref{eq:critical-above}\\
 \hline
 \end{tabular}
 \caption{Selection and correction scales in the bulk-critical limit,
@@ -2386,7 +2516,7 @@ with $q_\star=2\pi$.}
 \label{tab:critical-summary}
 \end{table}
 
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}[x=2.65cm,y=2.65cm,font=\small]
   \fill[pattern=north east lines,pattern color=blue!65!black]
@@ -3850,12 +3980,12 @@ root orders.  The flat band at $\omega=1$ is the singular exception, with
 its tuned $J_3$ block recorded separately.
 
 On the infinite line, the same Green function distinguishes extended
-bulk spectrum from defect-localized modes.  The noncompact off-bulk modes
+bulk spectrum from defect-localized modes.  The infinite-support off-bulk modes
 are described by the matching equations and their cubic elimination, and
 the singular transfer value supports a compact mode on three sites.  The
 transfer alternatives exclude embedded $\ell^2$ modes except at the
 singular flat band, whose eigenspace is given explicitly.  Each simple
-noncompact localized eigenvalue produces a finite-ring eigenvalue with
+infinite-support localized eigenvalue produces a finite-ring eigenvalue with
 exponentially small error and uniformly localized squared right-eigenvector
 amplitude.
 
@@ -3885,15 +4015,17 @@ decomposition across every regime considered here.
 The manuscript source and the formula-audit code are available at
 \url{https://github.com/skypher/kinetic-defect-ring}; the repository
 history records the manuscript revision.  From the repository root, the
-formula audit is run as
+formula audit and the data generation for Figure~\ref{fig:numerical-summary}
+are run as
 \begin{center}
-\texttt{python3 -u scripts/verify\_formulas.py}.
+\texttt{python3 -u scripts/verify\_formulas.py},\qquad
+\texttt{python3 -u scripts/generate\_figure\_data.py}.
 \end{center}
 The audit compares the characteristic, transfer, flat-band Jordan,
 localization, and representative gap formulas with direct finite-matrix
 or defining-equation calculations.  Its scope and execution environment
-are documented in the repository; the computations are independent
-checks rather than replacements for the arguments in the manuscript.
+are documented in the repository; the computations are cross-checks rather
+than replacements for the arguments in the manuscript.
 
 \enlargethispage{2\baselineskip}
 \phantomsection
