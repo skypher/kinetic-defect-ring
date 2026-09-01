@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import argparse
 import math
 from pathlib import Path
 
@@ -12,6 +13,13 @@ from verify_formulas import generator, homogeneous_gap, spectral_gap
 
 
 OUTPUT_DIRECTORY = Path(__file__).resolve().parents[1] / "paper" / "figures"
+
+
+def parse_arguments() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="Regenerate the numerical data used by the manuscript figure."
+    )
+    return parser.parse_args()
 
 
 def reflection_matrix(n: int) -> np.ndarray:
@@ -152,6 +160,7 @@ def fixed_gap_scaling() -> None:
 
 
 def main() -> None:
+    parse_arguments()
     OUTPUT_DIRECTORY.mkdir(parents=True, exist_ok=True)
     parity_spectrum()
     localization_profile()

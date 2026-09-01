@@ -12,9 +12,9 @@ The compiled manuscript is [`paper/main.pdf`](paper/main.pdf), with source in
    Chebyshev, and `2 x 2` transfer-matrix forms);
 2. a parity factorization and a Jordan-block classification, including the
    flat-band point `omega = 1`;
-3. an infinite-volume criterion for off-bulk defect-localized modes, an
-   exclusion of dispersive embedded eigenvalues, and exact descriptions of
-   the compact singular mode and embedded flat-band eigenspace;
+3. an infinite-volume criterion for defect-localized modes outside the bulk
+   spectrum, an exclusion of dispersive embedded eigenvalues, and exact
+   descriptions of the compact singular mode and embedded flat-band eigenspace;
 4. fixed-rate and critical large-ring expansions of the spectral gap; and
 5. a term-by-term comparison with the telegraph and
    telegraph-with-lattice-diffusion approximations.
