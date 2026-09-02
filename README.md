@@ -6,7 +6,9 @@ bulk tumbling rate is `omega`, and the tumbling rate at site zero is
 `omega_0`.
 
 The compiled manuscript is [`paper/main.pdf`](paper/main.pdf), with source in
-[`paper/main.tex`](paper/main.tex). Its principal results are:
+[`paper/main.tex`](paper/main.tex).  The annotated tag
+`paper-2026-09-02-reviewed` identifies the reviewed commit.  Its principal
+results are:
 
 1. three equivalent exact characteristic equations (resolvent,
    Chebyshev, and `2 x 2` transfer-matrix forms);
@@ -47,7 +49,12 @@ pdflatex main.tex
 ## Replay the formula audit
 
 The audit requires Python 3 and NumPy.  The reviewed formula audit was
-tested with Python 3.12.3 and NumPy 1.26.4.
+tested with Python 3.12.3 and NumPy 1.26.4.  Install the pinned Python
+dependency with
+
+```sh
+python3 -m pip install -r requirements.txt
+```
 
 ```sh
 python3 -u scripts/verify_formulas.py

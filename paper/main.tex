@@ -215,9 +215,10 @@ also occur in interacting periodic exclusion processes
 and many-particle steady behavior rather than the full one-particle
 spectrum of a fixed tumbling-rate defect.
 
-Related lattice-impurity methods include persistent walks with random
-asymmetric transmittances \cite{SadjadiMiri2008}, Chebyshev propagators
-and partially absorbing defects for confined nonpersistent walks
+Related lattice-disorder and impurity methods include persistent walks with
+random symmetric or asymmetric site transmittances
+\cite{MiriSadjadiFouladvand2006,SadjadiMiri2008}, Chebyshev propagators and
+partially absorbing defects for confined nonpersistent walks
 \cite[Secs.~VI--VII and Apps.~C and E]{Giuggioli2020}, and the
 classical difference-equation construction of isolated impurity levels
 \cite{KosterSlater1954}.  Green-function reduction of a point
@@ -1727,7 +1728,17 @@ The affected companion moves away from that value at order $n^{-3}$:
 a slower defect moves it to the left and leaves the protected root in
 control, whereas a faster defect moves it toward zero and selects the
 affected root.  Thus a local rate change alters the first correction but
-not the leading fixed-rate decay scale.
+not the leading fixed-rate decay scale.  At a site with tumbling rate $r$,
+successive events are tumbles with probability $r/(1+r)$ until a hop occurs
+with probability $1/(1+r)$.  Summing over an odd number of tumbles gives
+
+\[
+ \sum_{m\geq0}\left(\frac{r}{1+r}\right)^{2m+1}\frac1{1+r}
+ =\frac{r}{1+2r},
+\]
+which increases with $r$.  Faster tumbling at the defect therefore enhances
+immediate backtracking and slows the reflection-odd density imbalance
+represented by the affected first mode.
 
 The proof occupies the next two subsections.  The local Green estimate
 locates the affected companion of the protected first-mode root; the
@@ -1823,7 +1834,7 @@ fixed distance from $S_n$.  Thus these terms have total derivative
 $O(1)$.  This proves the derivative bound in
 \eqref{eq:fixed-regular-green-bounds}.
 
-At $\lambda=0$, every unpaired nonzero-wave Fourier summand is exactly
+At $\lambda=0$, every nonzero-wave Fourier summand is exactly
 $1/[2(1+\omega)]$.  The $q=0$ term and the removed first-pole
 term each change the average by $O(n^{-1})$, using
 \eqref{eq:fixed-small-wave-bounds}.  Hence
@@ -3645,7 +3656,7 @@ gives the affected pair
  \Delta=\mathord\pm2\ii\sqrt{q_\star h}\,n^{-3/2}
         +2h n^{-2}+O(n^{-5/2}).
 \end{equation}
-Its decay rate exceeds the protected decay rate by
+The decay rate of this affected pair exceeds the protected decay rate by
 \[
  \left(\frac{q_\star^2}{\sqrt3}-2h\right)n^{-2}+O(n^{-5/2}).
 \]
@@ -4021,13 +4032,16 @@ decomposition across every regime considered here.
 \section*{Code availability}
 
 The manuscript source and the formula-audit code are available at
-\url{https://github.com/skypher/kinetic-defect-ring}; the repository
-history records the manuscript revision.  From the repository root, the
-formula audit and the data generation for Figure~\ref{fig:numerical-summary}
-are run as
+\url{https://github.com/skypher/kinetic-defect-ring}.  The annotated Git tag
+\texttt{paper-2026-09-02-reviewed} identifies the reviewed commit.  The
+repository includes a pinned dependency file.  From its root, the formula
+audit and the data generation for Figure~\ref{fig:numerical-summary} are run
+separately as
 \begin{center}
-\texttt{python3 -u scripts/verify\_formulas.py},\qquad
-\texttt{python3 -u scripts/generate\_figure\_data.py}.
+\begin{tabular}{l}
+\texttt{python3 -u scripts/verify\_formulas.py}\\
+\texttt{python3 -u scripts/generate\_figure\_data.py}
+\end{tabular}
 \end{center}
 The audit compares the characteristic, transfer, flat-band Jordan,
 localization, and representative gap formulas with direct finite-matrix
