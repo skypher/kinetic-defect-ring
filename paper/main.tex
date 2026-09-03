@@ -40,6 +40,7 @@
 \medmuskip=4mu
 \thickmuskip=8mu
 \setlength{\emergencystretch}{2em}
+\hyphenation{par-ti-cle in-ho-mo-ge-neous}
 
 \numberwithin{equation}{section}
 
@@ -137,7 +138,7 @@ exact spectrum, exceptional points, and spectral-decay crossover}
 We determine how changing the tumbling rate at one site changes the spectrum
 and relaxation of a continuous-time run-and-tumble particle on an $n$-site
 ring.  Reflection splits the state space into a protected sector and a
-defect-sensitive sector; a rank-one reduction then gives explicit finite
+defect-sensitive sector.  A rank-one reduction then gives explicit finite
 polynomials and a scalar Green equation for the complete spectrum and Jordan
 structure, including the singular flat band at $\omega=1$.  On the infinite
 line, the same equation characterizes every localized mode outside the bulk
@@ -237,7 +238,7 @@ Rank-one determinant and resolvent identities are the finite-dimensional
 mechanism behind the scalar reduction; an early inverse-update formula appears
 in \cite[pp.~124--127]{ShermanMorrison1950}.  For scalar second-order difference
 operators, transfer matrices, Green kernels, and periodic monodromy are
-developed in \cite[Secs.~1.1--1.2 and 7.1]{Teschl1999}.  The operator here is
+developed in \cite[Secs.~1.1--1.2 and 7.1]{Teschl2000}.  The operator here is
 instead a two-component nonnormal stochastic generator, so the parity and
 Jordan analysis is carried out directly.  Chapters~14--15 of
 \cite{TrefethenEmbree2005} review the distinction between asymptotic spectral
@@ -247,6 +248,8 @@ Here and below, an exact spectral description means that the eigenvalues and
 their Jordan multiplicities are characterized by explicit finite polynomials
 or secular equations; it does not mean that the roots of a general polynomial
 are expressed in radicals.
+The spectral right edge of a set means the supremum of the real parts of its
+elements; for each finite-ring spectrum this supremum is a maximum.
 
 Table~\ref{tab:main-results} maps the principal conclusions to their exact
 statements.  In particular, the gap theorems combine local first-pole
@@ -1596,8 +1599,9 @@ is an algebraically simple eigenvalue of $L_n(\omega,\omega_0)$.
 
 \begin{proof}
 Choose a bulk site $r\ne0$.  Starting from any state, repeated hops in its
-current orientation reach $r$.  At $r$ the orientation can be retained or
-reversed, the latter transition having rate $\omega>0$.  Repeated hops in
+current orientation reach $r$.  From $r$, the particle can continue hopping
+in that orientation or can tumble once, at rate $\omega>0$, to reverse it.
+Repeated hops in
 the selected orientation then reach any prescribed target site with the
 prescribed orientation.  Thus every state communicates with every other
 state, including when $\omega_0=0$.
@@ -1736,7 +1740,8 @@ with probability $1/(1+r)$.  Summing over an odd number of tumbles gives
  =\frac{r}{1+2r},
 \]
 which increases with $r$.  Thus faster tumbling at the defect increases the
-probability of immediate backtracking.  This local calculation is consistent
+probability that the next hop reverses the orientation present on arrival.
+This local calculation is consistent
 with, but does not by itself imply, the spectral result: Theorem~\ref{thm:fixed-gap}
 shows that the affected first mode moves toward zero and hence that the
 reflection-odd density imbalance decays more slowly.
@@ -2312,7 +2317,7 @@ Figure~\ref{fig:numerical-summary} illustrates three parts of the exact
 analysis with direct finite matrices: the protected/affected parity split,
 the infinite-support localized tail, and the fixed-rate gap correction.
 
-\begin{figure}[H]
+\begin{figure}[!t]
 \centering
 \begin{minipage}[t]{0.49\textwidth}
 \centering
@@ -2499,7 +2504,12 @@ faster defect.
 Table~\ref{tab:critical-summary} and
 Figure~\ref{fig:critical-selection} display this selection rule.  An
 equality case in the table means that the protected and affected parity
-roots coincide.
+roots coincide.  Because the parity sectors are invariant, this cross-sector
+coincidence alone does not create a nontrivial Jordan block; it is exceptional
+only if one of the sector blocks is independently defective, as described in
+Theorems~\ref{thm:jordan-regular}--\ref{thm:flat-band}.  In particular, the
+tie at $\alpha=\beta=q_\star$ should not be confused with the limiting
+within-block coalescence scale $\alpha=q_\star$.
 
 \begin{table}[H]
 \centering
@@ -4036,7 +4046,8 @@ decomposition across every regime considered here.
 
 The manuscript source and the formula-audit code are available at
 \url{https://github.com/skypher/kinetic-defect-ring}.  The annotated Git tag
-\texttt{paper-2026-09-02-reviewed} identifies the reviewed commit.  The
+\texttt{paper-2026-09-03-referee-\allowbreak revised} identifies the exact manuscript and
+audit revision described here.  The
 repository includes a pinned dependency file.  From its root, the formula
 audit and the data generation for Figure~\ref{fig:numerical-summary} are run
 separately as

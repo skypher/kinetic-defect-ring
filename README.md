@@ -7,8 +7,8 @@ bulk tumbling rate is `omega`, and the tumbling rate at site zero is
 
 The compiled manuscript is [`paper/main.pdf`](paper/main.pdf), with source in
 [`paper/main.tex`](paper/main.tex).  The annotated tag
-`paper-2026-09-02-reviewed` identifies the reviewed commit.  Its principal
-results are:
+`paper-2026-09-03-referee-revised` identifies the exact manuscript and audit
+revision described here.  Its principal results are:
 
 1. three equivalent exact characteristic equations (resolvent,
    Chebyshev, and `2 x 2` transfer-matrix forms);
@@ -26,7 +26,8 @@ gap, and localization formulas can be replayed against direct matrices
 and their defining equations with
 [`scripts/verify_formulas.py`](scripts/verify_formulas.py).  The script is a
 short assertion-based audit, including all ring sizes from 2 through 12
-for the flat-band nullity profiles.  The data in the manuscript's numerical
+for the flat-band nullity profiles and a multi-size convergence check for the
+critical-gap side expansions.  The data in the manuscript's numerical
 summary figure are reproduced by
 [`scripts/generate_figure_data.py`](scripts/generate_figure_data.py).  These
 computations are cross-checks rather than substitutes for the proofs in the

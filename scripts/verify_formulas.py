@@ -505,36 +505,47 @@ def critical_zero_wave_cancellation_audit() -> None:
 
 def critical_side_gap_audit() -> None:
     k = 2.0 * math.pi
-    n = 120
     cases = [(3.0, 0.0), (3.0, 6.0), (8.0, 3.0), (8.0, 12.0)]
     for alpha, beta in cases:
-        exact_gap = spectral_gap(n, alpha / n, beta / n)
-        if alpha < k:
-            predicted = (
-                alpha / n
-                + (k * k / 2.0 - 2.0 * max(alpha - beta, 0.0)) / n**2
-            )
-        else:
-            root = math.sqrt(alpha * alpha - k * k)
-            predicted = (
-                (alpha - root) / n
-                + (
-                    k * k / 2.0
-                    - 2.0
-                    * max(beta - alpha, 0.0)
-                    * (alpha - root)
-                    / root
+        raw_errors = []
+        for n in [80, 120, 160]:
+            exact_gap = spectral_gap(n, alpha / n, beta / n)
+            if alpha < k:
+                predicted = (
+                    alpha / n
+                    + (k * k / 2.0 - 2.0 * max(alpha - beta, 0.0)) / n**2
                 )
-                / n**2
+            else:
+                root = math.sqrt(alpha * alpha - k * k)
+                predicted = (
+                    (alpha - root) / n
+                    + (
+                        k * k / 2.0
+                        - 2.0
+                        * max(beta - alpha, 0.0)
+                        * (alpha - root)
+                        / root
+                    )
+                    / n**2
+                )
+            raw_error = abs(exact_gap - predicted)
+            raw_errors.append(raw_error)
+            scaled_error = raw_error * n**3
+            print(
+                f"critical_side_gap alpha={alpha} beta={beta} n={n}"
+                f" raw_error={raw_error:.9g}"
+                f" scaled_n3_error={scaled_error:.9g}",
+                flush=True,
             )
-        scaled_error = abs(exact_gap - predicted) * n**3
-        print(
-            f"critical_side_gap alpha={alpha} beta={beta} n={n}"
-            f" scaled_n3_error={scaled_error:.9g}",
-            flush=True,
-        )
-        if scaled_error > 60.0:
-            raise AssertionError("critical side-gap audit failed")
+            if scaled_error > 60.0:
+                raise AssertionError(
+                    "critical side-gap bounded-remainder audit failed"
+                )
+        if any(
+            later >= earlier
+            for earlier, later in zip(raw_errors, raw_errors[1:])
+        ):
+            raise AssertionError("critical side-gap convergence audit failed")
 
 
 def main() -> None:
