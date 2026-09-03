@@ -680,7 +680,7 @@ to $\mathcal H_-$ give \eqref{eq:Qminus}.  Multiplication proves
 \subsection{Jordan structure and the exceptional locus}
 
 \begin{definition}[Exceptional point]\label{def:exceptional}
-For an eigenvalue $\mu$, let $m_{\rm alg}(\mu)$ be its algebraic
+For fixed $n$ and an eigenvalue $\mu$, let $m_{\rm alg}(\mu)$ be its algebraic
 multiplicity and
 $m_{\rm geo}(\mu)=\dim\ker(\mu I-L)$ its geometric multiplicity.  We call
 $(\omega,\omega_0,\mu)$ an exceptional point when
@@ -751,12 +751,12 @@ Assume $\omega\ne1$.
 \begin{enumerate}
 \item In the protected sector, the endpoint factors in
   \eqref{eq:Hplus} give one-dimensional blocks.  For each
-  $1\leq k\leq m$, a root of $D_k$ gives one $J_1$, except that
+  $1\leq k\leq m$, a root of $D_k$ gives one $J_1$, except when
   \begin{equation}\label{eq:protected-ep}
     \omega=|s_k|,\qquad
-    \mu=c_k-1-\omega.
+    \mu=c_k-1-\omega,
   \end{equation}
-  gives one $J_2(\mu)$.
+  in which case it gives one $J_2(\mu)$.
 \item In the affected sector, if
   \begin{equation}\label{eq:affected-ep}
     Q_{n,-}(\mu)=Q_{n,-}'(\mu)=\cdots
@@ -807,7 +807,6 @@ eigenvalue, of size equal to the root order.  The direct-sum assertion
 follows from the invariant parity splitting.
 \end{proof}
 
-\newpage
 \begin{theorem}[Flat-band classification at $\omega=1$]
 \label{thm:flat-band}
 Let $\omega=1$ and put $\mu=-2$.
@@ -1736,9 +1735,11 @@ with probability $1/(1+r)$.  Summing over an odd number of tumbles gives
  \sum_{m\geq0}\left(\frac{r}{1+r}\right)^{2m+1}\frac1{1+r}
  =\frac{r}{1+2r},
 \]
-which increases with $r$.  Faster tumbling at the defect therefore enhances
-immediate backtracking and slows the reflection-odd density imbalance
-represented by the affected first mode.
+which increases with $r$.  Thus faster tumbling at the defect increases the
+probability of immediate backtracking.  This local calculation is consistent
+with, but does not by itself imply, the spectral result: Theorem~\ref{thm:fixed-gap}
+shows that the affected first mode moves toward zero and hence that the
+reflection-odd density imbalance decays more slowly.
 
 The proof occupies the next two subsections.  The local Green estimate
 locates the affected companion of the protected first-mode root; the
@@ -2437,8 +2438,7 @@ For finite $n$, the first homogeneous block is exceptional at
 \end{equation}
 Thus $\alpha=q_\star$ is the limiting first-mode exceptional scale, not
 the exact finite-$n$ coalescence.  At the exact scaling
-$\alpha=q_\star$, the residual lattice splitting is of order $n^{-2}$
-and is retained in Theorem~\ref{thm:critical-gap}.
+$\alpha=q_\star$, the residual lattice splitting is of order $n^{-2}$.
 
 \begin{theorem}[Bulk-critical double scaling]\label{thm:critical-gap}
 Set
@@ -3320,9 +3320,12 @@ annular difference contains no zero, proving item 2.
 \label{lem:critical-endpoint-root}
 Set $\omega=\alpha/n$ and $\omega_0=\beta/n$, where
 $\alpha>0$ and $\beta\ge0$ are fixed, and put $b=\beta-\alpha$.
-For all sufficiently large $n$, the affected polynomial $Q_{n,-}$ has
-exactly one zero in a fixed $O(n^{-3})$ neighborhood of
-$-2\alpha/n-2b/n^2$.  Counted with algebraic multiplicity, it is
+There is a constant $C>0$, independent of $n$, such that, for all sufficiently
+large $n$, the affected polynomial $Q_{n,-}$ has exactly one zero in
+\[
+ \left|\lambda+\frac{2\alpha}{n}+\frac{2b}{n^2}\right|<Cn^{-3}.
+\]
+The count includes algebraic multiplicity, and this zero satisfies
 \begin{equation}\label{eq:critical-endpoint-root}
  \lambda_{0,-}=-\frac{2\alpha}{n}-\frac{2b}{n^2}+O(n^{-3}).
 \end{equation}
@@ -3902,9 +3905,9 @@ $e^{2\pi\mathrm i\ell x/n}$ gives
 $\lambda(\lambda+2\omega)+(2\pi\ell/n)^2=0$.  Hence its two roots,
 as $\ell$ ranges over $\mathbb Z$, are exactly
 $\Sigma_{\rm tel}(n,\omega)$.
-Indeed, the periodic Fourier transform identifies the homogeneous
-operator, with its periodic $H^1$ domain, with the orthogonal direct sum
-over $\ell\in\mathbb Z$ of the matrices
+Fourier transformation identifies the homogeneous operator on the periodic
+$H^1$ domain with the orthogonal direct sum over $\ell\in\mathbb Z$ of the
+matrices
 \[
  M_\ell:=\begin{pmatrix}
   0&-\mathrm i q_\ell\\
