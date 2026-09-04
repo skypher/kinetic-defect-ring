@@ -233,6 +233,11 @@ Hermitian reciprocal lattices are treated in
 concern on-site potentials, boundary sensitivity, and skin or bound-state
 localization.  Here the local perturbation acts instead on the tumbling
 channel of a stochastic generator.
+The contribution beyond these prior settings is a single exact framework
+that gives parity protection, the complete finite-ring Jordan classification
+including the flat band, every localized mode outside the bulk spectrum, and
+the fixed-rate and critical spectral-gap crossovers for one fixed
+tumbling-rate defect.
 
 Rank-one determinant and resolvent identities are the finite-dimensional
 mechanism behind the scalar reduction; an early inverse-update formula appears
@@ -374,6 +379,34 @@ At site zero, changing $\omega$ to $\omega_0$ adds
              \begin{pmatrix}1&-1\end{pmatrix}.
 \]
 Every other matrix entry is unchanged.
+\end{proof}
+
+\begin{lemma}[Homogeneous Bloch dissipation]
+\label{lem:bloch-dissipation}
+For $q\in[-\pi,\pi]$, let
+\[
+ W(q)=\begin{pmatrix}
+ e^{\ii q}-1-\omega&\omega\\
+ \omega&e^{-\ii q}-1-\omega
+ \end{pmatrix}.
+\]
+Then every $v=(v^+,v^-)\in\C^2$ satisfies
+\begin{equation}\label{eq:bloch-dissipation}
+ -\Re\langle v,W(q)v\rangle
+ =(1-\cos q)(|v^+|^2+|v^-|^2)
+   +\omega|v^+-v^-|^2.
+\end{equation}
+For $v\ne0$, the right side vanishes exactly when $q=0$ and
+$v^+=v^-$; in that case $W(0)v=0$.
+\end{lemma}
+
+\begin{proof}
+Taking the real part of the two diagonal terms gives
+$(\cos q-1-\omega)(|v^+|^2+|v^-|^2)$, while the two off-diagonal
+terms give $2\omega\Re(\overline{v^+}v^-)$.  This is
+\eqref{eq:bloch-dissipation}.  Both terms on its right are nonnegative;
+since $\omega>0$ and $1-\cos q$ vanishes only at $q=0$ in the displayed
+interval, their common equality case is the one stated.
 \end{proof}
 
 \medskip
@@ -679,6 +712,22 @@ Lemma~\ref{lem:protected-sector} and the rank-one determinant lemma restricted
 to $\mathcal H_-$ give \eqref{eq:Qminus}.  Multiplication proves
 \eqref{eq:parity-factor}.
 \end{proof}
+
+\begin{definition}[Pole-cleared secular zero]
+\label{def:pole-cleared-zero}
+On a neighborhood $U$, let $E$ be the product, with multiplicity, of the
+local factors of $H_{n,-}^{(0)}$ whose zeros are the poles of $G_n$ being
+cleared.  The \emph{pole-cleared secular expression} is the holomorphic
+continuation to $U$ of
+\[
+ E(\lambda)\bigl(1+2\delta G_n(\lambda)\bigr),
+\]
+and a \emph{pole-cleared zero} is a zero of this continuation, counted with
+its order.  Whenever such zeros are identified with zeros of $Q_{n,-}$
+below, the remaining factor $H_{n,-}^{(0)}/E$ is shown to be nonvanishing on
+$U$, and the cleared expression is evaluated at the original poles to
+determine whether they are retained or canceled.
+\end{definition}
 
 \subsection{Jordan structure and the exceptional locus}
 
@@ -1349,7 +1398,7 @@ At these parameters there are two admissible values
 \end{equation}
 and both give infinite-support localized modes with decay root
 $z=-\omega$.
-A root of \eqref{eq:localization-cubic} is accepted only when both
+A root of \eqref{eq:localization-cubic} is admissible only when both
 \eqref{eq:loc-dispersion} and \eqref{eq:loc-match} hold; this removes
 roots introduced by elimination or by clearing denominators.
 \end{corollary}
@@ -1436,8 +1485,10 @@ it is the limiting root $z=0$.
 
 \begin{proposition}[Finite-ring convergence of a localized mode]
 \label{prop:localized-convergence}
-Suppose \eqref{eq:localization-secular} has a simple root
-$\lambda_\infty$ with decay root
+Let $\delta\ne0$ and $\lambda_\infty\notin\Sigma_\omega$.  Assume
+$a_\infty:=\lambda_\infty+1+\omega\ne0$, and suppose
+\eqref{eq:localization-secular} has the simple root $\lambda_\infty$ with
+decay root
 $z_\infty$, $0<|z_\infty|<1$.  There is a closed disk $B$ centered at
 $\lambda_\infty$, disjoint from $\Sigma_\omega$, such that, for all
 sufficiently large $n$, the finite polynomial $Q_{n,-}$ has exactly one
@@ -1453,9 +1504,9 @@ diagnostic, not a probability law or stationary mass of the Markov chain;
 no assertion about left-eigenvector localization is made.  The amplitude
 is bounded by $C|z_\infty|^{2\operatorname{dist}(j,0)}$ for a constant $C$
 independent of $j$ and of all sufficiently large $n$.
-In the compact case \eqref{eq:compact-localization}, the infinite and
-finite eigenvalues agree exactly and the eigenvector is supported where
-$\operatorname{dist}(j,0)\le1$.
+Under the parameters of Proposition~\ref{prop:compact-localization}, the
+infinite and finite eigenvalues agree exactly and the eigenvector is supported
+where $\operatorname{dist}(j,0)\le1$.
 \end{proposition}
 
 \begin{proof}
@@ -1725,6 +1776,7 @@ set with $\omega$ bounded away from zero.  The root selection is uniform
 through $\omega_0=\omega$, where the two parity roots coincide.
 \end{theorem}
 
+\begin{remark}[Local interpretation of parity selection]
 The selection mechanism is visible directly in the two parity sectors.
 Reflection fixes the protected first-mode root at its homogeneous value.
 The affected companion moves away from that value at order $n^{-3}$:
@@ -1745,6 +1797,7 @@ This local calculation is consistent
 with, but does not by itself imply, the spectral result: Theorem~\ref{thm:fixed-gap}
 shows that the affected first mode moves toward zero and hence that the
 reflection-odd density imbalance decays more slowly.
+\end{remark}
 
 The proof occupies the next two subsections.  The local Green estimate
 locates the affected companion of the protected first-mode root; the
@@ -1803,8 +1856,9 @@ its derivative at zero is $-(1+\omega)/(2\omega)$ and, after decreasing
 $\eta$, its modulus is bounded below by a positive constant.  The fast
 root $p^-(q)$ stays a fixed distance from zero on $[0,\eta]$.
 For $\eta\le q\le\pi$, both roots stay a fixed distance from zero:
-the real-part dissipation of the homogeneous Fourier block can vanish
-only at $q=0$ in the density direction, and the Heine--Borel theorem
+Lemma~\ref{lem:bloch-dissipation} shows that the real-part dissipation of
+the homogeneous Fourier block can vanish only at $q=0$ in the density
+direction, and the Heine--Borel theorem
 applied to the remaining compact parameter set supplies a uniform
 positive distance.
 
@@ -2126,7 +2180,7 @@ If $\delta=0$, that sector is homogeneous and the conclusion follows from
  g_0=\frac1{2(1+\omega)},\qquad
  M_0=1+2\delta g_0=\frac{1+\omega_0}{1+\omega}>0.
  \end{equation}
-When parameters vary below, $\Omega_n$, $f_n$, $g_0$, and $M_0$ are
+In the uniform argument below, $\Omega_n$, $f_n$, $g_0$, and $M_0$ are
 evaluated at the current parameter pair.
 In a neighborhood of zero, every affected root is a zero of $f_n$.
 Indeed, the residue at every slow homogeneous pole is nonzero, so
@@ -2150,11 +2204,10 @@ closed left half-plane.  Pass to a subsequence such that
  \qquad \lambda_j\longrightarrow\lambda_*\ne0.
 \]
 Since the boundary of $\Omega_{n_j}$ tends to the imaginary axis,
-$\Re\lambda_*=0$.  For a bulk Bloch vector at wave number $q$, the real
-part of its quadratic form is the negative of $(1-\cos q)$ times its
-squared norm, together with the nonnegative tumbling form.  Equality
-therefore forces $q=0$ and equal orientation components, and the
-corresponding eigenvalue is zero.  Thus
+$\Re\lambda_*=0$.  The exact identity
+\eqref{eq:bloch-dissipation} forces zero dissipation only at $q=0$ with
+equal orientation components; Lemma~\ref{lem:bloch-dissipation} then gives
+the eigenvalue zero.  Thus
 $\Sigma_{\omega_*}$ meets the imaginary axis only at zero.
 
 Choose a closed disk $U$ about $\lambda_*$ disjoint from zero,
@@ -3211,8 +3264,8 @@ $\alpha>0$ and $\beta\ge0$ are fixed, put $q_\star=2\pi$, and write
 $b=\beta-\alpha$.
 \begin{enumerate}
 \item Fix $\ell\ge1$ with $\alpha\ne\ell q_\star$.  There is
-  $A_{\ell}>0$ such that, for each sign and every fixed
-  $A\ge A_{\ell}$, all sufficiently large $n$ have the property that the disk
+  $A_{\ell}>0$ such that, for each sign, every fixed
+  $A\ge A_{\ell}$, and all sufficiently large $n$, the disk
   $|\lambda-p_{\ell,n}^{\pm}|<An^{-2}$ contains exactly one zero
   $\widehat p_{\ell,n}^{\pm}$ of $Q_{n,-}$, counted with algebraic
   multiplicity, and
@@ -3823,7 +3876,8 @@ the negative real part, gives \eqref{eq:telegraph-critical}.
 
 For the Schr\"odinger operator, a one-dimensional point interaction can be
 encoded by continuity at the interaction point and a jump in the derivative;
-see \cite[Part~I, Ch.~I.3, Eq.~(3.1.9)]{AlbeverioGesztesyHoeghKrohnHolden2005}.
+see \cite[Part~I, Ch.~I.3, Thm.~3.1.1 and
+Eq.~(3.1.9)]{AlbeverioGesztesyHoeghKrohnHolden2005}.
 After elimination of $\rho$ from the eigenvalue equations below, the domain
 condition produces an analogous derivative jump for $m$.  The operator here
 is nevertheless a first-order kinetic system, not a Schr\"odinger operator or
@@ -4040,13 +4094,14 @@ secular structure at unit site spacing.  Together, the finite, infinite,
 asymptotic, and continuum formulations expose the same protected/affected
 decomposition across every regime considered here.
 
+\enlargethispage{3\baselineskip}
 \phantomsection
 \addcontentsline{toc}{section}{Code availability}
 \section*{Code availability}
 
 The manuscript source and the formula-audit code are available at
 \url{https://github.com/skypher/kinetic-defect-ring}.  The annotated Git tag
-\texttt{paper-2026-09-03-referee-\allowbreak revised} identifies the exact manuscript and
+\texttt{paper-2026-09-04-referee-\allowbreak revised} identifies the exact manuscript and
 audit revision described here.  The
 repository includes a pinned dependency file.  From its root, the formula
 audit and the data generation for Figure~\ref{fig:numerical-summary} are run
@@ -4063,7 +4118,6 @@ or defining-equation calculations.  Its scope and execution environment
 are documented in the repository; the computations are cross-checks rather
 than replacements for the arguments in the manuscript.
 
-\enlargethispage{2\baselineskip}
 \phantomsection
 \addcontentsline{toc}{section}{AI-use disclosure}
 \section*{AI-use disclosure}

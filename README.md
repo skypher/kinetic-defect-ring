@@ -7,7 +7,7 @@ bulk tumbling rate is `omega`, and the tumbling rate at site zero is
 
 The compiled manuscript is [`paper/main.pdf`](paper/main.pdf), with source in
 [`paper/main.tex`](paper/main.tex).  The annotated tag
-`paper-2026-09-03-referee-revised` identifies the exact manuscript and audit
+`paper-2026-09-04-referee-revised` identifies the exact manuscript and audit
 revision described here.  Its principal results are:
 
 1. three equivalent exact characteristic equations (resolvent,
